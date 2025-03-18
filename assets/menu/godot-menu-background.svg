@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Gradient background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2a3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a1a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Particle effect -->
+    <radialGradient id="particleGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#bgGradient)" />
+  
+  <!-- Decorative elements -->
+  <!-- Abstract shapes -->
+  <path d="M0,400 Q480,200 960,400 T1920,400 L1920,1080 L0,1080 Z" fill="#101830" opacity="0.3" />
+  <path d="M0,500 Q480,350 960,500 T1920,500 L1920,1080 L0,1080 Z" fill="#152040" opacity="0.4" />
+  <path d="M0,600 Q480,500 960,600 T1920,600 L1920,1080 L0,1080 Z" fill="#203060" opacity="0.5" />
+  
+  <!-- Grid lines -->
+  <g opacity="0.15">
+    <line x1="0" y1="200" x2="1920" y2="200" stroke="#4080ff" stroke-width="1" />
+    <line x1="0" y1="400" x2="1920" y2="400" stroke="#4080ff" stroke-width="1" />
+    <line x1="0" y1="600" x2="1920" y2="600" stroke="#4080ff" stroke-width="1" />
+    <line x1="0" y1="800" x2="1920" y2="800" stroke="#4080ff" stroke-width="1" />
+    <line x1="0" y1="1000" x2="1920" y2="1000" stroke="#4080ff" stroke-width="1" />
+    
+    <line x1="200" y1="0" x2="200" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="400" y1="0" x2="400" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="600" y1="0" x2="600" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="800" y1="0" x2="800" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="1000" y1="0" x2="1000" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="1200" y1="0" x2="1200" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="1400" y1="0" x2="1400" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="1600" y1="0" x2="1600" y2="1080" stroke="#4080ff" stroke-width="1" />
+    <line x1="1800" y1="0" x2="1800" y2="1080" stroke="#4080ff" stroke-width="1" />
+  </g>
+  
+  <!-- Particles -->
+  <g>
+    <circle cx="200" cy="150" r="3" fill="#ffffff" opacity="0.7" />
+    <circle cx="350" cy="320" r="2" fill="#ffffff" opacity="0.5" />
+    <circle cx="550" cy="180" r="4" fill="#ffffff" opacity="0.8" />
+    <circle cx="780" cy="250" r="2" fill="#ffffff" opacity="0.6" />
+    <circle cx="950" cy="120" r="3" fill="#ffffff" opacity="0.7" />
+    <circle cx="1100" cy="370" r="2" fill="#ffffff" opacity="0.5" />
+    <circle cx="1300" cy="220" r="4" fill="#ffffff" opacity="0.8" />
+    <circle cx="1450" cy="160" r="2" fill="#ffffff" opacity="0.6" />
+    <circle cx="1650" cy="310" r="3" fill="#ffffff" opacity="0.7" />
+    <circle cx="1800" cy="140" r="2" fill="#ffffff" opacity="0.5" />
+  </g>
+  
+  <!-- Larger glowing particles -->
+  <g>
+    <circle cx="300" cy="200" r="8" fill="url(#particleGlow)" opacity="0.6" />
+    <circle cx="700" cy="300" r="12" fill="url(#particleGlow)" opacity="0.7" />
+    <circle cx="1100" cy="150" r="10" fill="url(#particleGlow)" opacity="0.5" />
+    <circle cx="1500" cy="250" r="14" fill="url(#particleGlow)" opacity="0.8" />
+  </g>
+  
+  <!-- Abstract energy flow -->
+  <path d="M0,300 C200,280 400,350 600,300 S800,200 1000,250 S1200,350 1400,300 S1600,200 1920,250" 
+        stroke="#4080ff" stroke-width="2" fill="none" opacity="0.3" />
+  
+  <path d="M0,320 C200,300 400,370 600,320 S800,220 1000,270 S1200,370 1400,320 S1600,220 1920,270" 
+        stroke="#60a0ff" stroke-width="1" fill="none" opacity="0.2" />
+</svg>
