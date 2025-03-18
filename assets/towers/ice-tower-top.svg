@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Wieża Lodowa (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień wieży -->
+    <ellipse cx="5" cy="5" rx="55" ry="55" fill="#00000033"/>
+    
+    <!-- Podstawa wieży -->
+    <circle cx="0" cy="0" r="50" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+    
+    <!-- Wewnętrzna struktura -->
+    <circle cx="0" cy="0" r="35" fill="#7dc3e8" stroke="#3498db" stroke-width="2"/>
+    
+    <!-- Lodowe kryształy -->
+    <polygon points="0,-35 10,-15 -10,-15" fill="#a3e4ff" stroke="#7dc3e8" stroke-width="1"/>
+    <polygon points="0,35 10,15 -10,15" fill="#a3e4ff" stroke="#7dc3e8" stroke-width="1"/>
+    <polygon points="-35,0 -15,10 -15,-10" fill="#a3e4ff" stroke="#7dc3e8" stroke-width="1"/>
+    <polygon points="35,0 15,10 15,-10" fill="#a3e4ff" stroke="#7dc3e8" stroke-width="1"/>
+    
+    <!-- Centralny rdzeń -->
+    <circle cx="0" cy="0" r="20" fill="#cff0ff" stroke="#a3e4ff" stroke-width="2"/>
+    
+    <!-- Efekt zamrażania -->
+    <circle cx="0" cy="0" r="15" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
+  </g>
+</svg>

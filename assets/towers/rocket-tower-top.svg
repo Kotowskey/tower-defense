@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Wieża Rakietowa (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień wieży -->
+    <ellipse cx="5" cy="5" rx="55" ry="55" fill="#00000033"/>
+    
+    <!-- Podstawa wieży -->
+    <circle cx="0" cy="0" r="50" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+    
+    <!-- Wewnętrzna struktura -->
+    <circle cx="0" cy="0" r="35" fill="#e67e22" stroke="#d35400" stroke-width="2"/>
+    
+    <!-- Wyrzutnie rakiet -->
+    <circle cx="-20" cy="-20" r="15" fill="#c0392b" stroke="#922b21" stroke-width="2"/>
+    <circle cx="20" cy="-20" r="15" fill="#c0392b" stroke="#922b21" stroke-width="2"/>
+    <circle cx="-20" cy="20" r="15" fill="#c0392b" stroke="#922b21" stroke-width="2"/>
+    <circle cx="20" cy="20" r="15" fill="#c0392b" stroke="#922b21" stroke-width="2"/>
+    
+    <!-- Rakiety -->
+    <circle cx="-20" cy="-20" r="8" fill="#f39c12" stroke="#d35400" stroke-width="1"/>
+    <circle cx="20" cy="-20" r="8" fill="#f39c12" stroke="#d35400" stroke-width="1"/>
+    <circle cx="-20" cy="20" r="8" fill="#f39c12" stroke="#d35400" stroke-width="1"/>
+    <circle cx="20" cy="20" r="8" fill="#f39c12" stroke="#d35400" stroke-width="1"/>
+    
+    <!-- Centrum kontrolne -->
+    <circle cx="0" cy="0" r="10" fill="#95a5a6" stroke="#7f8c8d" stroke-width="1"/>
+  </g>
+</svg>

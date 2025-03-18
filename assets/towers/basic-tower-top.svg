@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Podstawowa Wieża (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień wieży -->
+    <ellipse cx="5" cy="5" rx="55" ry="55" fill="#00000033"/>
+    
+    <!-- Podstawa wieży -->
+    <circle cx="0" cy="0" r="50" fill="#888888" stroke="#666666" stroke-width="2"/>
+    
+    <!-- Wewnętrzna struktura -->
+    <circle cx="0" cy="0" r="35" fill="#999999" stroke="#777777" stroke-width="2"/>
+    
+    <!-- Centralne działo -->
+    <circle cx="0" cy="0" r="20" fill="#777777" stroke="#555555" stroke-width="2"/>
+    <circle cx="0" cy="0" r="15" fill="#ff0000" stroke="#cc0000" stroke-width="2"/>
+    
+    <!-- Promienie wzmocnienia -->
+    <line x1="0" y1="-35" x2="0" y2="-50" stroke="#666666" stroke-width="3"/>
+    <line x1="35" y1="0" x2="50" y2="0" stroke="#666666" stroke-width="3"/>
+    <line x1="0" y1="35" x2="0" y2="50" stroke="#666666" stroke-width="3"/>
+    <line x1="-35" y1="0" x2="-50" y2="0" stroke="#666666" stroke-width="3"/>
+  </g>
+</svg>

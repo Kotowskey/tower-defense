@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Wieża Karabinowa (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień wieży -->
+    <ellipse cx="5" cy="5" rx="55" ry="55" fill="#00000033"/>
+    
+    <!-- Podstawa wieży -->
+    <circle cx="0" cy="0" r="50" fill="#3a7ebf" stroke="#2a6eaf" stroke-width="2"/>
+    
+    <!-- Wewnętrzna struktura -->
+    <circle cx="0" cy="0" r="35" fill="#5a9edf" stroke="#3a7ebf" stroke-width="2"/>
+    
+    <!-- Centralne działo podwójne -->
+    <circle cx="-15" cy="0" r="12" fill="#444444" stroke="#333333" stroke-width="2"/>
+    <circle cx="15" cy="0" r="12" fill="#444444" stroke="#333333" stroke-width="2"/>
+    <circle cx="-15" cy="0" r="7" fill="#bbbbbb" stroke="#999999" stroke-width="1"/>
+    <circle cx="15" cy="0" r="7" fill="#bbbbbb" stroke="#999999" stroke-width="1"/>
+    
+    <!-- Wzmocnienie struktury -->
+    <rect x="-25" y="-25" width="50" height="50" rx="10" ry="10" fill="none" stroke="#2a6eaf" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Wieża Snajperska (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień wieży -->
+    <ellipse cx="5" cy="5" rx="55" ry="55" fill="#00000033"/>
+    
+    <!-- Podstawa wieży -->
+    <circle cx="0" cy="0" r="50" fill="#27ae60" stroke="#219952" stroke-width="2"/>
+    
+    <!-- Wewnętrzna struktura -->
+    <circle cx="0" cy="0" r="35" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+    
+    <!-- Centralne działo -->
+    <circle cx="0" cy="0" r="20" fill="#219952" stroke="#16773e" stroke-width="2"/>
+    
+    <!-- Lufa snajperska -->
+    <rect x="-5" y="-40" width="10" height="80" fill="#444444" stroke="#333333" stroke-width="2" rx="2" ry="2"/>
+    
+    <!-- Celownik optyczny -->
+    <circle cx="0" cy="0" r="10" fill="#bbbbbb" stroke="#999999" stroke-width="2"/>
+    <circle cx="0" cy="0" r="5" fill="#444444" stroke="#333333" stroke-width="1"/>
+    <line x1="-10" y1="0" x2="10" y2="0" stroke="#444444" stroke-width="1"/>
+    <line x1="0" y1="-10" x2="0" y2="10" stroke="#444444" stroke-width="1"/>
+  </g>
+</svg>

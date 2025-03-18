@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Wieża Magiczna (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień wieży -->
+    <ellipse cx="5" cy="5" rx="55" ry="55" fill="#00000033"/>
+    
+    <!-- Podstawa wieży -->
+    <circle cx="0" cy="0" r="50" fill="#9b59b6" stroke="#8e44ad" stroke-width="2"/>
+    
+    <!-- Wewnętrzna struktura -->
+    <circle cx="0" cy="0" r="35" fill="#b383d3" stroke="#9b59b6" stroke-width="2"/>
+    
+    <!-- Centralna kula mocy -->
+    <circle cx="0" cy="0" r="20" fill="#d7ace4" stroke="#9b59b6" stroke-width="2"/>
+    
+    <!-- Magiczne symbole -->
+    <path d="M0,-5 L5,15 L-15,-5 L15,-5 L-5,15 Z" fill="#ffffff" stroke="#d7ace4" stroke-width="1"/>
+    
+    <!-- Promieniowanie magii -->
+    <circle cx="0" cy="0" r="15" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+    <circle cx="0" cy="0" r="25" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
+    <circle cx="0" cy="0" r="35" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.2"/>
+  </g>
+</svg>

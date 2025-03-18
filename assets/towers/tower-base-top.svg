@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Baza pod Wieże (widok z góry) -->
+  <g transform="translate(100, 100)">
+    <!-- Cień bazy -->
+    <ellipse cx="5" cy="5" rx="75" ry="75" fill="#00000033"/>
+    
+    <!-- Zewnętrzna podstawa -->
+    <circle cx="0" cy="0" r="70" fill="#555555" stroke="#444444" stroke-width="2"/>
+    
+    <!-- Pierwsza warstwa wewnętrzna -->
+    <circle cx="0" cy="0" r="60" fill="#666666" stroke="#555555" stroke-width="2"/>
+    
+    <!-- Platforma montażowa -->
+    <circle cx="0" cy="0" r="50" fill="#777777" stroke="#666666" stroke-width="2"/>
+    
+    <!-- Gniazdo montażowe -->
+    <circle cx="0" cy="0" r="40" fill="#888888" stroke="#777777" stroke-width="2"/>
+    
+    <!-- Elementy mocujące -->
+    <circle cx="0" cy="-55" r="5" fill="#aaaaaa" stroke="#888888" stroke-width="1"/>
+    <circle cx="0" cy="55" r="5" fill="#aaaaaa" stroke="#888888" stroke-width="1"/>
+    <circle cx="-55" cy="0" r="5" fill="#aaaaaa" stroke="#888888" stroke-width="1"/>
+    <circle cx="55" cy="0" r="5" fill="#aaaaaa" stroke="#888888" stroke-width="1"/>
+    
+    <!-- Elementy dekoracyjne -->
+    <circle cx="-38" cy="-38" r="4" fill="#999999" stroke="#888888" stroke-width="1"/>
+    <circle cx="38" cy="-38" r="4" fill="#999999" stroke="#888888" stroke-width="1"/>
+    <circle cx="-38" cy="38" r="4" fill="#999999" stroke="#888888" stroke-width="1"/>
+    <circle cx="38" cy="38" r="4" fill="#999999" stroke="#888888" stroke-width="1"/>
+    
+    <!-- Wzór centralny -->
+    <circle cx="0" cy="0" r="30" fill="none" stroke="#666666" stroke-width="2" stroke-dasharray="5,5"/>
+    <circle cx="0" cy="0" r="20" fill="none" stroke="#666666" stroke-width="2"/>
+    <circle cx="0" cy="0" r="10" fill="#666666" stroke="#555555" stroke-width="1"/>
+  </g>
+</svg>
