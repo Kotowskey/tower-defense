@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmqwnoeo23mwx"]
+[gd_scene load_steps=5 format=3 uid="uid://bmqwnoeo23mwx"]
 
 [ext_resource type="Texture2D" uid="uid://o606x6btsxvb" path="res://assets/menu/godot-menu-background.svg" id="1_p5q33"]
+[ext_resource type="Texture2D" uid="uid://b4c66sov7o72l" path="res://assets/menu/kenny/button_rectangle_depth_flat.png" id="2_wlxha"]
+[ext_resource type="Texture2D" uid="uid://c4etfg62owyda" path="res://assets/menu/kenny/button_rectangle_depth_gradient.png" id="3_eq5so"]
+[ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/menu/kenny/fonts/Kenney Future Narrow.ttf" id="4_xy0mx"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -24,9 +27,76 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -8.0
+offset_right = -8.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="NEW GAME" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_wlxha")
+texture_pressed = ExtResource("3_eq5so")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/NEW GAME"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 14.0
+offset_right = 189.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("4_xy0mx")
+theme_override_font_sizes/font_size = 25
+text = "NEW GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SETTINGS" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_wlxha")
+texture_pressed = ExtResource("3_eq5so")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/SETTINGS"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 14.0
+offset_right = 189.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("4_xy0mx")
+theme_override_font_sizes/font_size = 25
+text = "SETTINGS
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QUIT" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_wlxha")
+texture_pressed = ExtResource("3_eq5so")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/QUIT"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 14.0
+offset_right = 189.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("4_xy0mx")
+theme_override_font_sizes/font_size = 25
+text = "Quit
+"
+horizontal_alignment = 1
+vertical_alignment = 1
