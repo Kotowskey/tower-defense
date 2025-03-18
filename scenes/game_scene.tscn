@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://qik1ytgalcrw"]
+[gd_scene load_steps=6 format=3 uid="uid://qik1ytgalcrw"]
 
+[ext_resource type="Script" path="res://scripts/game_scene.gd" id="1_a5vh6"]
 [ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="1_e6pvo"]
 [ext_resource type="Texture2D" uid="uid://cm00t2us2nyo7" path="res://assets/menu/kenny/button_square_depth_flat.png" id="2_6s7g6"]
 [ext_resource type="Texture2D" uid="uid://wahkuvvwnoe2" path="res://assets/menu/kenny/button_square_depth_gradient.png" id="3_dp1g0"]
 [ext_resource type="Texture2D" uid="uid://cptrtmn7ona11" path="res://assets/towers/basic-tower-top.svg" id="4_rxgyj"]
 
 [node name="GameScene" type="Node2D"]
+script = ExtResource("1_a5vh6")
 
 [node name="Map" parent="." instance=ExtResource("1_e6pvo")]
 
@@ -51,3 +53,8 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_rxgyj")
 expand_mode = 2
+
+[node name="Label" type="Label" parent="UI/HUD"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 500.0
