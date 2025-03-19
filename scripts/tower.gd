@@ -1,13 +1,11 @@
 extends Node2D
-
 var tower_cost = 100
 var tower_range = 300
 var tower_damage = 10
 var tower_fire_rate = 1.0
 var can_fire = true
 var target = null
-
-@onready var detection_area = $DetectionArea
+var detection_area = null  
 
 func _ready():
 	# Utworzenie obszaru wykrywania wrogów
@@ -25,6 +23,9 @@ func _ready():
 		area.connect("body_entered", Callable(self, "_on_detection_area_body_entered"))
 		area.connect("body_exited", Callable(self, "_on_detection_area_body_exited"))
 	
+	
+	detection_area = $DetectionArea
+	
 	# Ustawienie timera do strzelania
 	var timer = Timer.new()
 	timer.name = "FireRateTimer"
@@ -34,7 +35,7 @@ func _ready():
 	timer.connect("timeout", Callable(self, "_on_fire_rate_timer_timeout"))
 	timer.start()
 
-func _process(delta):
+func _process(_delta):
 	if target and weakref(target).get_ref():
 		# Obracanie wieży w kierunku celu
 		var direction = target.global_position - global_position
@@ -51,7 +52,7 @@ func _on_detection_area_body_exited(body):
 	var parent = body.get_parent()
 	if target == parent:
 		target = null
-		# Tutaj można dodać szukanie nowego celu w obszarze
+		# dodać szukanie nowego celu w obszarze
 
 func _on_fire_rate_timer_timeout():
 	if target and weakref(target).get_ref() and can_fire:
