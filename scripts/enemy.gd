@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Node2D
 
 signal enemy_died
 signal enemy_escaped
@@ -8,7 +8,7 @@ var path_follow: PathFollow2D
 var speed = 100
 var max_health = 100
 var current_health = max_health
-var value = 25  
+var value = 25
 
 func _ready():
 	current_health = max_health
