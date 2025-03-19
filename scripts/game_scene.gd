@@ -15,12 +15,31 @@ func _ready():
 		money_label.position = Vector2(20, 20)
 		$UI/HUD.add_child(money_label)
 	
+	set_process_input(true)
 	update_money_ui()
 
 func _process(delta):
 	if building_mode and tower_preview:
 		var mouse_pos = get_global_mouse_position()
 		tower_preview.position = mouse_pos
+
+func _input(event):
+	if not building_mode:
+		return
+	
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var mouse_pos = get_global_mouse_position()
+			
+			if player_money >= 100:
+				place_tower(mouse_pos)
+				player_money -= 100
+				update_money_ui()
+			else:
+				print("Not enough money to place tower")
+		
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			cancel_building()
 
 func _on_tower_button_pressed():
 	print("Tower button pressed")
@@ -33,32 +52,11 @@ func _on_tower_button_pressed():
 	tower_preview.modulate = Color(1, 1, 1, 0.5)
 	add_child(tower_preview)
 
-func _unhandled_input(event):
-	if not building_mode:
-		return
-		
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			var mouse_pos = get_global_mouse_position()
-			if player_money >= 100:
-				place_tower(mouse_pos)
-				player_money -= 100
-				update_money_ui()
-			print("Tower placed at: ", mouse_pos)
-		
-		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			cancel_building()
-			print("Building cancelled")
-
 func place_tower(pos):
 	var new_tower = tower_scene.instantiate()
 	new_tower.position = pos
 	
-	if $Map.has_node("Turrets"):
-		$Map/Turrets.add_child(new_tower)
-	else:
-		$Map.add_child(new_tower)
-	
+	add_child(new_tower)
 	cancel_building()
 
 func cancel_building():
