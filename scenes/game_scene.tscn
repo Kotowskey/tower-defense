@@ -83,7 +83,24 @@ text = "START"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="UI/HUD"]
-layout_mode = 0
-offset_right = 400.0
-offset_bottom = 500.0
+[node name="UserUI" type="VBoxContainer" parent="UI/HUD"]
+custom_minimum_size = Vector2(100, 400)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1921.0
+offset_top = -540.0
+offset_right = -1821.0
+offset_bottom = -140.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="UI/HUD/UserUI"]
+layout_mode = 2
+
+[node name="LivesLabel" type="Label" parent="UI/HUD/UserUI"]
+layout_mode = 2

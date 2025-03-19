@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://cah106dou6wt3"]
+[gd_scene load_steps=6 format=4 uid="uid://cah106dou6wt3"]
 
 [ext_resource type="Script" uid="uid://dk8fb2h31quj7" path="res://scripts/map.gd" id="1_h4gj2"]
 [ext_resource type="Texture2D" uid="uid://63tu3pk2ge74" path="res://assets/tiles/tower-defense-tiles-128.svg" id="1_pgknr"]
-[ext_resource type="PackedScene" uid="uid://cv5v738oij1r1" path="res://scenes/tower.tscn" id="2_l8gyp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a1ht3"]
 texture = ExtResource("1_pgknr")
@@ -62,9 +61,6 @@ tile_map_data = PackedByteArray("AAAOAAAAAQAAAAUAAAAOAAEAAQACAAUAAAAOAAIAAQAAAAU
 tile_set = SubResource("TileSet_hqri8")
 
 [node name="Turrets" type="Node2D" parent="."]
-
-[node name="Tower" parent="Turrets" instance=ExtResource("2_l8gyp")]
-position = Vector2(1478, 441)
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_s2nao")

@@ -3,12 +3,13 @@ extends Node2D
 signal enemy_died
 signal enemy_escaped
 
-var path: Path2D
-var path_follow: PathFollow2D
-var speed = 100
-var max_health = 100
-var current_health = max_health
-var value = 25
+@export var path: Path2D
+@export var path_follow: PathFollow2D
+@export var speed: float = 100
+@export var max_health: int = 100
+@export var value: int = 25
+
+var current_health: int
 
 func _ready():
 	current_health = max_health

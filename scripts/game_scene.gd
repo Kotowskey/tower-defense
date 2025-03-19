@@ -15,22 +15,6 @@ var tower_preview = null
 func _ready():
 	$UI/HUD/BuildUI/Tower.connect("pressed", Callable(self, "_on_tower_button_pressed"))
 
-	# Dodanie etykiety pieniędzy
-	if not $UI/HUD.has_node("MoneyLabel"):
-		var money_label = Label.new()
-		money_label.name = "MoneyLabel"
-		money_label.text = "Money: " + str(player_money)
-		money_label.position = Vector2(20, 20)
-		$UI/HUD.add_child(money_label)
-
-	# Dodanie etykiety żyć
-	if not $UI/HUD.has_node("LivesLabel"):
-		var lives_label = Label.new()
-		lives_label.name = "LivesLabel"
-		lives_label.text = "Lives: " + str(player_lives)
-		lives_label.position = Vector2(20, 50)
-		$UI/HUD.add_child(lives_label)
-
 	# Podłączenie sygnału do istniejącego przycisku w scenie
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.connect("pressed", Callable(self, "_on_spawn_button_pressed"))
@@ -87,12 +71,12 @@ func cancel_building():
 		tower_preview = null
 
 func update_money_ui():
-	if $UI/HUD.has_node("MoneyLabel"):
-		$UI/HUD/MoneyLabel.text = "Money: " + str(player_money)
+	if $UI/HUD/UserUI.has_node("MoneyLabel"):
+		$UI/HUD/UserUI/MoneyLabel.text = "Money: " + str(player_money)
 
 func update_lives_ui():
-	if $UI/HUD.has_node("LivesLabel"):
-		$UI/HUD/LivesLabel.text = "Lives: " + str(player_lives)
+	if $UI/HUD/UserUI.has_node("LivesLabel"):
+		$UI/HUD/UserUI/LivesLabel.text = "Lives: " + str(player_lives)
 
 func spawn_enemy():
 	var enemy = enemy_scene.instantiate()
