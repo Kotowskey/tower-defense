@@ -5,26 +5,25 @@ var tower_damage = 10
 var tower_fire_rate = 1.0
 var can_fire = true
 var target = null
-var detection_area = null  
+var detection_area = null
 
 func _ready():
-	# Utworzenie obszaru wykrywania wrogów
-	if not has_node("DetectionArea"):
-		var area = Area2D.new()
-		area.name = "DetectionArea"
-		add_child(area)
+	# Ładowanie sceny DetectionArea
+	if not has_node("Node2D"):
+		var detection_scene = load("res://scenes/detection_area.tscn")
+		var area_node = detection_scene.instantiate()
+		add_child(area_node)
 		
-		var shape = CollisionShape2D.new()
-		var circle = CircleShape2D.new()
-		circle.radius = tower_range
-		shape.shape = circle
-		area.add_child(shape)
+		# Dostosuj promień do wartości tower_range
+		var area = area_node.get_node("Area2D")
+		var shape = area.get_node("CollisionShape2D").shape
+		shape.radius = tower_range
 		
+		# Podłącz sygnały
 		area.connect("body_entered", Callable(self, "_on_detection_area_body_entered"))
 		area.connect("body_exited", Callable(self, "_on_detection_area_body_exited"))
 	
-	
-	detection_area = $DetectionArea
+	detection_area = $Node2D/Area2D
 	
 	# Ustawienie timera do strzelania
 	var timer = Timer.new()
