@@ -66,20 +66,5 @@ tile_set = SubResource("TileSet_hqri8")
 [node name="Tower" parent="Turrets" instance=ExtResource("2_l8gyp")]
 position = Vector2(1478, 441)
 
-[node name="Tower2" parent="Turrets" instance=ExtResource("2_l8gyp")]
-position = Vector2(1088, 441)
-
-[node name="Tower3" parent="Turrets" instance=ExtResource("2_l8gyp")]
-position = Vector2(1091, 702)
-
-[node name="Tower4" parent="Turrets" instance=ExtResource("2_l8gyp")]
-position = Vector2(321, 702)
-
-[node name="Tower5" parent="Turrets" instance=ExtResource("2_l8gyp")]
-position = Vector2(705, 696)
-
-[node name="Tower6" parent="Turrets" instance=ExtResource("2_l8gyp")]
-position = Vector2(717, 444)
-
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_s2nao")
