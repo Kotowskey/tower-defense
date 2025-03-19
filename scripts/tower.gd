@@ -1,9 +1,11 @@
 extends Node2D
-var tower_cost = 100
-var tower_range = 300
-var tower_damage = 10
-var tower_fire_rate = 1.0
-var can_fire = true
+
+@export var tower_cost: int = 100
+@export var tower_range: float = 300.0
+@export var tower_damage: int = 10
+@export var tower_fire_rate: float = 1.0
+
+var can_fire: bool = true
 var target = null
 var detection_area = null
 
