@@ -23,7 +23,7 @@ func _ready():
 	update_money_ui()
 	update_lives_ui()
 
-func _process(delta):
+func _process(_delta):
 	if building_mode and tower_preview:
 		var mouse_pos = get_global_mouse_position()
 		tower_preview.position = mouse_pos
