@@ -19,6 +19,9 @@ func _ready():
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.connect("pressed", Callable(self, "_on_spawn_button_pressed"))
 
+	# Muzyka w tle
+	$AudioStreamPlayer.play()
+
 	set_process_input(true)
 	update_money_ui()
 	update_lives_ui()
@@ -62,6 +65,8 @@ func place_tower(pos):
 	new_tower.position = pos
 
 	add_child(new_tower)
+	if has_node("TowerCreation"):
+			$TowerCreation.play()
 	cancel_building()
 
 func cancel_building():
@@ -118,3 +123,12 @@ func _on_enemy_escaped():
 
 func _on_spawn_button_pressed():
 	spawn_wave()  # Używa domyślnych wartości z exportowanych zmiennych
+	
+func pause_music():
+	$AudioStreamPlayer.stream_paused = true
+
+func resume_music():
+	$AudioStreamPlayer.stream_paused = false
+
+func stop_music():
+	$AudioStreamPlayer.stop()
