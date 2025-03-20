@@ -15,13 +15,6 @@ run/main_scene="res://scenes/scene_handler.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://bmf1yhmw1gdmj"
 
-[display]
-
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/initial_position_type=2
-window/stretch/mode="viewport"
-
 [dotnet]
 
 project/assembly_name="Tower Defense"
