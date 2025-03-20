@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://qik1ytgalcrw"]
+[gd_scene load_steps=10 format=3 uid="uid://qik1ytgalcrw"]
 
 [ext_resource type="Script" uid="uid://cpxycdxkpcq5w" path="res://scripts/game_scene.gd" id="1_a5vh6"]
 [ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="1_e6pvo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cptrtmn7ona11" path="res://assets/towers/basic-tower-top.svg" id="4_rxgyj"]
 [ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="6_rurhu"]
 [ext_resource type="AudioStream" uid="uid://lbyyry08vxme" path="res://assets/music/Fortress in the Sky.mp3" id="7_kk2rg"]
+[ext_resource type="AudioStream" uid="uid://xlrrxom35fil" path="res://assets/effects/button_2.mp3" id="8_utbpp"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_a5vh6")
@@ -90,6 +91,9 @@ text = "START"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="StartSound" type="AudioStreamPlayer" parent="UI/HUD/BuildUI/SpawnButton"]
+stream = ExtResource("8_utbpp")
+
 [node name="UserUI" type="VBoxContainer" parent="UI/HUD"]
 custom_minimum_size = Vector2(100, 400)
 layout_direction = 1
@@ -106,3 +110,5 @@ layout_mode = 2
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_kk2rg")
+volume_db = -10.0
+parameters/looping = true

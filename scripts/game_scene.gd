@@ -50,7 +50,6 @@ func _input(event):
 			cancel_building()
 
 func _on_tower_button_pressed():
-	print("Tower button pressed")
 	building_mode = true
 
 	if tower_preview:
@@ -122,6 +121,7 @@ func _on_enemy_escaped():
 		# Tu można dodać logikę końca gry
 
 func _on_spawn_button_pressed():
+	$UI/HUD/BuildUI/SpawnButton/StartSound.play()
 	spawn_wave()  # Używa domyślnych wartości z exportowanych zmiennych
 	
 func pause_music():
