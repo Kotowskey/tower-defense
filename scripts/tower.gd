@@ -74,6 +74,10 @@ func fire_at_target():
 		tween.tween_property(line, "modulate", Color(1, 1, 1, 0), 0.2)
 		tween.tween_callback(func(): line.queue_free())
 		
+		# Odtwarzanie dźwięku jeśli istnieje AudioStreamPlayer
+		if has_node("PopSound"):
+			$PopSound.play()
+		
 		# Zadawanie obrażeń
 		var killed = target.take_damage(tower_damage)
 		if killed:

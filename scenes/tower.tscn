@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cv5v738oij1r1"]
+[gd_scene load_steps=4 format=3 uid="uid://cv5v738oij1r1"]
 
 [ext_resource type="Script" uid="uid://bg26d85ppkpdy" path="res://scripts/tower.gd" id="1_wi6yv"]
 [ext_resource type="Texture2D" uid="uid://cptrtmn7ona11" path="res://assets/towers/basic-tower-top.svg" id="1_xjp5q"]
+[ext_resource type="AudioStream" uid="uid://d0vbyq1dpnlvx" path="res://assets/effects/baloon_popping.wav" id="3_ktxwe"]
 
 [node name="Tower" type="Node2D"]
 script = ExtResource("1_wi6yv")
 
 [node name="Basic-tower-top" type="Sprite2D" parent="."]
 texture = ExtResource("1_xjp5q")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ktxwe")
