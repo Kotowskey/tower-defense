@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://qik1ytgalcrw"]
+[gd_scene load_steps=15 format=3 uid="uid://qik1ytgalcrw"]
 
 [ext_resource type="Script" uid="uid://cpxycdxkpcq5w" path="res://scripts/game_scene.gd" id="1_a5vh6"]
 [ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="1_e6pvo"]
@@ -9,6 +9,11 @@
 [ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="6_rurhu"]
 [ext_resource type="AudioStream" uid="uid://lbyyry08vxme" path="res://assets/music/Fortress in the Sky.mp3" id="7_kk2rg"]
 [ext_resource type="AudioStream" uid="uid://xlrrxom35fil" path="res://assets/effects/button_2.mp3" id="8_utbpp"]
+[ext_resource type="Texture2D" uid="uid://xfh0uwvw1cbn" path="res://assets/towers/rocket-tower-top.svg" id="9_5ay1a"]
+[ext_resource type="Texture2D" uid="uid://bsnysfcd5u7va" path="res://assets/towers/ice-tower-top.svg" id="9_rvs2r"]
+[ext_resource type="Texture2D" uid="uid://e1yir2kqkhka" path="res://assets/towers/sniper-tower-top.svg" id="10_ldkr4"]
+[ext_resource type="AudioStream" uid="uid://bo3sq5yuig6i1" path="res://assets/effects/upgrade_sound.mp3" id="10_rp1ui"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="11_wys8v"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_a5vh6")
@@ -18,6 +23,9 @@ wave_delay = 0.4
 
 [node name="TowerCreation" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_b5spy")
+
+[node name="UpgradeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_rp1ui")
 
 [node name="Map" parent="." instance=ExtResource("1_e6pvo")]
 
@@ -32,7 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BuildUI" type="VBoxContainer" parent="UI/HUD"]
-custom_minimum_size = Vector2(100, 400)
+custom_minimum_size = Vector2(100, 500)
 layout_direction = 1
 layout_mode = 1
 anchors_preset = 6
@@ -41,13 +49,13 @@ anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -200.0
-offset_bottom = 200.0
+offset_top = -250.0
+offset_bottom = 250.0
 grow_horizontal = 0
 grow_vertical = 2
 alignment = 1
 
-[node name="Tower" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="TowerBasic" type="TextureButton" parent="UI/HUD/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -55,7 +63,7 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/Tower"]
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerBasic"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,6 +72,149 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_rxgyj")
 expand_mode = 2
+
+[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerBasic"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
+text = "100"
+horizontal_alignment = 1
+
+[node name="TowerArea" type="TextureButton" parent="UI/HUD/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_5ay1a")
+expand_mode = 2
+
+[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerArea"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
+text = "200"
+horizontal_alignment = 1
+
+[node name="TowerSniper" type="TextureButton" parent="UI/HUD/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerSniper"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_ldkr4")
+expand_mode = 2
+
+[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerSniper"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
+text = "300"
+horizontal_alignment = 1
+
+[node name="TowerSlow" type="TextureButton" parent="UI/HUD/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerSlow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_rvs2r")
+expand_mode = 2
+
+[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerSlow"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
+text = "150"
+horizontal_alignment = 1
+
+[node name="Upgrade" type="TextureButton" parent="UI/HUD/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/HUD/BuildUI/Upgrade"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
+text = "Upgrade"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="SpawnButton" type="TextureButton" parent="UI/HUD/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
@@ -87,7 +238,8 @@ layout_mode = 0
 offset_right = 80.0
 offset_bottom = 80.0
 theme_override_fonts/font = ExtResource("6_rurhu")
-text = "START"
+text = "START
+WAVE 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -95,18 +247,130 @@ vertical_alignment = 1
 stream = ExtResource("8_utbpp")
 
 [node name="UserUI" type="VBoxContainer" parent="UI/HUD"]
-custom_minimum_size = Vector2(100, 400)
+custom_minimum_size = Vector2(200, 400)
 layout_direction = 1
 layout_mode = 0
-offset_right = 100.0
+offset_right = 200.0
 offset_bottom = 400.0
 alignment = 1
 
 [node name="MoneyLabel" type="Label" parent="UI/HUD/UserUI"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
+text = "Money: 500"
 
 [node name="LivesLabel" type="Label" parent="UI/HUD/UserUI"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
+text = "Lives: 10"
+
+[node name="WaveLabel" type="Label" parent="UI/HUD/UserUI"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
+text = "Wave: 0"
+
+[node name="PauseMenu" type="Control" parent="UI"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_wys8v")
+
+[node name="Background" type="ColorRect" parent="UI/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.588235)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -125.0
+offset_right = 100.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="PauseLabel" type="Label" parent="UI/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 30
+text = "GAME PAUSED"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="TextureButton" parent="UI/PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/PauseMenu/VBoxContainer/ResumeButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+text = "RESUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="TextureButton" parent="UI/PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/PauseMenu/VBoxContainer/SettingsButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuButton" type="TextureButton" parent="UI/PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/PauseMenu/VBoxContainer/MainMenuButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+text = "MAIN MENU"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_kk2rg")

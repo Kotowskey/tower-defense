@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb8xxxrvk83wy"]
+
+[ext_resource type="Script" uid="uid://bg26d85ppkpdy" path="res://scripts/tower.gd" id="1_p12u7"]
+[ext_resource type="Texture2D" uid="uid://e1yir2kqkhka" path="res://assets/towers/sniper-tower-top.svg" id="5_u302f"]
+[ext_resource type="AudioStream" uid="uid://d0vbyq1dpnlvx" path="res://assets/effects/baloon_popping.wav" id="6_7pupf"]
+
+[node name="Tower" type="Node2D"]
+script = ExtResource("1_p12u7")
+
+[node name="Sniper-tower-top" type="Sprite2D" parent="."]
+texture = ExtResource("5_u302f")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_7pupf")

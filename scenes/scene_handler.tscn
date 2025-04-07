@@ -7,3 +7,4 @@
 script = ExtResource("1_0p1ja")
 
 [node name="Menu" parent="." instance=ExtResource("1_qdltj")]
+script = null
