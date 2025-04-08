@@ -159,18 +159,25 @@ func cancel_building():
 		tower_preview = null
 
 func select_tower_at_position(pos):
+	var currently_selected = null
+	if selected_tower:
+		currently_selected = selected_tower.get_ref()
+	
+	deselect_tower()
+	
 	for tower in get_tree().get_nodes_in_group("towers"):
 		var tower_size = 64
 		var tower_rect = Rect2(tower.position - Vector2(tower_size/2.0, tower_size/2.0), 
 							  Vector2(tower_size, tower_size))
 		
 		if tower_rect.has_point(pos):
-			deselect_tower()
+			if currently_selected == tower:
+				return
+			
 			selected_tower = weakref(tower)
 			tower.show_range(true)
 			return
 	
-	deselect_tower()
 
 func deselect_tower():
 	if selected_tower and selected_tower.get_ref():

@@ -214,6 +214,9 @@ func upgrade():
 	if has_node("Node2D/Area2D/CollisionShape2D"):
 		$Node2D/Area2D/CollisionShape2D.shape.radius = tower_range
 	
+	if has_node("RangeIndicator"):
+		$RangeIndicator.set_range(tower_range)
+	
 	return tower_cost * tower_level
 
 func show_range(display_range = true):
