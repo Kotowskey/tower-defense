@@ -22,28 +22,20 @@ func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/SETTINGS"):
 		get_node("Menu/MarginContainer/VBoxContainer/SETTINGS").connect("pressed", Callable(self, "on_settings_pressed"))
 	
-	# Przyciski poziomu trudności - podłącz je tylko jeśli menu trudności istnieje
+	# Podłączanie sygnałów z menu trudności
 	if has_node("DifficultyMenu"):
-		if has_node("DifficultyMenu/VBoxContainer/EASY"):
-			get_node("DifficultyMenu/VBoxContainer/EASY").connect("pressed", Callable(self, "on_easy_pressed"))
+		$DifficultyMenu.connect("difficulty_selected", Callable(self, "on_difficulty_selected"))
+		$DifficultyMenu.connect("back_pressed", Callable(self, "on_diff_back_pressed"))
 		
-		if has_node("DifficultyMenu/VBoxContainer/NORMAL"):
-			get_node("DifficultyMenu/VBoxContainer/NORMAL").connect("pressed", Callable(self, "on_normal_pressed"))
-		
-		if has_node("DifficultyMenu/VBoxContainer/HARD"):
-			get_node("DifficultyMenu/VBoxContainer/HARD").connect("pressed", Callable(self, "on_hard_pressed"))
-		
-		if has_node("DifficultyMenu/VBoxContainer/BACK"):
-			get_node("DifficultyMenu/VBoxContainer/BACK").connect("pressed", Callable(self, "on_diff_back_pressed"))
-		
-		get_node("DifficultyMenu").hide()
+		# Ukryj menu trudności na początku
+		$DifficultyMenu.hide()
 	
 func on_new_game_pressed():
 	if has_node("Menu"):
-		get_node("Menu").hide()
+		$Menu.hide()
 	
 	if has_node("DifficultyMenu"):
-		get_node("DifficultyMenu").show()
+		$DifficultyMenu.show()
 	else:
 		start_game()
 
@@ -53,35 +45,25 @@ func on_settings_pressed():
 func on_quit_pressed():
 	get_tree().quit()
 
-func on_easy_pressed():
+func on_difficulty_selected(difficulty):
 	if has_node("/root/DifficultyManager"):
-		get_node("/root/DifficultyManager").set_difficulty(0) # EASY
-	start_game()
-
-func on_normal_pressed():
-	if has_node("/root/DifficultyManager"):
-		get_node("/root/DifficultyManager").set_difficulty(1) # NORMAL
-	start_game()
-
-func on_hard_pressed():
-	if has_node("/root/DifficultyManager"):
-		get_node("/root/DifficultyManager").set_difficulty(2) # HARD
+		get_node("/root/DifficultyManager").set_difficulty(difficulty)
 	start_game()
 
 func on_diff_back_pressed():
 	if has_node("DifficultyMenu"):
-		get_node("DifficultyMenu").hide()
+		$DifficultyMenu.hide()
 	
 	if has_node("Menu"):
-		get_node("Menu").show()
+		$Menu.show()
 
 func start_game():
 	# Usuń menu
 	if has_node("DifficultyMenu"):
-		get_node("DifficultyMenu").queue_free()
+		$DifficultyMenu.queue_free()
 	
 	if has_node("Menu"):
-		get_node("Menu").queue_free()
+		$Menu.queue_free()
 	
 	var game_scene = load("res://scenes/game_scene.tscn").instantiate()
 	
