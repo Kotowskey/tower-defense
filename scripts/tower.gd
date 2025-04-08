@@ -166,15 +166,6 @@ func fire_at_target(enemy_target):
 			if tower_type != 1:
 				target = null
 
-class TowerAreaEffect extends Node2D:
-	var range_value = 0.0
-	
-	func _init(range_val):
-		range_value = range_val
-	
-	func _draw():
-		draw_circle(Vector2.ZERO, range_value, Color(1, 0.5, 0, 0.3))
-
 func fire_at_all_targets():
 	var valid_targets = []
 	
@@ -185,7 +176,9 @@ func fire_at_all_targets():
 	targets = valid_targets
 	
 	if targets.size() > 0 and can_fire:
-		var effect = TowerAreaEffect.new(tower_range)
+		var effect_scene = load("res://scenes/tower_area_effect.tscn")
+		var effect = effect_scene.instantiate()
+		effect.set_range(tower_range)
 		add_child(effect)
 		
 		var tween = create_tween()
@@ -223,21 +216,13 @@ func upgrade():
 	
 	return tower_cost * tower_level
 
-class RangeIndicator extends Node2D:
-	var range_value = 0.0
-	
-	func _init(range_val):
-		range_value = range_val
-	
-	func _draw():
-		draw_circle(Vector2.ZERO, range_value, Color(0.5, 0.5, 1.0, 0.2))
-		draw_arc(Vector2.ZERO, range_value, 0, 2*PI, 32, Color(0.5, 0.5, 1.0, 0.5), 2.0)
-
 func show_range(show = true):
 	if has_node("RangeIndicator"):
 		$RangeIndicator.queue_free()
 	
 	if show:
-		var indicator = RangeIndicator.new(tower_range)
+		var range_indicator_scene = load("res://scenes/range_indicator.tscn")
+		var indicator = range_indicator_scene.instantiate()
 		indicator.name = "RangeIndicator"
+		indicator.set_range(tower_range)
 		add_child(indicator)

@@ -273,16 +273,11 @@ func end_wave():
 		if $UI/HUD/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildUI/SpawnButton/Image.has_node("Label"):
 			$UI/HUD/BuildUI/SpawnButton/Image/Label.text = "START\nWAVE " + str(current_wave + 1)
 	
-	var wave_completed_label = Label.new()
-	wave_completed_label.text = "Wave " + str(current_wave) + " Completed!\n+" + str(wave_reward) + " Money"
-	wave_completed_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	wave_completed_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	wave_completed_label.position = Vector2(get_viewport_rect().size.x / 2 - 100, get_viewport_rect().size.y / 2 - 50)
-	$UI/HUD.add_child(wave_completed_label)
-	
-	var tween = create_tween()
-	tween.tween_property(wave_completed_label, "modulate", Color(1, 1, 1, 0), 2.0)
-	tween.tween_callback(func(): wave_completed_label.queue_free())
+	var wave_completed_scene = load("res://scenes/wave_completed.tscn")
+	var wave_completed = wave_completed_scene.instantiate()
+	wave_completed.set_wave_info(current_wave, wave_reward)
+	wave_completed.position = Vector2(get_viewport_rect().size.x / 2 - 100, get_viewport_rect().size.y / 2 - 50)
+	$UI/HUD.add_child(wave_completed)
 
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_enemies):
@@ -327,44 +322,13 @@ func _on_enemy_escaped():
 func game_over():
 	get_tree().paused = true
 	
-	var game_over_screen = Control.new()
-	game_over_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
-	game_over_screen.mouse_filter = Control.MOUSE_FILTER_STOP
-	game_over_screen.process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	var background = ColorRect.new()
-	background.set_anchors_preset(Control.PRESET_FULL_RECT)
-	background.color = Color(0, 0, 0, 0.7)
-	game_over_screen.add_child(background)
-	
-	var vbox = VBoxContainer.new()
-	vbox.set_anchors_preset(Control.PRESET_CENTER)
-	vbox.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	vbox.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	vbox.add_theme_constant_override("separation", 20)
-	game_over_screen.add_child(vbox)
-	
-	var label = Label.new()
-	label.text = "GAME OVER\nYou survived " + str(current_wave) + " waves!"
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.add_theme_font_size_override("font_size", 40)
-	vbox.add_child(label)
-	
-	var restart_button = Button.new()
-	restart_button.text = "RESTART"
-	restart_button.custom_minimum_size = Vector2(150, 50)
-	restart_button.connect("pressed", Callable(self, "_on_restart_pressed"))
-	vbox.add_child(restart_button)
-	
-	var menu_button = Button.new()
-	menu_button.text = "MAIN MENU"
-	menu_button.custom_minimum_size = Vector2(150, 50)
-	menu_button.connect("pressed", Callable(self, "_on_main_menu_pressed"))
-	vbox.add_child(menu_button)
+	var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
+	var game_over_screen = game_over_screen_scene.instantiate()
+	game_over_screen.set_wave_count(current_wave)
+	game_over_screen.connect("restart_pressed", Callable(self, "_on_restart_pressed"))
+	game_over_screen.connect("main_menu_pressed", Callable(self, "_on_main_menu_pressed"))
 	
 	$UI.add_child(game_over_screen)
-	
 	$AudioStreamPlayer.volume_db = -20.0
 
 func _on_restart_pressed():
