@@ -4,7 +4,6 @@ signal difficulty_selected(level)
 signal back_pressed
 
 func _ready():
-	# Podłączanie przycisków
 	$VBoxContainer/EASY.connect("pressed", Callable(self, "_on_easy_pressed"))
 	$VBoxContainer/NORMAL.connect("pressed", Callable(self, "_on_normal_pressed"))
 	$VBoxContainer/HARD.connect("pressed", Callable(self, "_on_hard_pressed"))

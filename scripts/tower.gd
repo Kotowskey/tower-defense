@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var tower_type: int = 0 # Typ wieży (0=Basic, 1=Rocket, 2=Sniper, 3=Ice)
+@export var tower_type: int = 0 
 @export var tower_level: int = 1 
 
 @export var tower_cost: int = 100
@@ -28,7 +28,7 @@ func _ready():
 		var shape = area.get_node("CollisionShape2D").shape
 		shape.radius = tower_range
 		
-		if tower_type == 1: # Rocket Tower
+		if tower_type == 1:
 			area.connect("body_entered", Callable(self, "_on_detection_area_body_entered_area"))
 			area.connect("body_exited", Callable(self, "_on_detection_area_body_exited_area"))
 		else:
@@ -37,25 +37,26 @@ func _ready():
 	
 	detection_area = $Node2D/Area2D
 	
-	# Timera do strzelania
 	var timer = Timer.new()
 	timer.name = "FireRateTimer"
 	timer.wait_time = tower_fire_rate
 	timer.one_shot = false
 	add_child(timer)
 	timer.connect("timeout", Callable(self, "_on_fire_rate_timer_timeout"))
+	
+	await get_tree().process_frame
 	timer.start()
 
 func setup_tower_properties():
 	match tower_type:
-		0: # Basic Tower
+		0:
 			tower_name = "Basic Tower"
 			tower_cost = 100
 			tower_range = 300.0
 			tower_damage = 10
 			tower_fire_rate = 1.0
 		
-		1: # Rocket Tower
+		1:
 			tower_name = "Rocket Tower"
 			tower_cost = 200
 			tower_range = 250.0
@@ -67,7 +68,7 @@ func setup_tower_properties():
 				if texture:
 					$"Basic-tower-top".texture = texture
 		
-		2: # Sniper Tower
+		2:
 			tower_name = "Sniper Tower"
 			tower_cost = 300
 			tower_range = 500.0
@@ -79,7 +80,7 @@ func setup_tower_properties():
 				if texture:
 					$"Basic-tower-top".texture = texture
 		
-		3: # Ice Tower
+		3:
 			tower_name = "Ice Tower"
 			tower_cost = 150
 			tower_range = 250.0
@@ -94,25 +95,21 @@ func setup_tower_properties():
 					$"Basic-tower-top".texture = texture
 
 func _process(_delta):
-	if tower_type == 1: # Area Tower
-		pass # Wieża obszarowa nie obraca się
+	if tower_type == 1:
+		pass
 	elif target and weakref(target).get_ref():
-		# Obracanie wieży w kierunku celu
 		var direction = target.global_position - global_position
 		$"Basic-tower-top".rotation = direction.angle() + PI/2
 
 func _on_detection_area_body_entered(body):
-	# Sprawdzenie czy to wróg
 	var parent = body.get_parent()
 	if parent.has_method("take_damage") and not target:
 		target = parent
 
 func _on_detection_area_body_exited(body):
-	# Sprawdzenie czy to aktualny cel
 	var parent = body.get_parent()
 	if target == parent:
 		target = null
-		# Szukanie nowego celu w obszarze
 		if detection_area:
 			var bodies = detection_area.get_overlapping_bodies()
 			for b in bodies:
@@ -122,42 +119,37 @@ func _on_detection_area_body_exited(body):
 					break
 
 func _on_detection_area_body_entered_area(body):
-	# Dla wieży obszarowej dodajemy wszystkie cele do listy
 	var parent = body.get_parent()
 	if parent.has_method("take_damage") and not targets.has(parent):
 		targets.append(parent)
 
 func _on_detection_area_body_exited_area(body):
-	# Dla wieży obszarowej usuwamy cel z listy
 	var parent = body.get_parent()
 	if targets.has(parent):
 		targets.erase(parent)
 
 func _on_fire_rate_timer_timeout():
-	if tower_type == 1: # Area Tower
+	if tower_type == 1:
 		fire_at_all_targets()
 	elif target and weakref(target).get_ref() and can_fire:
 		fire_at_target(target)
 
 func fire_at_target(enemy_target):
 	if enemy_target.has_method("take_damage"):
-		# Efekt wizualny strzału
 		var line = Line2D.new()
 		line.width = 2
 		
-		# Różne kolory dla różnych typów wież
-		if tower_type == 2: # Sniper Tower
-			line.default_color = Color(0, 0, 1)  # Niebieska linia
-		elif tower_type == 3: # Ice Tower
-			line.default_color = Color(0, 1, 1)  # Cyjanowa linia
+		if tower_type == 2:
+			line.default_color = Color(0, 0, 1)
+		elif tower_type == 3:
+			line.default_color = Color(0, 1, 1)
 		else:
-			line.default_color = Color(1, 0, 0)  # Czerwona linia
+			line.default_color = Color(1, 0, 0)
 			
 		line.add_point(Vector2.ZERO)
 		line.add_point(enemy_target.global_position - global_position)
 		add_child(line)
 		
-		# Animacja znikania linii
 		var tween = create_tween()
 		tween.tween_property(line, "modulate", Color(1, 1, 1, 0), 0.2)
 		tween.tween_callback(func(): line.queue_free())
@@ -165,22 +157,27 @@ func fire_at_target(enemy_target):
 		if has_node("PopSound"):
 			$PopSound.play()
 		
-		# Zadawanie obrażeń
 		var killed = enemy_target.take_damage(tower_damage)
 		
-		# Dla wieży spowalniającej
 		if tower_type == 3 and enemy_target.has_method("apply_slow"):
 			enemy_target.apply_slow(slow_factor, slow_duration)
 			
 		if killed:
-			if tower_type != 1: # Nie dotyczy wieży obszarowej
+			if tower_type != 1:
 				target = null
 
+class TowerAreaEffect extends Node2D:
+	var range_value = 0.0
+	
+	func _init(range_val):
+		range_value = range_val
+	
+	func _draw():
+		draw_circle(Vector2.ZERO, range_value, Color(1, 0.5, 0, 0.3))
+
 func fire_at_all_targets():
-	# Dla wieży obszarowej - strzelamy do wszystkich celów w zasięgu
 	var valid_targets = []
 	
-	# Sprawdzenie, które cele są nadal ważne
 	for t in targets:
 		if weakref(t).get_ref():
 			valid_targets.append(t)
@@ -188,76 +185,59 @@ func fire_at_all_targets():
 	targets = valid_targets
 	
 	if targets.size() > 0 and can_fire:
-		# Efekt wizualny strzału obszarowego
-		var circle = Node2D.new()
-		add_child(circle)
+		var effect = TowerAreaEffect.new(tower_range)
+		add_child(effect)
 		
 		var tween = create_tween()
-		tween.tween_callback(func():
-			var draw_circle = func():
-				var visual_effect = Node2D.new()
-				visual_effect.draw.connect(func():
-					draw_circle(Vector2.ZERO, tower_range, Color(1, 0.5, 0, 0.3))
-				)
-				circle.add_child(visual_effect)
-				
-				var inner_tween = create_tween()
-				inner_tween.tween_property(visual_effect, "modulate", Color(1, 1, 1, 0), 0.3)
-				inner_tween.tween_callback(func(): visual_effect.queue_free())
-			draw_circle.call()
-		)
+		tween.tween_property(effect, "modulate", Color(1, 1, 1, 0), 0.3)
+		tween.tween_callback(func(): effect.queue_free())
 		
 		if has_node("PopSound"):
 			$PopSound.play()
 		
-		# Zadawanie obrażeń wszystkim celom
 		for t in targets:
 			if t.has_method("take_damage"):
 				t.take_damage(tower_damage)
 
-# Funkcja do ulepszania wieży
 func upgrade():
 	tower_level += 1
 	
-	# Zwiększamy statystyki w zależności od typu wieży
 	match tower_type:
-		0: # Basic Tower
+		0:
 			tower_damage += 5
 			tower_fire_rate *= 0.9
-		1: # Rocket Tower
+		1:
 			tower_damage += 2
 			tower_range += 25
-		2: # Sniper Tower
+		2:
 			tower_damage += 15
-		3: # Ice Tower
+		3:
 			slow_factor -= 0.1
 			slow_duration += 0.5
 	
-	# Aktualizacja parametrów timera
 	if has_node("FireRateTimer"):
 		$FireRateTimer.wait_time = tower_fire_rate
 	
-	# Aktualizacja zasięgu
 	if has_node("Node2D/Area2D/CollisionShape2D"):
 		$Node2D/Area2D/CollisionShape2D.shape.radius = tower_range
 	
-	# Zwracamy koszt ulepszenia (rośnie z poziomem)
 	return tower_cost * tower_level
 
-# Funkcja do pokazywania zasięgu wieży
+class RangeIndicator extends Node2D:
+	var range_value = 0.0
+	
+	func _init(range_val):
+		range_value = range_val
+	
+	func _draw():
+		draw_circle(Vector2.ZERO, range_value, Color(0.5, 0.5, 1.0, 0.2))
+		draw_arc(Vector2.ZERO, range_value, 0, 2*PI, 32, Color(0.5, 0.5, 1.0, 0.5), 2.0)
+
 func show_range(show = true):
 	if has_node("RangeIndicator"):
 		$RangeIndicator.queue_free()
 	
 	if show:
-		var indicator = Node2D.new()
+		var indicator = RangeIndicator.new(tower_range)
 		indicator.name = "RangeIndicator"
 		add_child(indicator)
-		
-		# Tworzymy prosty okrąg wizualny
-		var visual = Node2D.new()
-		visual.draw.connect(func():
-			draw_circle(Vector2.ZERO, tower_range, Color(0.5, 0.5, 1.0, 0.2))
-			draw_arc(Vector2.ZERO, tower_range, 0, 2*PI, 32, Color(0.5, 0.5, 1.0, 0.5), 2.0)
-		)
-		indicator.add_child(visual)

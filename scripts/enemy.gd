@@ -1,17 +1,14 @@
 extends Node2D
 
-# Sygnały
 signal enemy_died
 signal enemy_escaped
 
-# Exporty
 @export var path: Path2D
 @export var path_follow: PathFollow2D
 @export var speed: float = 100
 @export var max_health: int = 100
 @export var value: int = 25
 
-# Zmienne
 var current_health: int
 var current_speed: float
 var slow_factor: float = 1.0
@@ -21,7 +18,6 @@ func _ready():
 	current_health = max_health
 	current_speed = speed
 	
-	# Timer do obsługi efektu spowolnienia
 	slow_timer = Timer.new()
 	slow_timer.one_shot = true
 	add_child(slow_timer)
@@ -48,11 +44,9 @@ func apply_slow(factor, duration):
 	slow_factor = min(slow_factor, factor) 
 	current_speed = speed * slow_factor
 	
-	# Timer do przywrócenia normalnej prędkości
 	slow_timer.wait_time = duration
 	slow_timer.start()
 	
-	# Efekt wizualny spowolnienia
 	$CharacterBody2D/Sprite2D.modulate = Color(0.5, 0.5, 1)
 
 func _on_slow_timer_timeout():

@@ -1,6 +1,5 @@
 extends Node2D
 
-# Exporty
 @export var tower_scene: PackedScene = preload("res://scenes/tower.tscn")
 @export var enemy_scene: PackedScene = preload("res://scenes/enemy.tscn")
 @export var building_mode: bool = false
@@ -11,7 +10,6 @@ extends Node2D
 @export var wave_size: int = 5
 @export var wave_delay: float = 1.0
 
-# Zmienne
 var tower_preview = null
 var current_tower_type = 0
 var selected_tower = null
@@ -23,7 +21,6 @@ var enemies_spawned = 0
 var enemies_to_kill = 0
 
 func _ready():
-	# Przyciski budowania wież
 	if $UI/HUD/BuildUI.has_node("TowerBasic"):
 		$UI/HUD/BuildUI/TowerBasic.connect("pressed", Callable(self, "_on_tower_basic_pressed"))
 	
@@ -42,7 +39,6 @@ func _ready():
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.connect("pressed", Callable(self, "_on_spawn_button_pressed"))
 
-	# Muzyka w tle
 	$AudioStreamPlayer.play()
 
 	set_process_input(true)
@@ -50,11 +46,9 @@ func _ready():
 	update_lives_ui()
 	update_upgrade_ui()
 	
-	# Tekst przycisku startu fali
 	if $UI/HUD/BuildUI.has_node("SpawnButton") and $UI/HUD/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildUI/SpawnButton/Image.has_node("Label"):
 		$UI/HUD/BuildUI/SpawnButton/Image/Label.text = "START\nWAVE 1"
 	
-	# Etykiety fal
 	if $UI/HUD/UserUI.has_node("WaveLabel"):
 		$UI/HUD/UserUI/WaveLabel.text = "Wave: 0"
 
@@ -63,7 +57,6 @@ func _process(_delta):
 		var mouse_pos = get_global_mouse_position()
 		tower_preview.position = mouse_pos
 	
-	# Aktualizacja stanu przycisku ulepszania
 	if selected_tower:
 		var tower_node = selected_tower.get_ref()
 		if tower_node:
@@ -84,12 +77,11 @@ func _input(event):
 				var mouse_pos = get_global_mouse_position()
 				var tower_cost = 0
 				
-				# Koszt wieży na podstawie typu
 				match current_tower_type:
-					0: tower_cost = 100 # Basic Tower
-					1: tower_cost = 200 # Area Tower
-					2: tower_cost = 300 # Sniper Tower
-					3: tower_cost = 150 # Slow Tower
+					0: tower_cost = 100
+					1: tower_cost = 200
+					2: tower_cost = 300
+					3: tower_cost = 150
 				
 				if player_money >= tower_cost:
 					place_tower(mouse_pos)
@@ -98,7 +90,6 @@ func _input(event):
 				else:
 					print("Not enough money to place tower")
 			else:
-				# Wybieranie wieży do ulepszenia
 				var mouse_pos = get_global_mouse_position()
 				select_tower_at_position(mouse_pos)
 		
@@ -122,16 +113,16 @@ func toggle_pause_menu():
 		pause_music()
 
 func _on_tower_basic_pressed():
-	start_tower_placement(0) # Basic Tower
+	start_tower_placement(0)
 
 func _on_tower_area_pressed():
-	start_tower_placement(1) # Rocket Tower
+	start_tower_placement(1)
 
 func _on_tower_sniper_pressed():
-	start_tower_placement(2) # Sniper Tower
+	start_tower_placement(2)
 
 func _on_tower_slow_pressed():
-	start_tower_placement(3) # Slow Tower
+	start_tower_placement(3)
 
 func start_tower_placement(tower_type):
 	current_tower_type = tower_type
@@ -143,11 +134,12 @@ func start_tower_placement(tower_type):
 
 	tower_preview = tower_scene.instantiate()
 	tower_preview.tower_type = tower_type
-	tower_preview.modulate = Color(1, 1, 1, 0.5)
-	
-	tower_preview._ready()
 	
 	add_child(tower_preview)
+	
+	await get_tree().process_frame
+	
+	tower_preview.modulate = Color(1, 1, 1, 0.5)
 
 func place_tower(pos):
 	var new_tower = tower_scene.instantiate()
@@ -168,7 +160,7 @@ func cancel_building():
 
 func select_tower_at_position(pos):
 	for tower in get_tree().get_nodes_in_group("towers"):
-		var tower_size = 64 # Przybliżony rozmiar wieży
+		var tower_size = 64
 		var tower_rect = Rect2(tower.position - Vector2(tower_size/2, tower_size/2), 
 							  Vector2(tower_size, tower_size))
 		
@@ -195,7 +187,6 @@ func _on_upgrade_pressed():
 			var new_cost = tower.upgrade()
 			upgrade_cost = new_cost
 			update_money_ui()
-			# Efekt ulepszenia
 			if has_node("UpgradeSound"):
 				$UpgradeSound.play()
 		else:
@@ -219,7 +210,6 @@ func update_upgrade_ui():
 			upgrade_button.disabled = true
 			upgrade_button.modulate = Color(0.5, 0.5, 0.5, 1)
 		
-		# Aktualizacja tekstu kosztu ulepszenia
 		if upgrade_button.has_node("Label"):
 			if can_upgrade:
 				upgrade_button.get_node("Label").text = "Upgrade\n" + str(upgrade_cost)
@@ -240,16 +230,14 @@ func _on_spawn_button_pressed():
 func start_wave():
 	wave_in_progress = true
 	enemies_spawned = 0
-	enemies_to_kill = wave_size + (current_wave * 2) # Więcej wrogów z każdą falą
+	enemies_to_kill = wave_size + (current_wave * 2)
 	
-	# Aktualizacja przycisku fali
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.disabled = true
 		$UI/HUD/BuildUI/SpawnButton.modulate = Color(0.5, 0.5, 0.5, 1)
 		if $UI/HUD/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildUI/SpawnButton/Image.has_node("Label"):
 			$UI/HUD/BuildUI/SpawnButton/Image/Label.text = "IN\nPROGRESS"
 	
-	# Timer do śledzenia zakończenia fali
 	var wave_timer = Timer.new()
 	wave_timer.wait_time = 1.0
 	wave_timer.autostart = true
@@ -257,16 +245,14 @@ func start_wave():
 	add_child(wave_timer)
 	wave_timer.connect("timeout", Callable(self, "_on_wave_timer_timeout"))
 	
-	# Obliczanie statystyki wrogów w oparciu o numer fali
 	var enemy_health_multiplier = 1.0 + (current_wave * 0.2)
 	var enemy_speed_multiplier = 1.0 + (current_wave * 0.05)
 	var spawn_delay = wave_delay * (1.0 - (current_wave * 0.02))
-	spawn_delay = max(0.2, spawn_delay) # Minimalne opóźnienie spawnu
+	spawn_delay = max(0.2, spawn_delay)
 	
 	spawn_wave(enemies_to_kill, spawn_delay, enemy_health_multiplier, enemy_speed_multiplier)
 
 func _on_wave_timer_timeout():
-	# Sprawdzenie czy wszyscy wrogowie zostali zabici lub uciekli
 	var enemies_remaining = get_tree().get_nodes_in_group("enemies").size()
 	
 	if enemies_remaining == 0 and enemies_spawned >= enemies_to_kill:
@@ -277,19 +263,16 @@ func _on_wave_timer_timeout():
 func end_wave():
 	wave_in_progress = false
 	
-	# Nagroda za ukończenie fali
 	var wave_reward = 100 + (current_wave * 20)
 	player_money += wave_reward
 	update_money_ui()
 	
-	# Aktualizacja przycisku fali
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.disabled = false
 		$UI/HUD/BuildUI/SpawnButton.modulate = Color(1, 1, 1, 1)
 		if $UI/HUD/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildUI/SpawnButton/Image.has_node("Label"):
 			$UI/HUD/BuildUI/SpawnButton/Image/Label.text = "START\nWAVE " + str(current_wave + 1)
 	
-	# Kkomunikat o zakończeniu fali
 	var wave_completed_label = Label.new()
 	wave_completed_label.text = "Wave " + str(current_wave) + " Completed!\n+" + str(wave_reward) + " Money"
 	wave_completed_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -297,14 +280,12 @@ func end_wave():
 	wave_completed_label.position = Vector2(get_viewport_rect().size.x / 2 - 100, get_viewport_rect().size.y / 2 - 50)
 	$UI/HUD.add_child(wave_completed_label)
 	
-	# Animacja komunikatu
 	var tween = create_tween()
 	tween.tween_property(wave_completed_label, "modulate", Color(1, 1, 1, 0), 2.0)
 	tween.tween_callback(func(): wave_completed_label.queue_free())
 
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_enemies):
-		# Użycie timera do opóźnienia spawnu
 		var timer = get_tree().create_timer(i * delay)
 		timer.timeout.connect(func(): 
 			spawn_enemy(health_mult, speed_mult)
@@ -344,10 +325,8 @@ func _on_enemy_escaped():
 		game_over()
 
 func game_over():
-	# Pauza gry
 	get_tree().paused = true
 	
-	# Ekran końca gry
 	var game_over_screen = Control.new()
 	game_over_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
 	game_over_screen.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -386,16 +365,13 @@ func game_over():
 	
 	$UI.add_child(game_over_screen)
 	
-	# Wyciszenie muzyki
 	$AudioStreamPlayer.volume_db = -20.0
 
 func _on_restart_pressed():
-	# Restart gry
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 func _on_main_menu_pressed():
-	# Powrót do menu głównego
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/scene_handler.tscn")
 

@@ -1,11 +1,9 @@
 extends Node
 
-# Poziomy trudności
 enum Difficulty {EASY, NORMAL, HARD}
 
 var current_difficulty = Difficulty.NORMAL
 
-# Mnożniki trudności
 var difficulty_multipliers = {
 	Difficulty.EASY: {
 		"enemy_health": 0.7,

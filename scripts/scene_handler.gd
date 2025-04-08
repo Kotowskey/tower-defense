@@ -22,12 +22,10 @@ func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/SETTINGS"):
 		get_node("Menu/MarginContainer/VBoxContainer/SETTINGS").connect("pressed", Callable(self, "on_settings_pressed"))
 	
-	# Podłączanie sygnałów z menu trudności
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.connect("difficulty_selected", Callable(self, "on_difficulty_selected"))
 		$DifficultyMenu.connect("back_pressed", Callable(self, "on_diff_back_pressed"))
 		
-		# Ukryj menu trudności na początku
 		$DifficultyMenu.hide()
 	
 func on_new_game_pressed():
@@ -58,7 +56,6 @@ func on_diff_back_pressed():
 		$Menu.show()
 
 func start_game():
-	# Usuń menu
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.queue_free()
 	
