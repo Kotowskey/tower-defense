@@ -75,17 +75,17 @@ func _input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if building_mode:
 				var mouse_pos = get_global_mouse_position()
-				var tower_cost = 0
+				var selected_tower_cost = 0
 				
 				match current_tower_type:
-					0: tower_cost = 100
-					1: tower_cost = 200
-					2: tower_cost = 300
-					3: tower_cost = 150
+					0: selected_tower_cost = 100
+					1: selected_tower_cost = 200
+					2: selected_tower_cost = 300
+					3: selected_tower_cost = 150
 				
-				if player_money >= tower_cost:
+				if player_money >= selected_tower_cost:
 					place_tower(mouse_pos)
-					player_money -= tower_cost
+					player_money -= selected_tower_cost
 					update_money_ui()
 				else:
 					print("Not enough money to place tower")
@@ -161,7 +161,7 @@ func cancel_building():
 func select_tower_at_position(pos):
 	for tower in get_tree().get_nodes_in_group("towers"):
 		var tower_size = 64
-		var tower_rect = Rect2(tower.position - Vector2(tower_size/2, tower_size/2), 
+		var tower_rect = Rect2(tower.position - Vector2(tower_size/2.0, tower_size/2.0), 
 							  Vector2(tower_size, tower_size))
 		
 		if tower_rect.has_point(pos):
@@ -276,7 +276,7 @@ func end_wave():
 	var wave_completed_scene = load("res://scenes/wave_completed.tscn")
 	var wave_completed = wave_completed_scene.instantiate()
 	wave_completed.set_wave_info(current_wave, wave_reward)
-	wave_completed.position = Vector2(get_viewport_rect().size.x / 2 - 100, get_viewport_rect().size.y / 2 - 50)
+	wave_completed.position = Vector2(get_viewport_rect().size.x / 2.0 - 100, get_viewport_rect().size.y / 2.0 - 50)
 	$UI/HUD.add_child(wave_completed)
 
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):

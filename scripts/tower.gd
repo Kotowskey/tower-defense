@@ -216,11 +216,11 @@ func upgrade():
 	
 	return tower_cost * tower_level
 
-func show_range(show = true):
+func show_range(display_range = true):
 	if has_node("RangeIndicator"):
 		$RangeIndicator.queue_free()
 	
-	if show:
+	if display_range:
 		var range_indicator_scene = load("res://scenes/range_indicator.tscn")
 		var indicator = range_indicator_scene.instantiate()
 		indicator.name = "RangeIndicator"
