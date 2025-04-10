@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://dy64urtu8d0n3"]
 
-[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_8h3e2"]
+[ext_resource type="Script" uid="uid://d3gsoi0pmri0r" path="res://scripts/game_over.gd" id="1_8h3e2"]
 [ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_frhku"]
 
 [node name="GameOverScreen" type="Control"]

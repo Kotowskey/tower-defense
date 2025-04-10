@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://bdr4wruc7s3oo"]
 
-[ext_resource type="Script" path="res://scripts/wave_completed.gd" id="1_2t6es"]
+[ext_resource type="Script" uid="uid://di2u61jwbr7r0" path="res://scripts/wave_completed.gd" id="1_2t6es"]
 [ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_g3k6y"]
 
 [node name="WaveCompleted" type="Control"]
