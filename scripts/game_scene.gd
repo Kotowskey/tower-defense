@@ -19,6 +19,7 @@ var current_wave = 0
 var wave_in_progress = false
 var enemies_spawned = 0
 var enemies_to_kill = 0
+var tower_info_display = null
 
 func _ready():
 	if $UI/HUD/BuildUI.has_node("TowerBasic"):
@@ -38,6 +39,11 @@ func _ready():
 	
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.connect("pressed", Callable(self, "_on_spawn_button_pressed"))
+
+	var info_display_scene = load("res://scenes/tower_info_display.tscn")
+	tower_info_display = info_display_scene.instantiate()
+	tower_info_display.visible = false
+	$UI/HUD.add_child(tower_info_display)
 
 	$AudioStreamPlayer.play()
 
@@ -140,7 +146,6 @@ func start_tower_placement(tower_type):
 	await get_tree().process_frame
 	
 	tower_preview.modulate = Color(1, 1, 1, 0.5)
-	# Pokazywanie zasięgu wieży
 	if tower_preview.has_method("show_range"):
 		tower_preview.show_range(true)
 
@@ -158,7 +163,6 @@ func place_tower(pos):
 func cancel_building():
 	building_mode = false
 	if tower_preview:
-		# Chowanie zasięgu wieży
 		if tower_preview.has_method("show_range"):
 			tower_preview.show_range(false)
 		tower_preview.queue_free()
@@ -182,6 +186,12 @@ func select_tower_at_position(pos):
 			
 			selected_tower = weakref(tower)
 			tower.show_range(true)
+			
+			if tower_info_display:
+				update_tower_info_display(tower)
+				tower_info_display.visible = true
+				tower_info_display.position = Vector2(pos.x - 100, pos.y - 150)
+			
 			return
 	
 
@@ -189,6 +199,21 @@ func deselect_tower():
 	if selected_tower and selected_tower.get_ref():
 		selected_tower.get_ref().show_range(false)
 	selected_tower = null
+	
+	if tower_info_display:
+		tower_info_display.visible = false
+
+func update_tower_info_display(tower):
+	if tower_info_display:
+		tower_info_display.set_tower_info(
+			tower.tower_name,
+			tower.tower_level,
+			tower.tower_damage,
+			tower.tower_range,
+			tower.tower_fire_rate,
+			tower.tower_type == 3,  
+			tower.slow_factor if tower.tower_type == 3 else 0.0
+		)
 
 func _on_upgrade_pressed():
 	if selected_tower and selected_tower.get_ref():
