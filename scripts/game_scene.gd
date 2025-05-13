@@ -140,6 +140,9 @@ func start_tower_placement(tower_type):
 	await get_tree().process_frame
 	
 	tower_preview.modulate = Color(1, 1, 1, 0.5)
+	# Pokazywanie zasięgu wieży
+	if tower_preview.has_method("show_range"):
+		tower_preview.show_range(true)
 
 func place_tower(pos):
 	var new_tower = tower_scene.instantiate()
@@ -155,6 +158,9 @@ func place_tower(pos):
 func cancel_building():
 	building_mode = false
 	if tower_preview:
+		# Chowanie zasięgu wieży
+		if tower_preview.has_method("show_range"):
+			tower_preview.show_range(false)
 		tower_preview.queue_free()
 		tower_preview = null
 
