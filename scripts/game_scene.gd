@@ -169,6 +169,10 @@ func cancel_building():
 		tower_preview = null
 
 func select_tower_at_position(pos):
+	# Sprawdź, czy kliknięcie było na elemencie UI
+	if $UI/HUD/BuildUI.get_global_rect().has_point(pos):
+		return
+		
 	var currently_selected = null
 	if selected_tower:
 		currently_selected = selected_tower.get_ref()
@@ -193,7 +197,6 @@ func select_tower_at_position(pos):
 				tower_info_display.position = Vector2(pos.x - 100, pos.y - 150)
 			
 			return
-	
 
 func deselect_tower():
 	if selected_tower and selected_tower.get_ref():
@@ -225,8 +228,12 @@ func _on_upgrade_pressed():
 			var new_cost = tower.upgrade()
 			upgrade_cost = new_cost
 			update_money_ui()
+			update_tower_info_display(tower)
 			if has_node("UpgradeSound"):
 				$UpgradeSound.play()
+				
+			# Zapobiegaj odznaczeniu wieży
+			get_viewport().set_input_as_handled()
 		else:
 			print("Not enough money to upgrade tower")
 
