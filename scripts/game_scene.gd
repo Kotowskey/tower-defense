@@ -229,6 +229,14 @@ func _on_upgrade_pressed():
 			upgrade_cost = new_cost
 			update_money_ui()
 			update_tower_info_display(tower)
+			
+			# Aktualizacja wskaźnika zasięgu po ulepszeniu
+			if tower.has_node("RangeIndicator"):
+				tower.get_node("RangeIndicator").set_range(tower.tower_range)
+			else:
+				# Jeśli wskaźnik zasięgu nie istnieje, pokaż go na nowo
+				tower.show_range(true)
+				
 			if has_node("UpgradeSound"):
 				$UpgradeSound.play()
 				
