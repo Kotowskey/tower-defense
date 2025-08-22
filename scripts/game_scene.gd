@@ -329,7 +329,6 @@ func end_wave():
 	var wave_completed_scene = load("res://scenes/wave_completed.tscn")
 	var wave_completed = wave_completed_scene.instantiate()
 	wave_completed.set_wave_info(current_wave, wave_reward)
-	wave_completed.position = Vector2(get_viewport_rect().size.x / 2.0 - 100, get_viewport_rect().size.y / 2.0 - 50)
 	$UI/HUD.add_child(wave_completed)
 
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
