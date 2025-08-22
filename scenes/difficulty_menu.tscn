@@ -40,7 +40,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_m4lgy")
 theme_override_font_sizes/font_size = 30
-text = "WYBIERZ POZIOM TRUDNOŚCI"
+text = "CHOOSE DIFFICULTY "
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -48,22 +48,22 @@ autowrap_mode = 2
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_m4lgy")
-text = "ŁATWY"
+text = "EASY"
 
 [node name="NORMAL" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_m4lgy")
-text = "NORMALNY"
+text = "NORMAL"
 
 [node name="HARD" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_m4lgy")
-text = "TRUDNY"
+text = "HARD"
 
 [node name="BACK" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_m4lgy")
-text = "POWRÓT"
+text = "RETURN"

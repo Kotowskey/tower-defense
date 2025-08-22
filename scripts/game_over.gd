@@ -8,7 +8,7 @@ func _ready():
 	$VBoxContainer/MainMenuButton.connect("pressed", Callable(self, "_on_main_menu_pressed"))
 
 func set_wave_count(count):
-	$VBoxContainer/WavesLabel.text = "Wytrzymałeś " + str(count) + " fal!"
+	$VBoxContainer/WavesLabel.text = "You lasted " + str(count) + " waves!"
 
 func _on_restart_pressed():
 	emit_signal("restart_pressed")
