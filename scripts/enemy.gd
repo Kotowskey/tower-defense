@@ -8,6 +8,8 @@ signal enemy_escaped
 @export var speed: float = 100
 @export var max_health: int = 100
 @export var value: int = 25
+@export var is_boss: bool = false
+@export var boss_type: int = 0
 
 var current_health: int
 var current_speed: float
@@ -22,6 +24,35 @@ func _ready():
 	slow_timer.one_shot = true
 	add_child(slow_timer)
 	slow_timer.connect("timeout", Callable(self, "_on_slow_timer_timeout"))
+	
+	if is_boss:
+		setup_boss_properties()
+
+func setup_boss_properties():
+	match boss_type:
+		0: # Tank Boss
+			max_health = 500
+			speed = 80
+			value = 200
+			scale = Vector2(1.5, 1.5)
+			$CharacterBody2D/Sprite2D.modulate = Color(0.8, 0.2, 0.2)
+		
+		1: # Speed Boss
+			max_health = 200
+			speed = 300
+			value = 150
+			scale = Vector2(1.2, 1.2)
+			$CharacterBody2D/Sprite2D.modulate = Color(0.2, 0.8, 0.2)
+		
+		2: # Shield Boss
+			max_health = 350
+			speed = 120
+			value = 250
+			scale = Vector2(1.4, 1.4)
+			$CharacterBody2D/Sprite2D.modulate = Color(0.2, 0.2, 0.8)
+	
+	current_health = max_health
+	current_speed = speed
 
 func _process(delta):
 	if path_follow:
@@ -33,6 +64,9 @@ func _process(delta):
 			queue_free()
 
 func take_damage(damage):
+	if is_boss and boss_type == 2: # shield boss mniejszy damage
+		damage = int(damage * 0.7)
+	
 	current_health -= damage
 	if current_health <= 0:
 		emit_signal("enemy_died")
@@ -41,13 +75,17 @@ func take_damage(damage):
 	return false
 
 func apply_slow(factor, duration):
-	slow_factor = min(slow_factor, factor) 
+	var slow_resistance = 1.0
+	if is_boss:
+		slow_resistance = 0.5 # bossowie sa bardziej odporni na zamrozenie
+	
+	slow_factor = min(slow_factor, factor * slow_resistance + (1.0 - slow_resistance))
 	current_speed = speed * slow_factor
 	
-	slow_timer.wait_time = duration
+	slow_timer.wait_time = duration * slow_resistance
 	slow_timer.start()
 	
-	$CharacterBody2D/Sprite2D.modulate = Color(0.5, 0.5, 1)
+	$CharacterBody2D/Sprite2D.modulate = Color(0.5, 0.5, 1) if not is_boss else $CharacterBody2D/Sprite2D.modulate * Color(0.8, 0.8, 1.2)
 
 func _on_slow_timer_timeout():
 	slow_factor = 1.0

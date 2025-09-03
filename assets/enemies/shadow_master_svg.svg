@@ -1,0 +1,49 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="purpleBoss" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#d0bfff"/>
+      <stop offset="70%" stop-color="#9775fa"/>
+      <stop offset="100%" stop-color="#5f3dc4"/>
+    </radialGradient>
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Główny balon -->
+  <ellipse cx="64" cy="60" rx="35" ry="40" fill="url(#purpleBoss)" filter="url(#strongGlow)"/>
+  
+  <!-- Cienie -->
+  <ellipse cx="52" cy="48" rx="9" ry="12" fill="#4b0082" opacity="0.6"/>
+  <ellipse cx="76" cy="70" rx="8" ry="10" fill="#4b0082" opacity="0.6"/>
+  <ellipse cx="45" cy="78" rx="6" ry="8" fill="#4b0082" opacity="0.6"/>
+  <ellipse cx="83" cy="45" rx="7" ry="9" fill="#4b0082" opacity="0.6"/>
+  
+  <!-- Oczy świecące -->
+  <ellipse cx="56" cy="58" rx="3" ry="4" fill="#9400d3"/>
+  <ellipse cx="72" cy="58" rx="3" ry="4" fill="#9400d3"/>
+  <ellipse cx="56" cy="58" rx="1.5" ry="2" fill="#fff"/>
+  <ellipse cx="72" cy="58" rx="1.5" ry="2" fill="#fff"/>
+  
+  <!-- Złowrogi uśmiech -->
+  <path d="M52 72 Q64 80 76 72" stroke="#4b0082" stroke-width="3" fill="none"/>
+  <path d="M58 74 Q60 76 62 74" stroke="#4b0082" stroke-width="1" fill="none"/>
+  <path d="M66 74 Q68 76 70 74" stroke="#4b0082" stroke-width="1" fill="none"/>
+  
+  <!-- Mgielka cieni -->
+  <ellipse cx="88" cy="37" rx="6" ry="4" fill="#9370db" opacity="0.4"/>
+  <ellipse cx="40" cy="37" rx="5" ry="3" fill="#9370db" opacity="0.4"/>
+  <ellipse cx="25" cy="70" rx="4" ry="3" fill="#9370db" opacity="0.4"/>
+  <ellipse cx="103" cy="80" rx="5" ry="3" fill="#9370db" opacity="0.4"/>
+  
+  <!-- Ciemna energia -->
+  <circle cx="20" cy="45" r="2" fill="#8b00ff" opacity="0.5"/>
+  <circle cx="108" cy="55" r="3" fill="#8b00ff" opacity="0.5"/>
+  
+  <!-- Sznurek -->
+  <line x1="64" y1="100" x2="64" y2="115" stroke="#663399" stroke-width="2"/>
+</svg>

@@ -2,6 +2,7 @@ extends Node2D
 
 @export var tower_scene: PackedScene = preload("res://scenes/tower.tscn")
 @export var enemy_scene: PackedScene = preload("res://scenes/enemy.tscn")
+@export var boss_enemy_scene: PackedScene = preload("res://scenes/boss_enemy.tscn")
 @export var building_mode: bool = false
 @export var player_money: int = 500
 @export var player_lives: int = 10
@@ -283,7 +284,13 @@ func _on_spawn_button_pressed():
 func start_wave():
 	wave_in_progress = true
 	enemies_spawned = 0
-	enemies_to_kill = wave_size + (current_wave * 2)
+	
+	var is_boss_wave = (current_wave % 5 == 0) # boss co 5 rund
+	
+	if is_boss_wave:
+		enemies_to_kill = 1 + (current_wave / 10) # ile bossow
+	else:
+		enemies_to_kill = wave_size + (current_wave * 2)
 	
 	if $UI/HUD/BuildUI.has_node("SpawnButton"):
 		$UI/HUD/BuildUI/SpawnButton.disabled = true
@@ -303,7 +310,10 @@ func start_wave():
 	var spawn_delay = wave_delay * (1.0 - (current_wave * 0.02))
 	spawn_delay = max(0.2, spawn_delay)
 	
-	spawn_wave(enemies_to_kill, spawn_delay, enemy_health_multiplier, enemy_speed_multiplier)
+	if is_boss_wave:
+		spawn_boss_wave(enemies_to_kill, enemy_health_multiplier, enemy_speed_multiplier)
+	else:
+		spawn_wave(enemies_to_kill, spawn_delay, enemy_health_multiplier, enemy_speed_multiplier)
 
 func _on_wave_timer_timeout():
 	var enemies_remaining = get_tree().get_nodes_in_group("enemies").size()
@@ -316,7 +326,12 @@ func _on_wave_timer_timeout():
 func end_wave():
 	wave_in_progress = false
 	
+	var is_boss_wave = (current_wave % 5 == 0)
 	var wave_reward = 100 + (current_wave * 20)
+	
+	if is_boss_wave:
+		wave_reward *= 2 # podwojna nagroda za bossow
+	
 	player_money += wave_reward
 	update_money_ui()
 	
@@ -360,8 +375,43 @@ func spawn_enemy(health_mult = 1.0, speed_mult = 1.0):
 	
 	add_child(enemy)
 
+func spawn_boss_wave(num_bosses = 1, health_mult = 1.0, speed_mult = 1.0):
+	for i in range(num_bosses):
+		var timer = get_tree().create_timer(i * 3.0) # dluzsze opoznienie po bossach
+		timer.timeout.connect(func(): 
+			spawn_boss_enemy(health_mult, speed_mult, i % 3) # rozni bossowe
+			enemies_spawned += 1
+		)
+
+func spawn_boss_enemy(health_mult = 1.0, speed_mult = 1.0, boss_type = 0):
+	var boss = boss_enemy_scene.instantiate()
+	var map_node = $Map
+	var path = map_node.get_enemy_path()
+	
+	var path_follow = PathFollow2D.new()
+	path.add_child(path_follow)
+	
+	boss.path = path
+	boss.path_follow = path_follow
+	boss.boss_type = boss_type
+	
+	boss.max_health = round(boss.max_health * health_mult)
+	boss.speed = boss.speed * speed_mult
+	
+	boss.connect("enemy_died", Callable(self, "_on_boss_died"))
+	boss.connect("enemy_escaped", Callable(self, "_on_enemy_escaped"))
+	
+	boss.add_to_group("enemies")
+	
+	add_child(boss)
+
 func _on_enemy_died():
 	player_money += enemy_reward
+	update_money_ui()
+
+func _on_boss_died():
+	var boss_reward = enemy_reward * 8 # 8x wiecej nagrody za bossa
+	player_money += boss_reward
 	update_money_ui()
 
 func _on_enemy_escaped():

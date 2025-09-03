@@ -1,0 +1,65 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rainbowBoss" cx="0.3" cy="0.3">
+      <stop offset="0%" stop-color="#ff6b6b"/>
+      <stop offset="20%" stop-color="#ffd43b"/>
+      <stop offset="40%" stop-color="#51cf66"/>
+      <stop offset="60%" stop-color="#339af0"/>
+      <stop offset="80%" stop-color="#9775fa"/>
+      <stop offset="100%" stop-color="#212529"/>
+    </radialGradient>
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Główny balon -->
+  <ellipse cx="64" cy="60" rx="35" ry="40" fill="url(#rainbowBoss)" filter="url(#strongGlow)"/>
+  
+  <!-- Chaotyczne elementy -->
+  <circle cx="48" cy="42" r="4" fill="#ff0000" opacity="0.8"/>
+  <circle cx="80" cy="47" r="3" fill="#00ff00" opacity="0.8"/>
+  <circle cx="45" cy="75" r="5" fill="#0000ff" opacity="0.8"/>
+  <circle cx="83" cy="78" r="2.5" fill="#ff00ff" opacity="0.8"/>
+  <polygon points="72,37 76,32 80,37" fill="#ffff00" opacity="0.8"/>
+  <polygon points="48,85 52,95 44,95" fill="#00ffff" opacity="0.8"/>
+  
+  <!-- Dodatkowe chaotyczne kształty -->
+  <rect x="35" y="50" width="4" height="8" fill="#ff8c00" opacity="0.7" transform="rotate(45 37 54)"/>
+  <rect x="89" y="62" width="3" height="6" fill="#9932cc" opacity="0.7" transform="rotate(-30 90.5 65)"/>
+  
+  <!-- Oczy szalone -->
+  <ellipse cx="54" cy="54" rx="4" ry="6" fill="#ff0000"/>
+  <ellipse cx="74" cy="62" rx="4" ry="6" fill="#0000ff"/>
+  <circle cx="54" cy="54" r="1.5" fill="#000"/>
+  <circle cx="74" cy="62" r="1.5" fill="#000"/>
+  <circle cx="55" cy="53" r="0.8" fill="#fff"/>
+  <circle cx="75" cy="61" r="0.8" fill="#fff"/>
+  
+  <!-- Szalony uśmiech -->
+  <path d="M48 70 Q64 85 80 68" stroke="#000" stroke-width="3" fill="none"/>
+  <path d="M52 72 Q54 75 56 72" stroke="#000" stroke-width="2" fill="none"/>
+  <path d="M72 70 Q74 73 76 70" stroke="#000" stroke-width="2" fill="none"/>
+  
+  <!-- Zęby -->
+  <polygon points="58,74 60,77 62,74" fill="#fff"/>
+  <polygon points="66,76 68,79 70,76" fill="#fff"/>
+  
+  <!-- Energia wokół -->
+  <circle cx="25" cy="50" r="2" fill="#ff6b6b" opacity="0.6"/>
+  <circle cx="103" cy="70" r="3" fill="#51cf66" opacity="0.6"/>
+  <circle cx="30" cy="30" r="1.5" fill="#339af0" opacity="0.6"/>
+  <circle cx="98" cy="25" r="2" fill="#9775fa" opacity="0.6"/>
+  <circle cx="15" cy="85" r="2.5" fill="#ffd43b" opacity="0.6"/>
+  
+  <!-- Błyskawice chaosu -->
+  <path d="M20 60 L25 55 L22 50" stroke="#ff00ff" stroke-width="1.5" fill="none" opacity="0.8"/>
+  <path d="M108 45 L103 40 L106 35" stroke="#00ffff" stroke-width="1.5" fill="none" opacity="0.8"/>
+  
+  <!-- Sznurek tęczowy -->
+  <line x1="64" y1="100" x2="64" y2="115" stroke="#ff0080" stroke-width="2"/>
+</svg>
