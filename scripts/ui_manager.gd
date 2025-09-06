@@ -1,0 +1,192 @@
+extends Node
+
+var game_scene
+var game_state
+var tower_manager
+var wave_manager
+
+var can_upgrade = false
+var upgrade_cost = 0
+
+func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
+	game_scene = p_game_scene
+	game_state = p_game_state
+	tower_manager = p_tower_manager
+	wave_manager = p_wave_manager
+	
+	# Połącz sygnały
+	game_state.connect("money_changed", Callable(self, "update_money_ui"))
+	game_state.connect("lives_changed", Callable(self, "update_lives_ui"))
+	game_state.connect("wave_changed", Callable(self, "update_wave_ui"))
+	game_state.connect("game_over", Callable(self, "show_game_over"))
+	
+	tower_manager.connect("tower_selected", Callable(self, "_on_tower_selected"))
+	tower_manager.connect("tower_deselected", Callable(self, "_on_tower_deselected"))
+	
+	wave_manager.connect("wave_started", Callable(self, "_on_wave_started"))
+	wave_manager.connect("wave_completed", Callable(self, "_on_wave_completed"))
+
+func _process(_delta):
+	if tower_manager.get_selected_tower():
+		can_upgrade = true
+		upgrade_cost = tower_manager.get_upgrade_cost()
+	else:
+		can_upgrade = false
+	
+	update_upgrade_ui()
+
+func connect_ui_buttons():
+	if game_scene.has_node("UI/HUD/BuildUI/TowerBasic"):
+		game_scene.get_node("UI/HUD/BuildUI/TowerBasic").connect("pressed", Callable(self, "_on_tower_basic_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildUI/TowerArea"):
+		game_scene.get_node("UI/HUD/BuildUI/TowerArea").connect("pressed", Callable(self, "_on_tower_area_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildUI/TowerSniper"):
+		game_scene.get_node("UI/HUD/BuildUI/TowerSniper").connect("pressed", Callable(self, "_on_tower_sniper_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildUI/TowerSlow"):
+		game_scene.get_node("UI/HUD/BuildUI/TowerSlow").connect("pressed", Callable(self, "_on_tower_slow_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildUI/Upgrade"):
+		game_scene.get_node("UI/HUD/BuildUI/Upgrade").connect("pressed", Callable(self, "_on_upgrade_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildUI/SpawnButton"):
+		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").connect("pressed", Callable(self, "_on_spawn_button_pressed"))
+	
+	# Connect pause menu buttons
+	if game_scene.has_node("UI/PauseMenu/VBoxContainer/ResumeButton"):
+		game_scene.get_node("UI/PauseMenu/VBoxContainer/ResumeButton").connect("pressed", Callable(self, "_on_resume_pressed"))
+	
+	if game_scene.has_node("UI/PauseMenu/VBoxContainer/MainMenuButton"):
+		game_scene.get_node("UI/PauseMenu/VBoxContainer/MainMenuButton").connect("pressed", Callable(game_scene, "_on_main_menu_pressed"))
+
+func update_money_ui(amount = null):
+	if amount == null:
+		amount = game_state.player_money
+		
+	if game_scene.has_node("UI/HUD/UserUI/MoneyLabel"):
+		game_scene.get_node("UI/HUD/UserUI/MoneyLabel").text = "Money: " + str(amount)
+
+func update_lives_ui(amount = null):
+	if amount == null:
+		amount = game_state.player_lives
+		
+	if game_scene.has_node("UI/HUD/UserUI/LivesLabel"):
+		game_scene.get_node("UI/HUD/UserUI/LivesLabel").text = "Lives: " + str(amount)
+
+func update_wave_ui(wave_number = null):
+	if wave_number == null:
+		wave_number = game_state.current_wave
+		
+	if game_scene.has_node("UI/HUD/UserUI/WaveLabel"):
+		game_scene.get_node("UI/HUD/UserUI/WaveLabel").text = "Wave: " + str(wave_number)
+
+func update_upgrade_ui():
+	if game_scene.has_node("UI/HUD/BuildUI/Upgrade"):
+		var upgrade_button = game_scene.get_node("UI/HUD/BuildUI/Upgrade")
+		if can_upgrade and game_state.has_enough_money(upgrade_cost):
+			upgrade_button.disabled = false
+			upgrade_button.modulate = Color(1, 1, 1, 1)
+		else:
+			upgrade_button.disabled = true
+			upgrade_button.modulate = Color(0.5, 0.5, 0.5, 1)
+		
+		if upgrade_button.has_node("Label"):
+			if can_upgrade:
+				upgrade_button.get_node("Label").text = "Upgrade\n" + str(upgrade_cost)
+			else:
+				upgrade_button.get_node("Label").text = "Upgrade"
+
+func _on_tower_basic_pressed():
+	tower_manager.start_tower_placement(0)
+
+func _on_tower_area_pressed():
+	tower_manager.start_tower_placement(1)
+
+func _on_tower_sniper_pressed():
+	tower_manager.start_tower_placement(2)
+
+func _on_tower_slow_pressed():
+	tower_manager.start_tower_placement(3)
+
+func _on_upgrade_pressed():
+	tower_manager.upgrade_selected_tower()
+
+func _on_spawn_button_pressed():
+	if not wave_manager.is_wave_in_progress():
+		game_state.next_wave()
+		if game_scene.has_node("UI/HUD/BuildUI/SpawnButton") and game_scene.get_node("UI/HUD/BuildUI/SpawnButton").has_node("StartSound"):
+			game_scene.get_node("UI/HUD/BuildUI/SpawnButton/StartSound").play()
+		wave_manager.start_wave()
+	else:
+		print("Wave already in progress")
+
+func _on_resume_pressed():
+	toggle_pause_menu()
+
+func _on_tower_selected(tower):
+	if game_scene.has_node("UI/HUD/SelectedTower"):
+		var selected_tower_ui = game_scene.get_node("UI/HUD/SelectedTower")
+		selected_tower_ui.show()
+		
+		# Update tower type label
+		if selected_tower_ui.has_node("TowerTypeLabel"):
+			selected_tower_ui.get_node("TowerTypeLabel").text = "Tower Type: " + str(tower_manager.get_tower_type(tower))
+		
+		# Update tower level label
+		if selected_tower_ui.has_node("TowerLevelLabel"):
+			selected_tower_ui.get_node("TowerLevelLabel").text = "Level: " + str(tower_manager.get_tower_level(tower))
+		
+		# Update tower range label
+		if selected_tower_ui.has_node("TowerRangeLabel"):
+			selected_tower_ui.get_node("TowerRangeLabel").text = "Range: " + str(tower_manager.get_tower_range(tower))
+		
+		# Update tower damage label
+		if selected_tower_ui.has_node("TowerDamageLabel"):
+			selected_tower_ui.get_node("TowerDamageLabel").text = "Damage: " + str(tower_manager.get_tower_damage(tower))
+		
+		# Update tower fire rate label
+		if selected_tower_ui.has_node("TowerFireRateLabel"):
+			selected_tower_ui.get_node("TowerFireRateLabel").text = "Fire Rate: " + str(tower_manager.get_tower_fire_rate(tower))
+
+func _on_tower_deselected():
+	if game_scene.has_node("UI/HUD/SelectedTower"):
+		game_scene.get_node("UI/HUD/SelectedTower").hide()
+
+func _on_wave_started():
+	if game_scene.has_node("UI/HUD/BuildUI/SpawnButton"):
+		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").disabled = true
+		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").modulate = Color(0.5, 0.5, 0.5, 1)
+		if game_scene.get_node("UI/HUD/BuildUI/SpawnButton").has_node("Image") and game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image").has_node("Label"):
+			game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image/Label").text = "IN\nPROGRESS"
+
+func _on_wave_completed():
+	if game_scene.has_node("UI/HUD/BuildUI/SpawnButton"):
+		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").disabled = false
+		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").modulate = Color(1, 1, 1, 1)
+		if game_scene.get_node("UI/HUD/BuildUI/SpawnButton").has_node("Image") and game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image").has_node("Label"):
+			game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image/Label").text = "START\nWAVE " + str(game_state.current_wave + 1)
+
+func show_game_over():
+	game_scene.get_tree().paused = true
+	
+	var game_over_screen_scene = load("res://scenes/game_over_screen.tscn")
+	var game_over_screen = game_over_screen_scene.instantiate()
+	game_over_screen.set_wave_count(game_state.current_wave)
+	game_over_screen.connect("restart_pressed", Callable(game_scene, "_on_restart_pressed"))
+	game_over_screen.connect("main_menu_pressed", Callable(game_scene, "_on_main_menu_pressed"))
+	
+	game_scene.get_node("UI").add_child(game_over_screen)
+	game_scene.get_node("AudioStreamPlayer").volume_db = -20.0
+
+func toggle_pause_menu():
+	var pause_menu = game_scene.get_node("UI/PauseMenu")
+	if pause_menu.visible:
+		pause_menu.hide()
+		game_scene.get_tree().paused = false
+		game_scene.resume_music()
+	else:
+		pause_menu.show()
+		game_scene.get_tree().paused = true
+		game_scene.pause_music()
