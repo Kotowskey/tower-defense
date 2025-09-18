@@ -18,5 +18,3 @@ func _on_settings_button_pressed():
 func _on_main_menu_button_pressed():
 	emit_signal("main_menu_pressed")
 	get_parent().get_parent().stop_music()
-	# Powrót do menu głównego
-	get_tree().change_scene_to_file("res://scenes/scene_handler.tscn")
