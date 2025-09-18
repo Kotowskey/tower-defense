@@ -14,7 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://e1yir2kqkhka" path="res://assets/towers/sniper-tower-top.svg" id="10_ldkr4"]
 [ext_resource type="AudioStream" uid="uid://bo3sq5yuig6i1" path="res://assets/effects/upgrade_sound.mp3" id="10_rp1ui"]
 [ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/pause_menu.gd" id="11_wys8v"]
-[ext_resource type="AudioStream" uid="uid://by5e2ok634t1a" path="res://assets/effects/InvalidPlacementSound.mp3" id="15_ldkr4"]
+[ext_resource type="AudioStream" uid="uid://chn3523mbgkov" path="res://assets/effects/InvalidPlacementSound.wav" id="15_ldkr4"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_a5vh6")
