@@ -55,7 +55,10 @@ func _input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if tower_manager.is_in_building_mode():
 				var mouse_pos = get_global_mouse_position()
-				tower_manager.place_tower(mouse_pos)
+				var placed = tower_manager.place_tower(mouse_pos)
+				if not placed and tower_manager.is_valid_position == false:
+					if has_node("InvalidPlacementSound"):
+						$InvalidPlacementSound.play()
 			else:
 				var mouse_pos = get_global_mouse_position()
 				tower_manager.select_tower_at_position(mouse_pos)

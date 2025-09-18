@@ -11,6 +11,8 @@ var building_mode: bool = false
 var current_tower_type = 0
 var selected_tower = null
 var tower_info_display = null
+var minimum_tower_distance: float = 100.0
+var is_valid_position: bool = true
 
 var tower_costs = {
 	0: 100, # Basic tower
@@ -28,6 +30,12 @@ func _process(_delta):
 	if building_mode and tower_preview:
 		var mouse_pos = game_scene.get_global_mouse_position()
 		tower_preview.position = mouse_pos
+		
+		is_valid_position = is_valid_tower_position(mouse_pos)
+		if is_valid_position:
+			tower_preview.modulate = Color(1, 1, 1, 0.5)
+		else:
+			tower_preview.modulate = Color(1, 0.3, 0.3, 0.5)
 
 func setup_tower_info_display(info_display):
 	tower_info_display = info_display
@@ -52,8 +60,25 @@ func start_tower_placement(tower_type):
 	if tower_preview.has_method("show_range"):
 		tower_preview.show_range(true)
 
+func is_valid_tower_position(pos: Vector2) -> bool:
+	for tower in game_scene.get_tree().get_nodes_in_group("towers"):
+		var distance = pos.distance_to(tower.position)
+		if distance < minimum_tower_distance:
+			return false
+	
+	if game_scene.has_node("Map"):
+		var map_node = game_scene.get_node("Map")
+		if map_node.has_method("is_position_on_path"):
+			if map_node.is_position_on_path(pos):
+				return false
+	
+	return true
+
 func place_tower(pos):
 	var selected_tower_cost = tower_costs[current_tower_type]
+	
+	if !is_valid_tower_position(pos):
+		return false
 	
 	if game_state.has_enough_money(selected_tower_cost):
 		var new_tower = tower_scene.instantiate()
@@ -81,7 +106,6 @@ func cancel_building():
 		tower_preview = null
 
 func select_tower_at_position(pos):
-	# Sprawdź, czy kliknięcie było na elemencie UI
 	if game_scene.get_node("UI/HUD/BuildUI").get_global_rect().has_point(pos):
 		return
 		
@@ -144,17 +168,14 @@ func upgrade_selected_tower():
 			
 			update_tower_info_display(tower)
 			
-			# Aktualizacja wskaźnika zasięgu po ulepszeniu
 			if tower.has_node("RangeIndicator"):
 				tower.get_node("RangeIndicator").set_range(tower.tower_range)
 			else:
-				# Jeśli wskaźnik zasięgu nie istnieje, pokaż go na nowo
 				tower.show_range(true)
 				
 			if game_scene.has_node("UpgradeSound"):
 				game_scene.get_node("UpgradeSound").play()
 				
-			# Zapobiegaj odznaczeniu wieży
 			game_scene.get_viewport().set_input_as_handled()
 			return true
 		else:
