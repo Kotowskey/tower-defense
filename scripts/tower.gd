@@ -64,7 +64,7 @@ func setup_tower_properties():
 			tower_fire_rate = 1.5
 			
 			if has_node("Basic-tower-top"):
-				var texture = load("res://assets/towers/rocket-tower-top.svg") 
+				var texture = load("res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_red.png") 
 				if texture:
 					$"Basic-tower-top".texture = texture
 		
@@ -76,7 +76,7 @@ func setup_tower_properties():
 			tower_fire_rate = 2.0
 			
 			if has_node("Basic-tower-top"):
-				var texture = load("res://assets/towers/sniper-tower-top.svg")
+				var texture = load("res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_green.png")
 				if texture:
 					$"Basic-tower-top".texture = texture
 		
@@ -90,7 +90,7 @@ func setup_tower_properties():
 			slow_duration = 2.0
 			
 			if has_node("Basic-tower-top"):
-				var texture = load("res://assets/towers/ice-tower-top.svg")
+				var texture = load("res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_blue.png")
 				if texture:
 					$"Basic-tower-top".texture = texture
 
