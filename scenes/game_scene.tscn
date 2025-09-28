@@ -5,14 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://cm00t2us2nyo7" path="res://assets/ui/kenny/button_square_depth_flat.png" id="2_6s7g6"]
 [ext_resource type="AudioStream" uid="uid://bb8f7ltm0yjcj" path="res://assets/effects/tower_creation.mp3" id="2_b5spy"]
 [ext_resource type="Texture2D" uid="uid://wahkuvvwnoe2" path="res://assets/ui/kenny/button_square_depth_gradient.png" id="3_dp1g0"]
-[ext_resource type="Texture2D" uid="uid://cptrtmn7ona11" path="res://assets/towers/basic-tower-top.svg" id="4_rxgyj"]
 [ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="6_rurhu"]
 [ext_resource type="AudioStream" uid="uid://lbyyry08vxme" path="res://assets/music/Fortress in the Sky.mp3" id="7_kk2rg"]
+[ext_resource type="Texture2D" uid="uid://dnans4nivyi3w" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_dark.png" id="7_ldkr4"]
 [ext_resource type="AudioStream" uid="uid://xlrrxom35fil" path="res://assets/effects/button_2.mp3" id="8_utbpp"]
-[ext_resource type="Texture2D" uid="uid://xfh0uwvw1cbn" path="res://assets/towers/rocket-tower-top.svg" id="9_5ay1a"]
-[ext_resource type="Texture2D" uid="uid://bsnysfcd5u7va" path="res://assets/towers/ice-tower-top.svg" id="9_rvs2r"]
-[ext_resource type="Texture2D" uid="uid://e1yir2kqkhka" path="res://assets/towers/sniper-tower-top.svg" id="10_ldkr4"]
+[ext_resource type="Texture2D" uid="uid://clyi68seirwqj" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_red.png" id="9_liy57"]
+[ext_resource type="Texture2D" uid="uid://bedgx4fgrr33o" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_green.png" id="10_mwyo0"]
 [ext_resource type="AudioStream" uid="uid://bo3sq5yuig6i1" path="res://assets/effects/upgrade_sound.mp3" id="10_rp1ui"]
+[ext_resource type="Texture2D" uid="uid://ctl5fumq6uv1e" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_blue.png" id="11_s76x2"]
 [ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/pause_menu.gd" id="11_wys8v"]
 [ext_resource type="AudioStream" uid="uid://chn3523mbgkov" path="res://assets/effects/InvalidPlacementSound.wav" id="15_ldkr4"]
 
@@ -70,9 +70,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_rxgyj")
+texture = ExtResource("7_ldkr4")
 expand_mode = 2
 
 [node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerBasic"]
@@ -105,9 +109,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_5ay1a")
+texture = ExtResource("9_liy57")
 expand_mode = 2
 
 [node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerArea"]
@@ -140,9 +148,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_ldkr4")
+texture = ExtResource("10_mwyo0")
 expand_mode = 2
 
 [node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerSniper"]
@@ -175,9 +187,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_rvs2r")
+texture = ExtResource("11_s76x2")
 expand_mode = 2
 
 [node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerSlow"]
