@@ -106,7 +106,7 @@ func cancel_building():
 		tower_preview = null
 
 func select_tower_at_position(pos):
-	if game_scene.get_node("UI/HUD/BuildUI").get_global_rect().has_point(pos):
+	if game_scene.get_node("UI/HUD/BuildPanel/BuildUI").get_global_rect().has_point(pos):
 		return
 		
 	var currently_selected = null

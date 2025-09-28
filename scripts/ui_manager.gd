@@ -36,55 +36,55 @@ func _process(_delta):
 	update_upgrade_ui()
 
 func connect_ui_buttons():
-	if game_scene.has_node("UI/HUD/BuildUI/TowerBasic"):
-		game_scene.get_node("UI/HUD/BuildUI/TowerBasic").connect("pressed", Callable(self, "_on_tower_basic_pressed"))
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerBasic"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerBasic").connect("pressed", Callable(self, "_on_tower_basic_pressed"))
 	
-	if game_scene.has_node("UI/HUD/BuildUI/TowerArea"):
-		game_scene.get_node("UI/HUD/BuildUI/TowerArea").connect("pressed", Callable(self, "_on_tower_area_pressed"))
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerArea"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerArea").connect("pressed", Callable(self, "_on_tower_area_pressed"))
 	
-	if game_scene.has_node("UI/HUD/BuildUI/TowerSniper"):
-		game_scene.get_node("UI/HUD/BuildUI/TowerSniper").connect("pressed", Callable(self, "_on_tower_sniper_pressed"))
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerSniper"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerSniper").connect("pressed", Callable(self, "_on_tower_sniper_pressed"))
 	
-	if game_scene.has_node("UI/HUD/BuildUI/TowerSlow"):
-		game_scene.get_node("UI/HUD/BuildUI/TowerSlow").connect("pressed", Callable(self, "_on_tower_slow_pressed"))
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerSlow"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerSlow").connect("pressed", Callable(self, "_on_tower_slow_pressed"))
 	
-	if game_scene.has_node("UI/HUD/BuildUI/Upgrade"):
-		game_scene.get_node("UI/HUD/BuildUI/Upgrade").connect("pressed", Callable(self, "_on_upgrade_pressed"))
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Upgrade").connect("pressed", Callable(self, "_on_upgrade_pressed"))
 	
-	if game_scene.has_node("UI/HUD/BuildUI/SpawnButton"):
-		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").connect("pressed", Callable(self, "_on_spawn_button_pressed"))
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").connect("pressed", Callable(self, "_on_spawn_button_pressed"))
 	
 	# Connect pause menu buttons
-	if game_scene.has_node("UI/PauseMenu/VBoxContainer/ResumeButton"):
-		game_scene.get_node("UI/PauseMenu/VBoxContainer/ResumeButton").connect("pressed", Callable(self, "_on_resume_pressed"))
+	if game_scene.has_node("UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton"):
+		game_scene.get_node("UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton").connect("pressed", Callable(self, "_on_resume_pressed"))
 	
-	if game_scene.has_node("UI/PauseMenu/VBoxContainer/MainMenuButton"):
-		game_scene.get_node("UI/PauseMenu/VBoxContainer/MainMenuButton").connect("pressed", Callable(game_scene, "_on_main_menu_pressed"))
+	if game_scene.has_node("UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton"):
+		game_scene.get_node("UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton").connect("pressed", Callable(game_scene, "_on_main_menu_pressed"))
 
 func update_money_ui(amount = null):
 	if amount == null:
 		amount = game_state.player_money
 		
-	if game_scene.has_node("UI/HUD/UserUI/MoneyLabel"):
-		game_scene.get_node("UI/HUD/UserUI/MoneyLabel").text = "Money: " + str(amount)
+	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/MoneyContainer/MoneyLabel"):
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/MoneyContainer/MoneyLabel").text = "Money: " + str(amount)
 
 func update_lives_ui(amount = null):
 	if amount == null:
 		amount = game_state.player_lives
 		
-	if game_scene.has_node("UI/HUD/UserUI/LivesLabel"):
-		game_scene.get_node("UI/HUD/UserUI/LivesLabel").text = "Lives: " + str(amount)
+	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/LivesContainer/LivesLabel"):
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/LivesContainer/LivesLabel").text = "Lives: " + str(amount)
 
 func update_wave_ui(wave_number = null):
 	if wave_number == null:
 		wave_number = game_state.current_wave
 		
-	if game_scene.has_node("UI/HUD/UserUI/WaveLabel"):
-		game_scene.get_node("UI/HUD/UserUI/WaveLabel").text = "Wave: " + str(wave_number)
+	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel"):
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel").text = "Wave: " + str(wave_number)
 
 func update_upgrade_ui():
-	if game_scene.has_node("UI/HUD/BuildUI/Upgrade"):
-		var upgrade_button = game_scene.get_node("UI/HUD/BuildUI/Upgrade")
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
+		var upgrade_button = game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Upgrade")
 		if can_upgrade and game_state.has_enough_money(upgrade_cost):
 			upgrade_button.disabled = false
 			upgrade_button.modulate = Color(1, 1, 1, 1)
@@ -116,8 +116,8 @@ func _on_upgrade_pressed():
 func _on_spawn_button_pressed():
 	if not wave_manager.is_wave_in_progress():
 		game_state.next_wave()
-		if game_scene.has_node("UI/HUD/BuildUI/SpawnButton") and game_scene.get_node("UI/HUD/BuildUI/SpawnButton").has_node("StartSound"):
-			game_scene.get_node("UI/HUD/BuildUI/SpawnButton/StartSound").play()
+		if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton") and game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").has_node("StartSound"):
+			game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton/StartSound").play()
 		wave_manager.start_wave()
 	else:
 		print("Wave already in progress")
@@ -155,18 +155,18 @@ func _on_tower_deselected():
 		game_scene.get_node("UI/HUD/SelectedTower").hide()
 
 func _on_wave_started():
-	if game_scene.has_node("UI/HUD/BuildUI/SpawnButton"):
-		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").disabled = true
-		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").modulate = Color(0.5, 0.5, 0.5, 1)
-		if game_scene.get_node("UI/HUD/BuildUI/SpawnButton").has_node("Image") and game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image").has_node("Label"):
-			game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image/Label").text = "IN\nPROGRESS"
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").disabled = true
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").modulate = Color(0.5, 0.5, 0.5, 1)
+		if game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").has_node("Image") and game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton/Image").has_node("Label"):
+			game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton/Image/Label").text = "IN\nPROGRESS"
 
 func _on_wave_completed():
-	if game_scene.has_node("UI/HUD/BuildUI/SpawnButton"):
-		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").disabled = false
-		game_scene.get_node("UI/HUD/BuildUI/SpawnButton").modulate = Color(1, 1, 1, 1)
-		if game_scene.get_node("UI/HUD/BuildUI/SpawnButton").has_node("Image") and game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image").has_node("Label"):
-			game_scene.get_node("UI/HUD/BuildUI/SpawnButton/Image/Label").text = "START\nWAVE " + str(game_state.current_wave + 1)
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").disabled = false
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").modulate = Color(1, 1, 1, 1)
+		if game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").has_node("Image") and game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton/Image").has_node("Label"):
+			game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton/Image/Label").text = "START\nWAVE " + str(game_state.current_wave + 1)
 
 func show_game_over():
 	game_scene.get_tree().paused = true

@@ -44,8 +44,8 @@ func _ready():
 	ui_manager.update_wave_ui()
 	ui_manager.update_upgrade_ui()
 	
-	if $UI/HUD/BuildUI.has_node("SpawnButton") and $UI/HUD/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildUI/SpawnButton/Image.has_node("Label"):
-		$UI/HUD/BuildUI/SpawnButton/Image/Label.text = "START\nWAVE 1"
+	if $UI/HUD/BuildPanel/BuildUI.has_node("SpawnButton") and $UI/HUD/BuildPanel/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildPanel/BuildUI/SpawnButton/Image.has_node("Label"):
+		$UI/HUD/BuildPanel/BuildUI/SpawnButton/Image/Label.text = "START\nWAVE 1"
 
 	$AudioStreamPlayer.play()
 	set_process_input(true)

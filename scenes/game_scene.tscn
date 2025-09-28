@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qik1ytgalcrw"]
+[gd_scene load_steps=21 format=3 uid="uid://qik1ytgalcrw"]
 
 [ext_resource type="Script" uid="uid://cpxycdxkpcq5w" path="res://scripts/game_scene.gd" id="1_a5vh6"]
 [ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="1_e6pvo"]
@@ -15,6 +15,33 @@
 [ext_resource type="Texture2D" uid="uid://ctl5fumq6uv1e" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_blue.png" id="11_s76x2"]
 [ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/pause_menu.gd" id="11_wys8v"]
 [ext_resource type="AudioStream" uid="uid://chn3523mbgkov" path="res://assets/effects/InvalidPlacementSound.wav" id="15_ldkr4"]
+[ext_resource type="Texture2D" uid="uid://b4c66sov7o72l" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="16_new"]
+[ext_resource type="Texture2D" uid="uid://c4etfg62owyda" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="17_new"]
+[ext_resource type="FontFile" uid="uid://dq2bxbbw8nb5l" path="res://assets/ui/kenny/fonts/Kenney Future.ttf" id="18_new"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+bg_color = Color(0.1, 0.1, 0.15, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.6, 0.8, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info_panel"]
+bg_color = Color(0.05, 0.05, 0.1, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.4, 0.6, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_a5vh6")
@@ -41,23 +68,59 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BuildUI" type="VBoxContainer" parent="UI/HUD"]
-custom_minimum_size = Vector2(100, 500)
-layout_direction = 1
+[node name="BackgroundGradient" type="ColorRect" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.1, 0.1)
+
+[node name="BuildPanel" type="Panel" parent="UI/HUD"]
+custom_minimum_size = Vector2(120, 600)
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -250.0
-offset_bottom = 250.0
+offset_left = -140.0
+offset_top = -320.0
+offset_right = -20.0
+offset_bottom = 320.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="BuildTitle" type="Label" parent="UI/HUD/BuildPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 18
+text = "TOWERS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuildUI" type="VBoxContainer" parent="UI/HUD/BuildPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
 alignment = 1
 
-[node name="TowerBasic" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="TowerBasic" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -65,21 +128,21 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerBasic"]
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/TowerBasic"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_ldkr4")
 expand_mode = 2
 
-[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerBasic"]
+[node name="Cost" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerBasic"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -87,16 +150,16 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -23.0
+offset_top = -18.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_rurhu")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "100"
 horizontal_alignment = 1
 
-[node name="TowerArea" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="TowerArea" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -104,21 +167,21 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerArea"]
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/TowerArea"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("9_liy57")
 expand_mode = 2
 
-[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerArea"]
+[node name="Cost" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerArea"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -126,16 +189,16 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -23.0
+offset_top = -18.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_rurhu")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "200"
 horizontal_alignment = 1
 
-[node name="TowerSniper" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="TowerSniper" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -143,21 +206,21 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerSniper"]
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/TowerSniper"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("10_mwyo0")
 expand_mode = 2
 
-[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerSniper"]
+[node name="Cost" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerSniper"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -165,16 +228,16 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -23.0
+offset_top = -18.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_rurhu")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "300"
 horizontal_alignment = 1
 
-[node name="TowerSlow" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="TowerSlow" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -182,21 +245,21 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/TowerSlow"]
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/TowerSlow"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("11_s76x2")
 expand_mode = 2
 
-[node name="Cost" type="Label" parent="UI/HUD/BuildUI/TowerSlow"]
+[node name="Cost" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerSlow"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -204,16 +267,16 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -20.0
-offset_top = -23.0
+offset_top = -18.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("6_rurhu")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 14
 text = "150"
 horizontal_alignment = 1
 
-[node name="Upgrade" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="Upgrade" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -221,7 +284,7 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="UI/HUD/BuildUI/Upgrade"]
+[node name="Label" type="Label" parent="UI/HUD/BuildPanel/BuildUI/Upgrade"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -230,11 +293,11 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 12
-text = "Upgrade"
+text = "UPGRADE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpawnButton" type="TextureButton" parent="UI/HUD/BuildUI"]
+[node name="SpawnButton" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -242,7 +305,7 @@ texture_normal = ExtResource("2_6s7g6")
 texture_pressed = ExtResource("3_dp1g0")
 stretch_mode = 0
 
-[node name="Image" type="TextureRect" parent="UI/HUD/BuildUI/SpawnButton"]
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/SpawnButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -251,41 +314,103 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 2
 
-[node name="Label" type="Label" parent="UI/HUD/BuildUI/SpawnButton/Image"]
+[node name="Label" type="Label" parent="UI/HUD/BuildPanel/BuildUI/SpawnButton/Image"]
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 80.0
 theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
 text = "START
 WAVE 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StartSound" type="AudioStreamPlayer" parent="UI/HUD/BuildUI/SpawnButton"]
+[node name="StartSound" type="AudioStreamPlayer" parent="UI/HUD/BuildPanel/BuildUI/SpawnButton"]
 stream = ExtResource("8_utbpp")
 
-[node name="UserUI" type="VBoxContainer" parent="UI/HUD"]
-custom_minimum_size = Vector2(200, 400)
-layout_direction = 1
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 400.0
+[node name="InfoPanel" type="Panel" parent="UI/HUD"]
+custom_minimum_size = Vector2(280, 150)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -170.0
+offset_right = 300.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_info_panel")
+
+[node name="InfoTitle" type="Label" parent="UI/HUD/InfoPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 20
+text = "GAME STATUS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UserUI" type="VBoxContainer" parent="UI/HUD/InfoPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 40.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
 alignment = 1
 
-[node name="MoneyLabel" type="Label" parent="UI/HUD/UserUI"]
+[node name="MoneyContainer" type="HBoxContainer" parent="UI/HUD/InfoPanel/UserUI"]
 layout_mode = 2
+
+[node name="MoneyIcon" type="Label" parent="UI/HUD/InfoPanel/UserUI/MoneyContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 18
+text = "💰"
+
+[node name="MoneyLabel" type="Label" parent="UI/HUD/InfoPanel/UserUI/MoneyContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 18
 text = "Money: 500"
 
-[node name="LivesLabel" type="Label" parent="UI/HUD/UserUI"]
+[node name="LivesContainer" type="HBoxContainer" parent="UI/HUD/InfoPanel/UserUI"]
 layout_mode = 2
+
+[node name="LivesIcon" type="Label" parent="UI/HUD/InfoPanel/UserUI/LivesContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 18
+text = "❤️"
+
+[node name="LivesLabel" type="Label" parent="UI/HUD/InfoPanel/UserUI/LivesContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 18
 text = "Lives: 10"
 
-[node name="WaveLabel" type="Label" parent="UI/HUD/UserUI"]
+[node name="WaveContainer" type="HBoxContainer" parent="UI/HUD/InfoPanel/UserUI"]
 layout_mode = 2
+
+[node name="WaveIcon" type="Label" parent="UI/HUD/InfoPanel/UserUI/WaveContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 18
+text = "⚔️"
+
+[node name="WaveLabel" type="Label" parent="UI/HUD/InfoPanel/UserUI/WaveContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 18
 text = "Wave: 0"
@@ -308,39 +433,52 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.588235)
+color = Color(0, 0, 0, 0.75)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu"]
+[node name="MenuPanel" type="Panel" parent="UI/PauseMenu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -125.0
-offset_right = 100.0
-offset_bottom = 125.0
+offset_left = -150.0
+offset_top = -175.0
+offset_right = 150.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_info_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu/MenuPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="PauseLabel" type="Label" parent="UI/PauseMenu/VBoxContainer"]
+[node name="PauseLabel" type="Label" parent="UI/PauseMenu/MenuPanel/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("6_rurhu")
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 32
 text = "GAME PAUSED"
 horizontal_alignment = 1
 
-[node name="ResumeButton" type="TextureButton" parent="UI/PauseMenu/VBoxContainer"]
+[node name="ResumeButton" type="TextureButton" parent="UI/PauseMenu/MenuPanel/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture_normal = ExtResource("2_6s7g6")
-texture_pressed = ExtResource("3_dp1g0")
+texture_normal = ExtResource("16_new")
+texture_pressed = ExtResource("17_new")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="UI/PauseMenu/VBoxContainer/ResumeButton"]
+[node name="Label" type="Label" parent="UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -348,18 +486,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
 text = "RESUME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsButton" type="TextureButton" parent="UI/PauseMenu/VBoxContainer"]
+[node name="SettingsButton" type="TextureButton" parent="UI/PauseMenu/MenuPanel/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture_normal = ExtResource("2_6s7g6")
-texture_pressed = ExtResource("3_dp1g0")
+texture_normal = ExtResource("16_new")
+texture_pressed = ExtResource("17_new")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="UI/PauseMenu/VBoxContainer/SettingsButton"]
+[node name="Label" type="Label" parent="UI/PauseMenu/MenuPanel/VBoxContainer/SettingsButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -367,18 +506,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
 text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MainMenuButton" type="TextureButton" parent="UI/PauseMenu/VBoxContainer"]
+[node name="MainMenuButton" type="TextureButton" parent="UI/PauseMenu/MenuPanel/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-texture_normal = ExtResource("2_6s7g6")
-texture_pressed = ExtResource("3_dp1g0")
+texture_normal = ExtResource("16_new")
+texture_pressed = ExtResource("17_new")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="UI/PauseMenu/VBoxContainer/MainMenuButton"]
+[node name="Label" type="Label" parent="UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -386,6 +526,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
 text = "MAIN MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
