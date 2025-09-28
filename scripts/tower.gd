@@ -99,7 +99,7 @@ func _process(_delta):
 		pass
 	elif target and weakref(target).get_ref():
 		var direction = target.global_position - global_position
-		$"Basic-tower-top".rotation = direction.angle() + PI/2
+		$"Basic-tower-top".rotation = direction.angle() + PI/2 + PI # Obrót o 180 stopni
 
 func _on_detection_area_body_entered(body):
 	var parent = body.get_parent()
