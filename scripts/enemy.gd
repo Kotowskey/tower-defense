@@ -15,6 +15,7 @@ var current_health: int
 var current_speed: float
 var slow_factor: float = 1.0
 var slow_timer: Timer = null
+var health_bar: ProgressBar
 
 func _ready():
 	current_health = max_health
@@ -27,6 +28,15 @@ func _ready():
 	
 	if is_boss:
 		setup_boss_properties()
+	
+	setup_health_bar()
+
+func setup_health_bar():
+	health_bar = $HealthBar
+	if health_bar:
+		health_bar.max_value = max_health
+		health_bar.value = current_health
+		health_bar.show()
 
 func setup_boss_properties():
 	match boss_type:
@@ -68,6 +78,10 @@ func take_damage(damage):
 		damage = int(damage * 0.7)
 	
 	current_health -= damage
+	
+	if health_bar:
+		health_bar.value = current_health
+	
 	if current_health <= 0:
 		emit_signal("enemy_died")
 		queue_free()
@@ -77,7 +91,7 @@ func take_damage(damage):
 func apply_slow(factor, duration):
 	var slow_resistance = 1.0
 	if is_boss:
-		slow_resistance = 0.5 # bossowie sa bardziej odporni na zamrozenie
+		slow_resistance = 0.5 
 	
 	slow_factor = min(slow_factor, factor * slow_resistance + (1.0 - slow_resistance))
 	current_speed = speed * slow_factor
@@ -86,8 +100,15 @@ func apply_slow(factor, duration):
 	slow_timer.start()
 	
 	$CharacterBody2D/Sprite2D.modulate = Color(0.5, 0.5, 1) if not is_boss else $CharacterBody2D/Sprite2D.modulate * Color(0.8, 0.8, 1.2)
+	
+
+	if health_bar:
+		health_bar.modulate = Color(0.8, 0.8, 1.2)
 
 func _on_slow_timer_timeout():
 	slow_factor = 1.0
 	current_speed = speed
 	$CharacterBody2D/Sprite2D.modulate = Color(1, 1, 1)
+	
+	if health_bar:
+		health_bar.modulate = Color(1, 1, 1)

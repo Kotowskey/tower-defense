@@ -1,9 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8rnd30cftiwq"]
+[gd_scene load_steps=6 format=3 uid="uid://b8rnd30cftiwq"]
 
 [ext_resource type="Script" uid="uid://e7u6efh8ku1n" path="res://scripts/enemy.gd" id="1_t7gky"]
 [ext_resource type="Texture2D" uid="uid://b1m3x5hq1bmmo" path="res://assets/kenney_pixel-vehicle-pack/PNG/Cars/van_large.png" id="2_68b1p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ycia0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.2, 0.2, 0.2, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.9, 0.1, 0.1, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.7, 0.2, 0.7)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="BossEnemy" type="Node2D"]
 script = ExtResource("1_t7gky")
@@ -20,3 +39,15 @@ texture = ExtResource("2_68b1p")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 scale = Vector2(6, 6)
 shape = SubResource("CircleShape2D_ycia0")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(60, 8)
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -37.0
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+max_value = 500.0
+value = 500.0
+show_percentage = false

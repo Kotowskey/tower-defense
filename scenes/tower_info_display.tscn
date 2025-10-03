@@ -51,9 +51,9 @@ alignment = 1
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
 theme_override_fonts/font = ExtResource("2_title_font")
 theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
 text = "TOWER INFO"
 horizontal_alignment = 1
 
@@ -69,42 +69,42 @@ theme_override_constants/separation = 6
 
 [node name="TowerName" type="Label" parent="VBoxContainer/InfoContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 16
-theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
 text = "Name: Basic Tower"
 
 [node name="TowerLevel" type="Label" parent="VBoxContainer/InfoContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
 text = "Level: 1"
 
 [node name="TowerDamage" type="Label" parent="VBoxContainer/InfoContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.7, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(1, 0.7, 0.7, 1)
 text = "Damage: 10"
 
 [node name="TowerRange" type="Label" parent="VBoxContainer/InfoContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 1, 0.7, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.7, 1, 0.7, 1)
 text = "Range: 300"
 
 [node name="TowerFireRate" type="Label" parent="VBoxContainer/InfoContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 1, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.7, 0.7, 1, 1)
 text = "Fire Rate: 1.0/s"
 
 [node name="TowerSpecial" type="Label" parent="VBoxContainer/InfoContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.7, 1, 1, 1)
 text = "Slow: 50%"
