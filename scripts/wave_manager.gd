@@ -89,12 +89,18 @@ func end_wave():
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_enemies):
 		var timer = game_scene.get_tree().create_timer(i * delay)
+		var enemy_type = randi() % 5  # wybor pomiedzy 5 typami przeciwnikow
+		
+		# co czwarty przeciwnik jest mocniejszy
+		if i % 4 == 3:
+			enemy_type = 2 + randi() % 3  # uzywaj silniejszych przeciwnikow (typy 2-4)
+		
 		timer.timeout.connect(func(): 
-			spawn_enemy(health_mult, speed_mult)
+			spawn_enemy(health_mult, speed_mult, enemy_type)
 			enemies_spawned += 1
 		)
 
-func spawn_enemy(health_mult = 1.0, speed_mult = 1.0):
+func spawn_enemy(health_mult = 1.0, speed_mult = 1.0, enemy_type = 0):
 	var enemy = enemy_scene.instantiate()
 	var path = map_node.get_enemy_path()
 	
@@ -103,7 +109,9 @@ func spawn_enemy(health_mult = 1.0, speed_mult = 1.0):
 	
 	enemy.path = path
 	enemy.path_follow = path_follow
+	enemy.enemy_type = enemy_type
 	
+	# Apply properties after setting enemy type
 	enemy.max_health = round(enemy.max_health * health_mult)
 	enemy.speed = enemy.speed * speed_mult
 	
@@ -145,8 +153,8 @@ func spawn_boss_enemy(health_mult = 1.0, speed_mult = 1.0, boss_type = 0):
 	game_scene.add_child(boss)
 	emit_signal("enemy_spawned")
 
-func _on_enemy_died():
-	game_state.add_money(game_state.enemy_reward)
+func _on_enemy_died(enemy_type = 0):
+	game_state.add_money(game_state.get_enemy_reward(enemy_type))
 	emit_signal("enemy_died")
 
 func _on_boss_died():

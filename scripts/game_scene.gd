@@ -20,6 +20,7 @@ func _ready():
 	game_state = load("res://scripts/game_state.gd").new()
 	add_child(game_state)
 	game_state.set_initial_values(player_money, player_lives, enemy_reward)
+	game_state.setup_enemy_rewards()  
 	
 	tower_manager = load("res://scripts/tower_manager.gd").new(self, tower_scene, game_state)
 	add_child(tower_manager)

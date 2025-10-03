@@ -10,6 +10,7 @@ signal enemy_escaped
 @export var value: int = 25
 @export var is_boss: bool = false
 @export var boss_type: int = 0
+@export var enemy_type: int = 0 
 
 var current_health: int
 var current_speed: float
@@ -28,6 +29,8 @@ func _ready():
 	
 	if is_boss:
 		setup_boss_properties()
+	else:
+		setup_enemy_properties()  
 	
 	setup_health_bar()
 
@@ -37,6 +40,46 @@ func setup_health_bar():
 		health_bar.max_value = max_health
 		health_bar.value = current_health
 		health_bar.show()
+
+func setup_enemy_properties():
+	match enemy_type:
+		0:  # standardowy przeciwnik - czerwony zaokraglony
+			max_health = 25
+			speed = 450.0
+			value = 25
+			if has_node("CharacterBody2D/Sprite2D"):
+				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/rounded_red.png")
+		
+		1:  # szybki przeciwnik - czerwony szybki
+			max_health = 15
+			speed = 600.0
+			value = 35
+			if has_node("CharacterBody2D/Sprite2D"):
+				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/sports_red.png")
+		
+		2:  # ciezki przeciwnik - ciezarowka
+			max_health = 50
+			speed = 350.0
+			value = 45
+			if has_node("CharacterBody2D/Sprite2D"):
+				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/truckcabin_vintage.png")
+				
+		3:  # wzmocniony - van
+			max_health = 35
+			speed = 400.0
+			value = 40
+			if has_node("CharacterBody2D/Sprite2D"):
+				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/van_large.png")
+				
+		4:  # specjalny przeciwnik - policja
+			max_health = 30
+			speed = 500.0
+			value = 50
+			if has_node("CharacterBody2D/Sprite2D"):
+				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/police.png")
+	
+	current_health = max_health
+	current_speed = speed
 
 func setup_boss_properties():
 	match boss_type:

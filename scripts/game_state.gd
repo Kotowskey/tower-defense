@@ -13,6 +13,8 @@ var difficulty_multiplier: float = 1.0
 var enemy_reward: int = 25
 var tower_cost: int = 100
 
+var enemy_rewards = {}
+
 func _ready():
 	pass
 
@@ -23,6 +25,20 @@ func set_initial_values(money: int, lives: int, reward: int):
 	emit_signal("money_changed", player_money)
 	emit_signal("lives_changed", player_lives)
 	emit_signal("wave_changed", current_wave)
+
+func setup_enemy_rewards():
+	enemy_rewards = {
+		0: enemy_reward,         # standardowy- bazowa nagroda
+		1: int(enemy_reward * 1.4),  # szybki  - wiecej nagrody
+		2: int(enemy_reward * 1.8),  # ciezki  - najwieksza nagroda
+		3: int(enemy_reward * 1.6),  # wzmozniony 
+		4: int(enemy_reward * 2.0)   # specjalny - najwyzsza nagroda
+	}
+
+func get_enemy_reward(enemy_type = 0):
+	if enemy_rewards.has(enemy_type):
+		return enemy_rewards[enemy_type]
+	return enemy_reward
 
 func add_money(amount: int):
 	player_money += amount
