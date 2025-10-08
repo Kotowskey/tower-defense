@@ -28,7 +28,8 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 
 func _process(_delta):
 	if tower_manager.get_selected_tower():
-		can_upgrade = true
+		var selected_tower = tower_manager.get_selected_tower()
+		can_upgrade = selected_tower.can_upgrade()
 		upgrade_cost = tower_manager.get_upgrade_cost()
 	else:
 		can_upgrade = false
@@ -85,18 +86,26 @@ func update_wave_ui(wave_number = null):
 func update_upgrade_ui():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
 		var upgrade_button = game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Upgrade")
-		if can_upgrade and game_state.has_enough_money(upgrade_cost):
+		var selected_tower = tower_manager.get_selected_tower()
+		
+		if selected_tower and selected_tower.tower_level >= selected_tower.max_level:
+			upgrade_button.disabled = true
+			upgrade_button.modulate = Color(0.3, 0.3, 0.3, 1)
+			if upgrade_button.has_node("Label"):
+				upgrade_button.get_node("Label").text = "MAX\nLEVEL"
+		elif can_upgrade and game_state.has_enough_money(upgrade_cost):
 			upgrade_button.disabled = false
 			upgrade_button.modulate = Color(1, 1, 1, 1)
+			if upgrade_button.has_node("Label"):
+				upgrade_button.get_node("Label").text = "Upgrade\n" + str(upgrade_cost)
 		else:
 			upgrade_button.disabled = true
 			upgrade_button.modulate = Color(0.5, 0.5, 0.5, 1)
-		
-		if upgrade_button.has_node("Label"):
-			if can_upgrade:
-				upgrade_button.get_node("Label").text = "Upgrade\n" + str(upgrade_cost)
-			else:
-				upgrade_button.get_node("Label").text = "Upgrade"
+			if upgrade_button.has_node("Label"):
+				if can_upgrade:
+					upgrade_button.get_node("Label").text = "Upgrade\n" + str(upgrade_cost)
+				else:
+					upgrade_button.get_node("Label").text = "Upgrade"
 
 func _on_tower_basic_pressed():
 	tower_manager.start_tower_placement(0)

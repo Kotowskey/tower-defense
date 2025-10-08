@@ -14,6 +14,7 @@ var tower_properties = {
 		"range": 300.0,
 		"damage": 10,
 		"fire_rate": 1.0,
+		"max_level": 5,
 		"sprite": "res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_dark.png",
 		"description": "Standard tower with balanced stats"
 	},
@@ -23,6 +24,7 @@ var tower_properties = {
 		"range": 250.0,
 		"damage": 5,
 		"fire_rate": 1.5,
+		"max_level": 5,
 		"sprite": "res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_red.png",
 		"description": "Deals damage to all enemies in range"
 	},
@@ -32,6 +34,7 @@ var tower_properties = {
 		"range": 500.0,
 		"damage": 30,
 		"fire_rate": 2.0,
+		"max_level": 5,
 		"sprite": "res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_green.png", 
 		"description": "Long range and high damage but slow fire rate"
 	},
@@ -43,6 +46,7 @@ var tower_properties = {
 		"fire_rate": 1.0,
 		"slow_factor": 0.5,
 		"slow_duration": 2.0,
+		"max_level": 5,
 		"sprite": "res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_blue.png", 
 		"description": "Slows down enemies in range"
 	}

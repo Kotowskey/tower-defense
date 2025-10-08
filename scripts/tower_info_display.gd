@@ -4,12 +4,15 @@ func _ready():
 	visible = false
 
 func set_tower_info(tower_name: String, tower_level: int, tower_damage: int, tower_range: float, 
-					tower_fire_rate: float, has_slow: bool = false, slow_factor: float = 0.0):
+					tower_fire_rate: float, has_slow: bool = false, slow_factor: float = 0.0, max_level: int = 5):
 	if has_node("VBoxContainer/InfoContainer/TowerName"):
 		$VBoxContainer/InfoContainer/TowerName.text = "Name: " + tower_name
 		
 	if has_node("VBoxContainer/InfoContainer/TowerLevel"):
-		$VBoxContainer/InfoContainer/TowerLevel.text = "Level: " + str(tower_level)
+		var level_text = "Level: " + str(tower_level) + "/" + str(max_level)
+		if tower_level >= max_level:
+			level_text += " (MAX)"
+		$VBoxContainer/InfoContainer/TowerLevel.text = level_text
 		
 	if has_node("VBoxContainer/InfoContainer/TowerDamage"):
 		$VBoxContainer/InfoContainer/TowerDamage.text = "Damage: " + str(tower_damage)

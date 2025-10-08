@@ -2,6 +2,7 @@ extends Node2D
 
 @export var tower_type: int = 0 
 @export var tower_level: int = 1 
+@export var max_level: int = 5
 
 @export var tower_cost: int = 100
 @export var tower_range: float = 300.0
@@ -193,6 +194,9 @@ func fire_at_all_targets():
 				t.take_damage(tower_damage)
 
 func upgrade():
+	if tower_level >= max_level:
+		return -1  
+		
 	tower_level += 1
 	
 	match tower_type:
@@ -218,6 +222,12 @@ func upgrade():
 		$RangeIndicator.set_range(tower_range)
 	
 	return tower_cost * tower_level
+
+func can_upgrade() -> bool:
+	return tower_level < max_level
+
+func get_max_level() -> int:
+	return max_level
 
 func show_range(display_range = true):
 	if has_node("RangeIndicator"):
