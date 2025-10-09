@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cuv0y0akcj4du"]
 
 [ext_resource type="Script" uid="uid://cn0fwq0al86o6" path="res://scripts/tower_info_display.gd" id="1_dfuia"]
-[ext_resource type="FontFile" uid="uid://dq2bxbbw8nb5l" path="res://assets/ui/kenny/fonts/Kenney Future.ttf" id="2_title_font"]
-[ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="3_body_font"]
+[ext_resource type="FontFile" uid="uid://x0o8s4rr5bxr" path="res://assets/ui/kenny/fonts/Kenney Future.ttf" id="2_title_font"]
+[ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="3_body_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info_background"]
 bg_color = Color(0.05, 0.05, 0.1, 0.95)

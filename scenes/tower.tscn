@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cv5v738oij1r1"]
 
 [ext_resource type="Script" uid="uid://bg26d85ppkpdy" path="res://scripts/tower.gd" id="1_wi6yv"]
-[ext_resource type="Texture2D" uid="uid://cjbkpa6lgqm56" path="res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_dark.png" id="2_ktxwe"]
-[ext_resource type="AudioStream" uid="uid://d0vbyq1dpnlvx" path="res://assets/effects/baloon_popping.wav" id="3_ktxwe"]
+[ext_resource type="Texture2D" uid="uid://cejmn2dvpj3xf" path="res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_dark.png" id="2_ktxwe"]
+[ext_resource type="AudioStream" uid="uid://cyjqkbi6g4i13" path="res://assets/effects/baloon_popping.wav" id="3_ktxwe"]
 
 [node name="Tower" type="Node2D"]
 script = ExtResource("1_wi6yv")

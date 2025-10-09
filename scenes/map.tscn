@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=4 uid="uid://cah106dou6wt3"]
 
 [ext_resource type="Script" uid="uid://dk8fb2h31quj7" path="res://scripts/map.gd" id="1_h4gj2"]
-[ext_resource type="Texture2D" uid="uid://dv8srbf8ef3x" path="res://assets/tiles/tower-defense-tiles-128.svg" id="1_pgknr"]
-[ext_resource type="Texture2D" uid="uid://dftyw7moevu72" path="res://assets/kenney_top-down-tanks-redux/Tilesheet/terrainTiles_default.png" id="3_0cso3"]
-[ext_resource type="Texture2D" uid="uid://c8xq1o771il4y" path="res://assets/kenney_top-down-tanks-redux/Tilesheet/terrainTiles_retina.png" id="4_2klcf"]
+[ext_resource type="Texture2D" uid="uid://dwtijt50yj5el" path="res://assets/tiles/tower-defense-tiles-128.svg" id="1_pgknr"]
+[ext_resource type="Texture2D" uid="uid://d1mtce4fiqq4c" path="res://assets/kenney_top-down-tanks-redux/Tilesheet/terrainTiles_default.png" id="3_0cso3"]
+[ext_resource type="Texture2D" uid="uid://cp0b2fbt0u15k" path="res://assets/kenney_top-down-tanks-redux/Tilesheet/terrainTiles_retina.png" id="4_2klcf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a1ht3"]
 texture = ExtResource("1_pgknr")

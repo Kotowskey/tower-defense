@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8rnd30cftiwq"]
+[gd_scene load_steps=6 format=3 uid="uid://dxfhlhabfpkgc"]
 
 [ext_resource type="Script" uid="uid://e7u6efh8ku1n" path="res://scripts/enemy.gd" id="1_t7gky"]
-[ext_resource type="Texture2D" uid="uid://b1m3x5hq1bmmo" path="res://assets/kenney_pixel-vehicle-pack/PNG/Cars/van_large.png" id="2_68b1p"]
+[ext_resource type="Texture2D" uid="uid://cnh6f227tj8vr" path="res://assets/kenney_pixel-vehicle-pack/PNG/Cars/van_large.png" id="2_68b1p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ycia0"]
 
