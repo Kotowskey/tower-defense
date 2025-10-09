@@ -14,7 +14,6 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	tower_manager = p_tower_manager
 	wave_manager = p_wave_manager
 	
-	# Połącz sygnały
 	game_state.connect("money_changed", Callable(self, "update_money_ui"))
 	game_state.connect("lives_changed", Callable(self, "update_lives_ui"))
 	game_state.connect("wave_changed", Callable(self, "update_wave_ui"))
@@ -55,7 +54,9 @@ func connect_ui_buttons():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton"):
 		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").connect("pressed", Callable(self, "_on_spawn_button_pressed"))
 	
-	# Connect pause menu buttons
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Sell"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Sell").connect("pressed", Callable(self, "_on_sell_pressed"))
+	
 	if game_scene.has_node("UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton"):
 		game_scene.get_node("UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton").connect("pressed", Callable(self, "_on_resume_pressed"))
 	
@@ -106,6 +107,21 @@ func update_upgrade_ui():
 					upgrade_button.get_node("Label").text = "Upgrade\n" + str(upgrade_cost)
 				else:
 					upgrade_button.get_node("Label").text = "Upgrade"
+	
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Sell"):
+		var sell_button = game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Sell")
+		var selected_tower = tower_manager.get_selected_tower()
+		if selected_tower:
+			var refund = tower_manager.get_sell_refund()
+			sell_button.disabled = false
+			sell_button.modulate = Color(1, 1, 1, 1)
+			if sell_button.has_node("Label"):
+				sell_button.get_node("Label").text = "Sell\n+" + str(refund)
+		else:
+			sell_button.disabled = true
+			sell_button.modulate = Color(0.5, 0.5, 0.5, 1)
+			if sell_button.has_node("Label"):
+				sell_button.get_node("Label").text = "Sell"
 
 func _on_tower_basic_pressed():
 	tower_manager.start_tower_placement(0)
@@ -121,6 +137,10 @@ func _on_tower_slow_pressed():
 
 func _on_upgrade_pressed():
 	tower_manager.upgrade_selected_tower()
+
+func _on_sell_pressed():
+	tower_manager.sell_selected_tower()
+	update_upgrade_ui()
 
 func _on_spawn_button_pressed():
 	if not wave_manager.is_wave_in_progress():
@@ -139,29 +159,28 @@ func _on_tower_selected(tower):
 		var selected_tower_ui = game_scene.get_node("UI/HUD/SelectedTower")
 		selected_tower_ui.show()
 		
-		# Update tower type label
 		if selected_tower_ui.has_node("TowerTypeLabel"):
 			selected_tower_ui.get_node("TowerTypeLabel").text = "Tower Type: " + str(tower_manager.get_tower_type(tower))
 		
-		# Update tower level label
 		if selected_tower_ui.has_node("TowerLevelLabel"):
 			selected_tower_ui.get_node("TowerLevelLabel").text = "Level: " + str(tower_manager.get_tower_level(tower))
 		
-		# Update tower range label
 		if selected_tower_ui.has_node("TowerRangeLabel"):
 			selected_tower_ui.get_node("TowerRangeLabel").text = "Range: " + str(tower_manager.get_tower_range(tower))
 		
-		# Update tower damage label
 		if selected_tower_ui.has_node("TowerDamageLabel"):
 			selected_tower_ui.get_node("TowerDamageLabel").text = "Damage: " + str(tower_manager.get_tower_damage(tower))
 		
-		# Update tower fire rate label
 		if selected_tower_ui.has_node("TowerFireRateLabel"):
 			selected_tower_ui.get_node("TowerFireRateLabel").text = "Fire Rate: " + str(tower_manager.get_tower_fire_rate(tower))
+
+	update_upgrade_ui()
 
 func _on_tower_deselected():
 	if game_scene.has_node("UI/HUD/SelectedTower"):
 		game_scene.get_node("UI/HUD/SelectedTower").hide()
+
+	update_upgrade_ui()
 
 func _on_wave_started():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton"):

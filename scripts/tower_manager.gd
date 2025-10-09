@@ -13,6 +13,7 @@ var selected_tower = null
 var tower_info_display = null
 var minimum_tower_distance: float = 100.0
 var is_valid_position: bool = true
+var sell_refund_ratio: float = 0.7  
 
 var tower_costs = {
 	0: 100, # Basic tower
@@ -196,3 +197,33 @@ func get_upgrade_cost():
 
 func is_in_building_mode():
 	return building_mode
+
+
+func get_tower_invested_cost(tower) -> int:
+	var total: int = int(tower.tower_cost)
+	for l in range(1, tower.tower_level):
+		total += int(tower.tower_cost) * l
+	return total
+
+func get_sell_refund_for_tower(tower) -> int:
+	return int(round(get_tower_invested_cost(tower) * sell_refund_ratio))
+
+func get_sell_refund() -> int:
+	if selected_tower and selected_tower.get_ref():
+		return get_sell_refund_for_tower(selected_tower.get_ref())
+	return 0
+
+func sell_selected_tower() -> bool:
+	if selected_tower and selected_tower.get_ref():
+		var tower = selected_tower.get_ref()
+		var refund = get_sell_refund_for_tower(tower)
+		game_state.add_money(refund)
+		if tower.has_node("RangeIndicator"):
+			tower.get_node("RangeIndicator").queue_free()
+		tower.queue_free()
+		selected_tower = null
+		if tower_info_display:
+			tower_info_display.visible = false
+		emit_signal("tower_deselected")
+		return true
+	return false

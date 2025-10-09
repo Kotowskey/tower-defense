@@ -79,7 +79,7 @@ mouse_filter = 2
 color = Color(0.05, 0.05, 0.1, 0.1)
 
 [node name="BuildPanel" type="Panel" parent="UI/HUD"]
-custom_minimum_size = Vector2(120, 600)
+custom_minimum_size = Vector2(120, 750)
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -294,6 +294,27 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 12
 text = "UPGRADE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sell" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/HUD/BuildPanel/BuildUI/Sell"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 12
+text = "SELL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
