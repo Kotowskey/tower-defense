@@ -16,7 +16,19 @@ var wave_manager
 var ui_manager
 
 func _ready():
-	# Inicjalizacja komponentów
+	var selected_map_path := ""
+	if has_node("/root/DifficultyManager"):
+		selected_map_path = str(get_node("/root/DifficultyManager").get_meta("selected_map_path", ""))
+	var default_map_path := "res://scenes/map.tscn"
+	if selected_map_path != "" and selected_map_path != default_map_path:
+		if has_node("Map"):
+			$Map.free()
+		var map_packed := load(selected_map_path)
+		if map_packed:
+			var new_map = map_packed.instantiate()
+			new_map.name = "Map"
+			add_child(new_map)
+	
 	game_state = load("res://scripts/game_state.gd").new()
 	add_child(game_state)
 	game_state.set_initial_values(player_money, player_lives, enemy_reward)
@@ -32,7 +44,6 @@ func _ready():
 	ui_manager = load("res://scripts/ui_manager.gd").new(self, game_state, tower_manager, wave_manager)
 	add_child(ui_manager)
 	
-	# Setup UI i połącz sygnały
 	var info_display_scene = load("res://scenes/tower_info_display.tscn")
 	var tower_info_display = info_display_scene.instantiate()
 	tower_info_display.visible = false
