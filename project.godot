@@ -12,15 +12,21 @@ config_version=5
 
 config/name="Tower Defense"
 run/main_scene="res://scenes/scene_handler.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="uid://bmf1yhmw1gdmj"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
+window/size/mode=2
+window/size/resizable=true
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [dotnet]
 
 project/assembly_name="Tower Defense"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
