@@ -43,35 +43,35 @@ func setup_health_bar():
 
 func setup_enemy_properties():
 	match enemy_type:
-		0:  # standardowy przeciwnik - czerwony zaokraglony
+		0:
 			max_health = 25
 			speed = 450.0
 			value = 25
 			if has_node("CharacterBody2D/Sprite2D"):
 				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/rounded_red.png")
 		
-		1:  # szybki przeciwnik - czerwony szybki
+		1:
 			max_health = 15
 			speed = 600.0
 			value = 35
 			if has_node("CharacterBody2D/Sprite2D"):
 				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/sports_red.png")
 		
-		2:  # ciezki przeciwnik - ciezarowka
+		2:
 			max_health = 50
 			speed = 350.0
 			value = 45
 			if has_node("CharacterBody2D/Sprite2D"):
 				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/truckcabin_vintage.png")
 				
-		3:  # wzmocniony - van
+		3:
 			max_health = 35
 			speed = 400.0
 			value = 40
 			if has_node("CharacterBody2D/Sprite2D"):
 				$CharacterBody2D/Sprite2D.texture = load("res://assets/kenney_pixel-vehicle-pack/PNG/Cars/van_large.png")
 				
-		4:  # specjalny przeciwnik - policja
+		4:
 			max_health = 30
 			speed = 500.0
 			value = 50
@@ -117,7 +117,7 @@ func _process(delta):
 			queue_free()
 
 func take_damage(damage):
-	if is_boss and boss_type == 2: # shield boss mniejszy damage
+	if is_boss and boss_type == 2:
 		damage = int(damage * 0.7)
 	
 	current_health -= damage

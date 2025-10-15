@@ -28,11 +28,11 @@ func set_initial_values(money: int, lives: int, reward: int):
 
 func setup_enemy_rewards():
 	enemy_rewards = {
-		0: enemy_reward,         # standardowy- bazowa nagroda
-		1: int(enemy_reward * 1.4),  # szybki  - wiecej nagrody
-		2: int(enemy_reward * 1.8),  # ciezki  - najwieksza nagroda
-		3: int(enemy_reward * 1.6),  # wzmozniony 
-		4: int(enemy_reward * 2.0)   # specjalny - najwyzsza nagroda
+		0: enemy_reward,
+		1: int(enemy_reward * 1.4),
+		2: int(enemy_reward * 1.8),
+		3: int(enemy_reward * 1.6),
+		4: int(enemy_reward * 2.0)
 	}
 
 func get_enemy_reward(enemy_type = 0):
@@ -74,6 +74,6 @@ func get_wave_reward() -> int:
 	var wave_reward = 100 + (current_wave * 20)
 	
 	if is_boss_wave:
-		wave_reward *= 2 # podwojna nagroda za bossow
+		wave_reward *= 2
 	
 	return wave_reward

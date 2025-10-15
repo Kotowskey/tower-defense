@@ -46,10 +46,10 @@ func start_wave():
 	enemies_spawned = 0
 	
 	var current_wave = game_state.get_current_wave()
-	var is_boss_wave = (current_wave % 5 == 0) # boss co 5 rund
+	var is_boss_wave = (current_wave % 5 == 0)
 	
 	if is_boss_wave:
-		enemies_to_kill = 1 + (current_wave / 10) # ile bossow
+		enemies_to_kill = 1 + (current_wave / 10)
 	else:
 		enemies_to_kill = wave_size + (current_wave * 2)
 	
@@ -89,11 +89,10 @@ func end_wave():
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_enemies):
 		var timer = game_scene.get_tree().create_timer(i * delay)
-		var enemy_type = randi() % 5  # wybor pomiedzy 5 typami przeciwnikow
+		var enemy_type = randi() % 5
 		
-		# co czwarty przeciwnik jest mocniejszy
 		if i % 4 == 3:
-			enemy_type = 2 + randi() % 3  # uzywaj silniejszych przeciwnikow (typy 2-4)
+			enemy_type = 2 + randi() % 3
 		
 		timer.timeout.connect(func(): 
 			spawn_enemy(health_mult, speed_mult, enemy_type)
@@ -125,9 +124,9 @@ func spawn_enemy(health_mult = 1.0, speed_mult = 1.0, enemy_type = 0):
 
 func spawn_boss_wave(num_bosses = 1, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_bosses):
-		var timer = game_scene.get_tree().create_timer(i * 3.0) # dluzsze opoznienie po bossach
+		var timer = game_scene.get_tree().create_timer(i * 3.0)
 		timer.timeout.connect(func(): 
-			spawn_boss_enemy(health_mult, speed_mult, i % 3) # rozni bossowe
+			spawn_boss_enemy(health_mult, speed_mult, i % 3)
 			enemies_spawned += 1
 		)
 
@@ -158,7 +157,7 @@ func _on_enemy_died(enemy_type = 0):
 	emit_signal("enemy_died")
 
 func _on_boss_died():
-	var boss_reward = game_state.enemy_reward * 8 # 8x wiecej nagrody za bossa
+	var boss_reward = game_state.enemy_reward * 8
 	game_state.add_money(boss_reward)
 	emit_signal("enemy_died")
 
