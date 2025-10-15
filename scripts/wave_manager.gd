@@ -18,6 +18,20 @@ var enemies_to_kill: int = 0
 var wave_size: int = 5
 var wave_delay: float = 1.0
 
+# Define enemy classes
+var enemy_classes = {
+	0: preload("res://scripts/enemies/basic_enemy.gd"),
+	1: preload("res://scripts/enemies/fast_enemy.gd"),
+	2: preload("res://scripts/enemies/tank_enemy.gd")
+}
+
+# Define boss enemy classes
+var boss_classes = {
+	0: preload("res://scripts/enemies/boss/tank_boss.gd"),
+	1: preload("res://scripts/enemies/boss/speed_boss.gd"),
+	2: preload("res://scripts/enemies/boss/shield_boss.gd")
+}
+
 func _init(p_game_scene, p_enemy_scene: PackedScene, p_boss_enemy_scene: PackedScene, p_game_state, p_wave_size: int, p_wave_delay: float):
 	game_scene = p_game_scene
 	enemy_scene = p_enemy_scene
@@ -89,10 +103,7 @@ func end_wave():
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_enemies):
 		var timer = game_scene.get_tree().create_timer(i * delay)
-		var enemy_type = randi() % 5
-		
-		if i % 4 == 3:
-			enemy_type = 2 + randi() % 3
+		var enemy_type = randi() % 3  # Now we have 3 distinct enemy types
 		
 		timer.timeout.connect(func(): 
 			spawn_enemy(health_mult, speed_mult, enemy_type)
@@ -106,13 +117,23 @@ func spawn_enemy(health_mult = 1.0, speed_mult = 1.0, enemy_type = 0):
 	var path_follow = PathFollow2D.new()
 	path.add_child(path_follow)
 	
+	# Apply the correct enemy script based on type
+	if enemy_classes.has(enemy_type):
+		enemy.set_script(enemy_classes[enemy_type])
+	
 	enemy.path = path
 	enemy.path_follow = path_follow
-	enemy.enemy_type = enemy_type
 	
-	# Apply properties after setting enemy type
+	# Apply property multipliers after setting type via script
+	enemy._ready()  # Call _ready to initialize properties
 	enemy.max_health = round(enemy.max_health * health_mult)
+	enemy.current_health = enemy.max_health
 	enemy.speed = enemy.speed * speed_mult
+	enemy.current_speed = enemy.speed
+	
+	if enemy.has_node("HealthBar"):
+		enemy.get_node("HealthBar").max_value = enemy.max_health
+		enemy.get_node("HealthBar").value = enemy.current_health
 	
 	enemy.connect("enemy_died", Callable(self, "_on_enemy_died"))
 	enemy.connect("enemy_escaped", Callable(self, "_on_enemy_escaped"))
@@ -125,8 +146,9 @@ func spawn_enemy(health_mult = 1.0, speed_mult = 1.0, enemy_type = 0):
 func spawn_boss_wave(num_bosses = 1, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_bosses):
 		var timer = game_scene.get_tree().create_timer(i * 3.0)
+		var boss_type = i % 3
 		timer.timeout.connect(func(): 
-			spawn_boss_enemy(health_mult, speed_mult, i % 3)
+			spawn_boss_enemy(health_mult, speed_mult, boss_type)
 			enemies_spawned += 1
 		)
 
@@ -137,12 +159,22 @@ func spawn_boss_enemy(health_mult = 1.0, speed_mult = 1.0, boss_type = 0):
 	var path_follow = PathFollow2D.new()
 	path.add_child(path_follow)
 	
+	# Apply the correct boss script based on type
+	if boss_classes.has(boss_type):
+		boss.set_script(boss_classes[boss_type])
+	
 	boss.path = path
 	boss.path_follow = path_follow
-	boss.boss_type = boss_type
 	
+	boss._ready()  # Call _ready to initialize properties
 	boss.max_health = round(boss.max_health * health_mult)
+	boss.current_health = boss.max_health
 	boss.speed = boss.speed * speed_mult
+	boss.current_speed = boss.speed
+	
+	if boss.has_node("HealthBar"):
+		boss.get_node("HealthBar").max_value = boss.max_health
+		boss.get_node("HealthBar").value = boss.current_health
 	
 	boss.connect("enemy_died", Callable(self, "_on_boss_died"))
 	boss.connect("enemy_escaped", Callable(self, "_on_enemy_escaped"))
@@ -156,7 +188,7 @@ func _on_enemy_died(enemy_type = 0):
 	game_state.add_money(game_state.get_enemy_reward(enemy_type))
 	emit_signal("enemy_died")
 
-func _on_boss_died():
+func _on_boss_died(_enemy_type = 0):
 	var boss_reward = game_state.enemy_reward * 8
 	game_state.add_money(boss_reward)
 	emit_signal("enemy_died")

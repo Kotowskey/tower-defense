@@ -13,13 +13,21 @@ var selected_tower = null
 var tower_info_display = null
 var minimum_tower_distance: float = 100.0
 var is_valid_position: bool = true
-var sell_refund_ratio: float = 0.7  
+var sell_refund_ratio: float = 0.7
+
+# Define tower classes and costs
+var tower_classes = {
+	0: preload("res://scripts/towers/basic_tower.gd"),
+	1: preload("res://scripts/towers/rocket_tower.gd"),
+	2: preload("res://scripts/towers/sniper_tower.gd"),
+	3: preload("res://scripts/towers/ice_tower.gd")
+}
 
 var tower_costs = {
 	0: 100, # Basic tower
-	1: 200, # Area tower
+	1: 200, # Rocket tower
 	2: 300, # Sniper tower
-	3: 150  # Slow tower
+	3: 150  # Ice tower
 }
 
 func _init(p_game_scene, p_tower_scene: PackedScene, p_game_state):
@@ -51,7 +59,10 @@ func start_tower_placement(tower_type):
 		tower_preview.queue_free()
 
 	tower_preview = tower_scene.instantiate()
-	tower_preview.tower_type = tower_type
+	
+	# Apply the correct tower script based on type
+	if tower_classes.has(tower_type):
+		tower_preview.set_script(tower_classes[tower_type])
 	
 	game_scene.add_child(tower_preview)
 	
@@ -84,7 +95,11 @@ func place_tower(pos):
 	if game_state.has_enough_money(selected_tower_cost):
 		var new_tower = tower_scene.instantiate()
 		new_tower.position = pos
-		new_tower.tower_type = current_tower_type
+		
+		# Apply the correct tower script based on type
+		if tower_classes.has(current_tower_type):
+			new_tower.set_script(tower_classes[current_tower_type])
+		
 		new_tower.add_to_group("towers")
 
 		game_scene.add_child(new_tower)
@@ -148,14 +163,17 @@ func deselect_tower():
 
 func update_tower_info_display(tower):
 	if tower_info_display:
+		var stats = tower.get_tower_stats()
+		
 		tower_info_display.set_tower_info(
-			tower.tower_name,
-			tower.tower_level,
-			tower.tower_damage,
-			tower.tower_range,
-			tower.tower_fire_rate,
-			tower.tower_type == 3,  
-			tower.slow_factor if tower.tower_type == 3 else 0.0
+			stats.name,
+			stats.level,
+			stats.damage,
+			stats.range,
+			stats.fire_rate,
+			tower is IceTower,  
+			stats.get("slow_factor", 0.0),
+			stats.max_level
 		)
 
 func upgrade_selected_tower():
