@@ -29,19 +29,19 @@ func _ready():
 			new_map.name = "Map"
 			add_child(new_map)
 	
-	game_state = load("res://scripts/game_state.gd").new()
+	game_state = load("res://scripts/managers/game_state.gd").new()
 	add_child(game_state)
 	game_state.set_initial_values(player_money, player_lives, enemy_reward)
 	game_state.setup_enemy_rewards()  
 	
-	tower_manager = load("res://scripts/tower_manager.gd").new(self, tower_scene, game_state)
+	tower_manager = load("res://scripts/managers/tower_manager.gd").new(self, tower_scene, game_state)
 	add_child(tower_manager)
 	
-	wave_manager = load("res://scripts/wave_manager.gd").new(self, enemy_scene, boss_enemy_scene, game_state, wave_size, wave_delay)
+	wave_manager = load("res://scripts/managers/wave_manager.gd").new(self, enemy_scene, boss_enemy_scene, game_state, wave_size, wave_delay)
 	add_child(wave_manager)
 	wave_manager.setup_map($Map)
 	
-	ui_manager = load("res://scripts/ui_manager.gd").new(self, game_state, tower_manager, wave_manager)
+	ui_manager = load("res://scripts/ui/ui_manager.gd").new(self, game_state, tower_manager, wave_manager)
 	add_child(ui_manager)
 	
 	var info_display_scene = load("res://scenes/tower_info_display.tscn")

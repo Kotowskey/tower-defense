@@ -10,7 +10,7 @@ func _ready():
 
 func setup_difficulty_manager():
 	if not get_node_or_null("/root/DifficultyManager"):
-		var diff_manager = load("res://scripts/difficulty_manager.gd").new()
+		var diff_manager = load("res://scripts/managers/difficulty_manager.gd").new()
 		diff_manager.name = "DifficultyManager"
 		get_node("/root").add_child(diff_manager)
 	var dm = get_node("/root/DifficultyManager")
