@@ -2,7 +2,6 @@ extends Node2D
 class_name BaseTower
 
 signal tower_fired(target)
-signal tower_sold
 signal tower_upgraded
 
 @export var tower_level: int = 1 

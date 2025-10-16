@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkvq5x71ymhwc"]
+[gd_scene load_steps=5 format=3 uid="uid://xlnnyevnltm"]
 
-[ext_resource type="Script" path="res://scripts/ui/map_selector.gd" id="1_map_selector"]
-[ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_font_narrow"]
-[ext_resource type="Texture2D" uid="uid://b4c66sov7o72l" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="3_button_flat"]
-[ext_resource type="Texture2D" uid="uid://c4etfg62owyda" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="4_button_pressed"]
+[ext_resource type="Script" uid="uid://djfmxpw7hl65n" path="res://scripts/ui/map_selector.gd" id="1_map_selector"]
+[ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_font_narrow"]
+[ext_resource type="Texture2D" uid="uid://trnteubyptxo" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="3_button_flat"]
+[ext_resource type="Texture2D" uid="uid://b5enunnwcrptf" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="4_button_pressed"]
 
 [node name="MapSelector" type="Control"]
 layout_mode = 3

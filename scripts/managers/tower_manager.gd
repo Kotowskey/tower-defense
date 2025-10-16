@@ -183,7 +183,7 @@ func upgrade_selected_tower():
 		
 		if game_state.has_enough_money(cost):
 			game_state.reduce_money(cost)
-			var new_cost = tower.upgrade()
+			var _new_cost = tower.upgrade()
 			
 			update_tower_info_display(tower)
 			
