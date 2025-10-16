@@ -88,6 +88,8 @@ func _input(event):
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"): 
 		ui_manager.toggle_pause_menu()
+	elif event.is_action_pressed("toggle_build_menu"):
+		ui_manager.toggle_build_menu()
 
 func _on_restart_pressed():
 	get_tree().paused = false

@@ -7,6 +7,7 @@ var wave_manager
 
 var can_upgrade = false
 var upgrade_cost = 0
+var build_menu_visible = false
 
 func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	game_scene = p_game_scene
@@ -36,6 +37,9 @@ func _process(_delta):
 	update_upgrade_ui()
 
 func connect_ui_buttons():
+	if game_scene.has_node("UI/HUD/BuildPanel"):
+		game_scene.get_node("UI/HUD/BuildPanel").visible = false
+	
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerBasic"):
 		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerBasic").connect("pressed", Callable(self, "_on_tower_basic_pressed"))
 	
@@ -237,3 +241,9 @@ func toggle_pause_menu():
 		pause_menu.show()
 		game_scene.get_tree().paused = true
 		game_scene.pause_music()
+
+func toggle_build_menu():
+	if game_scene.has_node("UI/HUD/BuildPanel"):
+		var build_panel = game_scene.get_node("UI/HUD/BuildPanel")
+		build_menu_visible = !build_menu_visible
+		build_panel.visible = build_menu_visible
