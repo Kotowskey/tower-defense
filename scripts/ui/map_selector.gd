@@ -13,6 +13,7 @@ var map_name_label: Label
 var map_description_label: Label
 var difficulty_label: Label
 var preview_texture_rect: TextureRect
+var no_preview_label: Label
 var select_button: TextureButton
 
 func _ready():
@@ -27,7 +28,7 @@ func _initialize_maps():
 		"Classic Route",
 		"Standard map with a simple path.\nGood for beginners.",
 		"res://scenes/map.tscn",
-		"res://assets/ui/map_previews/map1_preview.png",
+		"res://assets/maps/map1.png",
 		1,
 		false
 	)
@@ -37,7 +38,7 @@ func _initialize_maps():
 		"Winding Road",
 		"Advanced map with many turns.\nRequires strategic planning.",
 		"res://scenes/map2.tscn",
-		"res://assets/ui/map_previews/map2_preview.png",
+		"res://assets/maps/map2.png",
 		3,
 		false
 	)
@@ -58,6 +59,9 @@ func _setup_ui_references():
 	
 	if has_node("Panel/VBoxContainer/DetailsPanel/DetailsContainer/PreviewPanel/PreviewRect"):
 		preview_texture_rect = $Panel/VBoxContainer/DetailsPanel/DetailsContainer/PreviewPanel/PreviewRect
+	
+	if has_node("Panel/VBoxContainer/DetailsPanel/DetailsContainer/PreviewPanel/NoPreviewLabel"):
+		no_preview_label = $Panel/VBoxContainer/DetailsPanel/DetailsContainer/PreviewPanel/NoPreviewLabel
 	
 	if has_node("Panel/VBoxContainer/ButtonsContainer/SelectButton"):
 		select_button = $Panel/VBoxContainer/ButtonsContainer/SelectButton
@@ -148,8 +152,12 @@ func _update_details_panel(map_data: MapData):
 	if preview_texture_rect:
 		if map_data.preview_image_path != "" and ResourceLoader.exists(map_data.preview_image_path):
 			preview_texture_rect.texture = load(map_data.preview_image_path)
+			if no_preview_label:
+				no_preview_label.visible = false
 		else:
 			preview_texture_rect.texture = null
+			if no_preview_label:
+				no_preview_label.visible = true
 
 func _on_select_button_pressed():
 	if selected_map_data:
