@@ -21,6 +21,30 @@ func _ready():
 	
 	super._ready()
 
+func _on_detection_area_body_entered(body):
+	var parent = body.get_parent()
+	if parent.has_method("take_damage") and not target:
+		if not parent.has_method("is_slowed") or not parent.is_slowed():
+			target = parent
+
+func find_new_target():
+	if detection_area:
+		var bodies = detection_area.get_overlapping_bodies()
+		for b in bodies:
+			var p = b.get_parent()
+			if p.has_method("take_damage"):
+				if p.has_method("is_slowed") and p.is_slowed():
+					continue
+				target = p
+				break
+
+func _on_fire_rate_timer_timeout():
+	if target and weakref(target).get_ref():
+		if target.has_method("is_slowed") and target.is_slowed():
+			return
+	
+	super._on_fire_rate_timer_timeout()
+
 func fire_at_target(enemy_target):
 	if enemy_target.has_method("take_damage"):
 		create_fire_effect(enemy_target)

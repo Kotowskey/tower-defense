@@ -81,6 +81,9 @@ func _on_slow_timer_timeout():
 	if health_bar:
 		health_bar.modulate = Color(1, 1, 1)
 
+func is_slowed() -> bool:
+	return slow_factor < 1.0
+
 func get_enemy_stats() -> Dictionary:
 	return {
 		"max_health": max_health,
