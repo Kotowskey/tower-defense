@@ -70,6 +70,11 @@ func _ready():
 	set_process_input(true)
 
 func _input(event):
+	if event.is_action_pressed("toggle_build_menu"):
+		ui_manager.toggle_build_menu()
+		get_viewport().set_input_as_handled()
+		return
+	
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if tower_manager.is_in_building_mode():
@@ -78,6 +83,9 @@ func _input(event):
 				if not placed and tower_manager.is_valid_position == false:
 					if has_node("InvalidPlacementSound"):
 						$InvalidPlacementSound.play()
+				else:
+					if placed:
+						get_viewport().gui_release_focus()
 			else:
 				var mouse_pos = get_global_mouse_position()
 				tower_manager.select_tower_at_position(mouse_pos)
@@ -88,8 +96,6 @@ func _input(event):
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"): 
 		ui_manager.toggle_pause_menu()
-	elif event.is_action_pressed("toggle_build_menu"):
-		ui_manager.toggle_build_menu()
 
 func _on_restart_pressed():
 	get_tree().paused = false
