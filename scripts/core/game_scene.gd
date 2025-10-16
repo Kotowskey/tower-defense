@@ -55,6 +55,8 @@ func _ready():
 	ui_manager.update_lives_ui()
 	ui_manager.update_wave_ui()
 	ui_manager.update_upgrade_ui()
+	ui_manager.update_tower_costs_ui()
+	ui_manager.update_talent_points_ui()
 	
 	if $UI/HUD/BuildPanel/BuildUI.has_node("SpawnButton") and $UI/HUD/BuildPanel/BuildUI/SpawnButton.has_node("Image") and $UI/HUD/BuildPanel/BuildUI/SpawnButton/Image.has_node("Label"):
 		$UI/HUD/BuildPanel/BuildUI/SpawnButton/Image/Label.text = "START\nWAVE 1"

@@ -25,6 +25,27 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	wave_manager.connect("wave_started", Callable(self, "_on_wave_started"))
 	wave_manager.connect("wave_completed", Callable(self, "_on_wave_completed"))
 
+func update_tower_costs_ui():
+	var tower_buttons = {
+		"TowerBasic": 0,
+		"TowerArea": 1,
+		"TowerSniper": 2,
+		"TowerSlow": 3
+	}
+	
+	for button_name in tower_buttons:
+		var button_path = "UI/HUD/BuildPanel/BuildUI/" + button_name
+		if game_scene.has_node(button_path):
+			var button = game_scene.get_node(button_path)
+			var tower_type = tower_buttons[button_name]
+			var cost = tower_manager.get_tower_cost(tower_type)
+			
+			if button.has_node("Label"):
+				var current_text = button.get_node("Label").text
+				var lines = current_text.split("\n")
+				if lines.size() > 1:
+					button.get_node("Label").text = lines[0] + "\n" + str(cost)
+
 func _process(_delta):
 	if tower_manager.get_selected_tower():
 		var selected_tower = tower_manager.get_selected_tower()
@@ -62,6 +83,16 @@ func connect_ui_buttons():
 	
 	if game_scene.has_node("UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton"):
 		game_scene.get_node("UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton").connect("pressed", Callable(game_scene, "_on_main_menu_pressed"))
+	
+	if game_scene.has_node("UI/PauseMenu"):
+		game_scene.get_node("UI/PauseMenu").connect("talents_pressed", Callable(self, "_on_talents_pressed"))
+	
+	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/TalentsButton"):
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/TalentsButton").connect("pressed", Callable(self, "_on_talents_button_pressed"))
+	
+	if has_node("/root/TalentManager"):
+		var talent_manager = get_node("/root/TalentManager")
+		talent_manager.talent_points_changed.connect(Callable(self, "update_talent_points_ui"))
 
 func update_money_ui(amount = null):
 	if amount == null:
@@ -83,6 +114,17 @@ func update_wave_ui(wave_number = null):
 		
 	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel"):
 		game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel").text = "Wave: " + str(wave_number)
+
+func update_talent_points_ui(points = null):
+	if points == null and has_node("/root/TalentManager"):
+		var talent_manager = get_node("/root/TalentManager")
+		points = talent_manager.talent_points
+	
+	if points == null:
+		points = 0
+	
+	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/TalentsContainer/TalentLabel"):
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/TalentsContainer/TalentLabel").text = "Talent Points: " + str(points)
 
 func update_upgrade_ui():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
@@ -218,3 +260,13 @@ func toggle_pause_menu():
 		pause_menu.show()
 		game_scene.get_tree().paused = true
 		game_scene.pause_music()
+
+func _on_talents_pressed():
+	var talent_tree_scene = load("res://scenes/talent_tree_ui.tscn")
+	var talent_tree = talent_tree_scene.instantiate()
+	game_scene.get_node("UI").add_child(talent_tree)
+
+func _on_talents_button_pressed():
+	var talent_tree_scene = load("res://scenes/talent_tree_ui.tscn")
+	var talent_tree = talent_tree_scene.instantiate()
+	game_scene.get_node("UI").add_child(talent_tree)

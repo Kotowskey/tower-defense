@@ -3,14 +3,22 @@ extends Control
 signal resume_pressed
 signal settings_pressed
 signal main_menu_pressed
+signal talents_pressed
 
 func _ready():
 	$MenuPanel/VBoxContainer/ResumeButton.connect("pressed", Callable(self, "_on_resume_button_pressed"))
+	
+	if $MenuPanel/VBoxContainer.has_node("TalentsButton"):
+		$MenuPanel/VBoxContainer/TalentsButton.connect("pressed", Callable(self, "_on_talents_button_pressed"))
+	
 	$MenuPanel/VBoxContainer/SettingsButton.connect("pressed", Callable(self, "_on_settings_button_pressed"))
 	$MenuPanel/VBoxContainer/MainMenuButton.connect("pressed", Callable(self, "_on_main_menu_button_pressed"))
 
 func _on_resume_button_pressed():
 	emit_signal("resume_pressed")
+
+func _on_talents_button_pressed():
+	emit_signal("talents_pressed")
 
 func _on_settings_button_pressed():
 	emit_signal("settings_pressed")

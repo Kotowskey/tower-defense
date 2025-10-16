@@ -18,8 +18,20 @@ var can_fire: bool = true
 var target = null
 var detection_area = null
 var range_indicator = null
+var talent_manager
+var base_damage: int
+var base_range: float
+var base_fire_rate: float
 
 func _ready():
+	if has_node("/root/TalentManager"):
+		talent_manager = get_node("/root/TalentManager")
+	
+	base_damage = tower_damage
+	base_range = tower_range
+	base_fire_rate = tower_fire_rate
+	
+	apply_talent_bonuses()
 	setup_detection_area()
 	setup_fire_rate_timer()
 
@@ -87,7 +99,17 @@ func fire_at_target(enemy_target):
 		create_fire_effect(enemy_target)
 		play_fire_sound()
 		
-		var killed = enemy_target.take_damage(tower_damage)
+		var final_damage = tower_damage
+		
+		if talent_manager and talent_manager.has_talent_effect("critical_chance"):
+			var crit_chance = talent_manager.get_talent_bonus("critical_chance")
+			if randf() < crit_chance:
+				final_damage *= 2
+		
+		var killed = enemy_target.take_damage(final_damage)
+		
+		if talent_manager and talent_manager.has_talent_effect("splash_damage"):
+			apply_splash_damage(enemy_target, final_damage)
 		
 		if killed:
 			target = null
@@ -172,3 +194,32 @@ func get_tower_stats() -> Dictionary:
 		"fire_rate": tower_fire_rate,
 		"cost": tower_cost
 	}
+
+func apply_talent_bonuses():
+	if not talent_manager:
+		return
+	
+	var damage_bonus = talent_manager.get_talent_bonus("tower_damage")
+	tower_damage = int(base_damage * (1.0 + damage_bonus))
+	
+	var range_bonus = talent_manager.get_talent_bonus("tower_range")
+	tower_range = base_range * (1.0 + range_bonus)
+	
+	var speed_bonus = talent_manager.get_talent_bonus("attack_speed")
+	tower_fire_rate = base_fire_rate / (1.0 + speed_bonus)
+
+func apply_splash_damage(primary_target, damage: int):
+	if not detection_area:
+		return
+	
+	var splash_percent = talent_manager.get_talent_bonus("splash_damage")
+	var splash_damage = int(damage * splash_percent)
+	var splash_range = 100.0
+	
+	var bodies = detection_area.get_overlapping_bodies()
+	for body in bodies:
+		var enemy = body.get_parent()
+		if enemy != primary_target and enemy.has_method("take_damage"):
+			var distance = enemy.global_position.distance_to(primary_target.global_position)
+			if distance <= splash_range:
+				enemy.take_damage(splash_damage)

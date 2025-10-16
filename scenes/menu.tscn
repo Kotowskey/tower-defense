@@ -65,6 +65,25 @@ text = "NEW GAME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TALENTS" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture_normal = ExtResource("2_wlxha")
+texture_pressed = ExtResource("3_eq5so")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TALENTS"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 14.0
+offset_right = 189.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("4_xy0mx")
+theme_override_font_sizes/font_size = 25
+text = "TALENTY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SETTINGS" type="TextureButton" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2

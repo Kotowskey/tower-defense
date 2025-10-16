@@ -436,6 +436,42 @@ theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 18
 text = "Wave: 0"
 
+[node name="TalentsContainer" type="HBoxContainer" parent="UI/HUD/InfoPanel/UserUI"]
+layout_mode = 2
+
+[node name="TalentIcon" type="Label" parent="UI/HUD/InfoPanel/UserUI/TalentsContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 18
+text = "⭐"
+
+[node name="TalentLabel" type="Label" parent="UI/HUD/InfoPanel/UserUI/TalentsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
+text = "Talent Points: 0"
+
+[node name="TalentsButton" type="TextureButton" parent="UI/HUD/InfoPanel/UserUI"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture_normal = ExtResource("16_new")
+texture_pressed = ExtResource("17_new")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/HUD/InfoPanel/UserUI/TalentsButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
+text = "OTWÓRZ TALENTY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PauseMenu" type="Control" parent="UI"]
 process_mode = 3
 visible = false
@@ -509,6 +545,26 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 18
 text = "RESUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TalentsButton" type="TextureButton" parent="UI/PauseMenu/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+texture_normal = ExtResource("16_new")
+texture_pressed = ExtResource("17_new")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/PauseMenu/MenuPanel/VBoxContainer/TalentsButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 18
+text = "TALENTY"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -24,16 +24,21 @@ var tower_classes = {
 }
 
 var tower_costs = {
-	0: 100, # Basic tower
-	1: 200, # Rocket tower
-	2: 300, # Sniper tower
-	3: 150  # Ice tower
+	0: 100,
+	1: 200,
+	2: 300,
+	3: 150
 }
+
+var talent_manager
 
 func _init(p_game_scene, p_tower_scene: PackedScene, p_game_state):
 	game_scene = p_game_scene
 	tower_scene = p_tower_scene
 	game_state = p_game_state
+	
+	if has_node("/root/TalentManager"):
+		talent_manager = get_node("/root/TalentManager")
 
 func _process(_delta):
 	if building_mode and tower_preview:
@@ -87,7 +92,7 @@ func is_valid_tower_position(pos: Vector2) -> bool:
 	return true
 
 func place_tower(pos):
-	var selected_tower_cost = tower_costs[current_tower_type]
+	var selected_tower_cost = get_tower_cost(current_tower_type)
 	
 	if !is_valid_tower_position(pos):
 		return false
@@ -96,7 +101,6 @@ func place_tower(pos):
 		var new_tower = tower_scene.instantiate()
 		new_tower.position = pos
 		
-		# Apply the correct tower script based on type
 		if tower_classes.has(current_tower_type):
 			new_tower.set_script(tower_classes[current_tower_type])
 		
@@ -245,3 +249,21 @@ func sell_selected_tower() -> bool:
 		emit_signal("tower_deselected")
 		return true
 	return false
+
+func get_tower_cost(tower_type: int) -> int:
+	if not tower_costs.has(tower_type):
+		return 0
+	
+	var base_cost = tower_costs[tower_type]
+	
+	if not has_node("/root/TalentManager"):
+		return base_cost
+	
+	if not talent_manager:
+		talent_manager = get_node("/root/TalentManager")
+	
+	if talent_manager:
+		var cost_reduction = talent_manager.get_talent_bonus("tower_cost")
+		base_cost = int(base_cost * (1.0 + cost_reduction))
+	
+	return base_cost

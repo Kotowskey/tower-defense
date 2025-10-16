@@ -93,6 +93,12 @@ func end_wave():
 	var wave_reward = game_state.get_wave_reward()
 	game_state.add_money(wave_reward)
 	
+	var current_wave = game_state.get_current_wave()
+	if current_wave % 5 == 0 and has_node("/root/TalentManager"):
+		var talent_manager = get_node("/root/TalentManager")
+		var points = 1 + (current_wave / 10)
+		talent_manager.add_talent_points(points)
+	
 	var wave_completed_scene = load("res://scenes/wave_completed.tscn")
 	var wave_completed = wave_completed_scene.instantiate()
 	wave_completed.set_wave_info(game_state.get_current_wave(), wave_reward)

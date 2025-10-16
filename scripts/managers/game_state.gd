@@ -14,13 +14,25 @@ var enemy_reward: int = 25
 var tower_cost: int = 100
 
 var enemy_rewards = {}
+var talent_manager
 
 func _ready():
-	pass
+	if has_node("/root/TalentManager"):
+		talent_manager = get_node("/root/TalentManager")
 
 func set_initial_values(money: int, lives: int, reward: int):
-	player_money = money
-	player_lives = lives
+	if has_node("/root/TalentManager"):
+		talent_manager = get_node("/root/TalentManager")
+	
+	var bonus_money = 0
+	var bonus_lives = 0
+	
+	if talent_manager:
+		bonus_money = int(talent_manager.get_talent_bonus("starting_money"))
+		bonus_lives = int(talent_manager.get_talent_bonus("starting_lives"))
+	
+	player_money = money + bonus_money
+	player_lives = lives + bonus_lives
 	enemy_reward = reward
 	emit_signal("money_changed", player_money)
 	emit_signal("lives_changed", player_lives)
@@ -36,9 +48,15 @@ func setup_enemy_rewards():
 	}
 
 func get_enemy_reward(enemy_type = 0):
+	var base_reward = enemy_reward
 	if enemy_rewards.has(enemy_type):
-		return enemy_rewards[enemy_type]
-	return enemy_reward
+		base_reward = enemy_rewards[enemy_type]
+	
+	if talent_manager:
+		var income_bonus = talent_manager.get_talent_bonus("income_multiplier")
+		base_reward = int(base_reward * (1.0 + income_bonus))
+	
+	return base_reward
 
 func add_money(amount: int):
 	player_money += amount
@@ -75,5 +93,9 @@ func get_wave_reward() -> int:
 	
 	if is_boss_wave:
 		wave_reward *= 2
+	
+	if talent_manager:
+		var wave_bonus = talent_manager.get_talent_bonus("wave_reward")
+		wave_reward = int(wave_reward * (1.0 + wave_bonus))
 	
 	return wave_reward
