@@ -14,8 +14,16 @@ var game_state
 var tower_manager
 var wave_manager
 var ui_manager
+var settings_manager
 
 func _ready():
+	# Initialize settings manager
+	if not get_node_or_null("/root/SettingsManager"):
+		settings_manager = load("res://scripts/managers/settings_manager.gd").new()
+		settings_manager.name = "SettingsManager"
+		get_node("/root").add_child(settings_manager)
+	else:
+		settings_manager = get_node("/root/SettingsManager")
 	var selected_map_path := ""
 	if has_node("/root/DifficultyManager"):
 		selected_map_path = str(get_node("/root/DifficultyManager").get_meta("selected_map_path", ""))

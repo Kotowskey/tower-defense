@@ -51,9 +51,11 @@ wave_delay = 0.4
 
 [node name="TowerCreation" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_b5spy")
+bus = &"SFX"
 
 [node name="UpgradeSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_rp1ui")
+bus = &"SFX"
 
 [node name="Map" parent="." instance=ExtResource("1_e6pvo")]
 
@@ -348,6 +350,7 @@ vertical_alignment = 1
 
 [node name="StartSound" type="AudioStreamPlayer" parent="UI/HUD/BuildPanel/BuildUI/SpawnButton"]
 stream = ExtResource("8_utbpp")
+bus = &"SFX"
 
 [node name="InfoPanel" type="Panel" parent="UI/HUD"]
 custom_minimum_size = Vector2(280, 150)
@@ -555,7 +558,9 @@ vertical_alignment = 1
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_kk2rg")
 volume_db = -10.0
+bus = &"Music"
 parameters/looping = true
 
 [node name="InvalidPlacementSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_ldkr4")
+bus = &"SFX"

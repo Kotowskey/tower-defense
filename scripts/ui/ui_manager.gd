@@ -57,11 +57,11 @@ func connect_ui_buttons():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Sell"):
 		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Sell").connect("pressed", Callable(self, "_on_sell_pressed"))
 	
-	if game_scene.has_node("UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton"):
-		game_scene.get_node("UI/PauseMenu/MenuPanel/VBoxContainer/ResumeButton").connect("pressed", Callable(self, "_on_resume_pressed"))
-	
-	if game_scene.has_node("UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton"):
-		game_scene.get_node("UI/PauseMenu/MenuPanel/VBoxContainer/MainMenuButton").connect("pressed", Callable(game_scene, "_on_main_menu_pressed"))
+	if game_scene.has_node("UI/PauseMenu"):
+		var pause_menu = game_scene.get_node("UI/PauseMenu")
+		pause_menu.connect("resume_pressed", Callable(self, "_on_resume_pressed"))
+		pause_menu.connect("settings_pressed", Callable(self, "_on_pause_settings_pressed"))
+		pause_menu.connect("main_menu_pressed", Callable(game_scene, "_on_main_menu_pressed"))
 
 func update_money_ui(amount = null):
 	if amount == null:
@@ -153,6 +153,25 @@ func _on_spawn_button_pressed():
 
 func _on_resume_pressed():
 	toggle_pause_menu()
+
+func _on_pause_settings_pressed():
+	if game_scene.has_node("UI/PauseMenu"):
+		game_scene.get_node("UI/PauseMenu").hide()
+	
+	var settings_scene = load("res://scenes/settings_menu.tscn")
+	var settings_menu = settings_scene.instantiate()
+	settings_menu.connect("back_pressed", Callable(self, "_on_pause_settings_back"))
+	game_scene.get_node("UI").add_child(settings_menu)
+
+func _on_pause_settings_back():
+	var ui_node = game_scene.get_node("UI")
+	for child in ui_node.get_children():
+		if child.name == "SettingsMenu":
+			child.queue_free()
+			break
+	
+	if game_scene.has_node("UI/PauseMenu"):
+		game_scene.get_node("UI/PauseMenu").show()
 
 func _on_tower_selected(tower):
 	if game_scene.has_node("UI/HUD/SelectedTower"):

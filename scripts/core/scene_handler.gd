@@ -1,9 +1,11 @@
 extends Node
 
 var map_selector: Control = null
+var settings_menu: Control = null
 
 func _ready():
 	call_deferred("setup_difficulty_manager")
+	call_deferred("setup_settings_manager")
 	
 	var timer = get_tree().create_timer(0.1)
 	timer.timeout.connect(func(): connect_menu_buttons())
@@ -16,6 +18,12 @@ func setup_difficulty_manager():
 	var dm = get_node("/root/DifficultyManager")
 	if not dm.has_meta("selected_map_path"):
 		dm.set_meta("selected_map_path", "res://scenes/map.tscn")
+
+func setup_settings_manager():
+	if not get_node_or_null("/root/SettingsManager"):
+		var settings_manager = load("res://scripts/managers/settings_manager.gd").new()
+		settings_manager.name = "SettingsManager"
+		get_node("/root").add_child(settings_manager)
 
 func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/NEW GAME"):
@@ -43,7 +51,24 @@ func on_new_game_pressed():
 		open_map_selector()
 
 func on_settings_pressed():
-	pass
+	if has_node("Menu"):
+		$Menu.hide()
+	
+	if settings_menu and is_instance_valid(settings_menu):
+		settings_menu.queue_free()
+	
+	var settings_scene = load("res://scenes/settings_menu.tscn")
+	settings_menu = settings_scene.instantiate()
+	settings_menu.connect("back_pressed", Callable(self, "on_settings_back_pressed"))
+	add_child(settings_menu)
+
+func on_settings_back_pressed():
+	if settings_menu and is_instance_valid(settings_menu):
+		settings_menu.queue_free()
+		settings_menu = null
+	
+	if has_node("Menu"):
+		$Menu.show()
 
 func on_quit_pressed():
 	get_tree().quit()
