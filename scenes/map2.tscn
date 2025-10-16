@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=4 uid="uid://c42536rikhmfh"]
 
-[ext_resource type="Script" uid="uid://dk8fb2h31quj7" path="res://scripts/map.gd" id="1_5kldx"]
+[ext_resource type="Script" uid="uid://dk8fb2h31quj7" path="res://scripts/map/map.gd" id="1_5kldx"]
 [ext_resource type="Texture2D" uid="uid://dwtijt50yj5el" path="res://assets/tiles/tower-defense-tiles-128.svg" id="2_rtqf6"]
 [ext_resource type="Texture2D" uid="uid://d1mtce4fiqq4c" path="res://assets/kenney_top-down-tanks-redux/Tilesheet/terrainTiles_default.png" id="3_u6ti8"]
 [ext_resource type="Texture2D" uid="uid://cp0b2fbt0u15k" path="res://assets/kenney_top-down-tanks-redux/Tilesheet/terrainTiles_retina.png" id="4_rutqx"]
@@ -123,6 +123,8 @@ tile_map_data = PackedByteArray("AAAOAAAAAwAAAAIAAAAOAAEAAwAAAAIAAAAOAAIAAwACAAI
 tile_set = SubResource("TileSet_hqri8")
 
 [node name="Turrets" type="Node2D" parent="."]
+visible = false
 
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 curve = SubResource("Curve2D_s2nao")

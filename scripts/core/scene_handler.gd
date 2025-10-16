@@ -89,51 +89,21 @@ func open_map_selector():
 		$DifficultyMenu.hide()
 	if map_selector and is_instance_valid(map_selector):
 		map_selector.queue_free()
+	
+	var map_selector_scene = load("res://scenes/map_selector.tscn")
+	map_selector = map_selector_scene.instantiate()
+	map_selector.connect("map_selected", Callable(self, "_on_map_selected"))
+	map_selector.connect("back_pressed", Callable(self, "_on_map_back_pressed"))
+	add_child(map_selector)
 
-	var panel := Panel.new()
-	panel.name = "MapSelector"
-	panel.set_anchors_preset(Control.PRESET_CENTER, true)
-	panel.custom_minimum_size = Vector2(320, 220)
-
-	var v := VBoxContainer.new()
-	v.anchor_right = 1.0
-	v.anchor_bottom = 1.0
-	v.offset_left = 20
-	v.offset_top = 20
-	v.offset_right = -20
-	v.offset_bottom = -20
-	v.add_theme_constant_override("separation", 16)
-	panel.add_child(v)
-
-	var lbl := Label.new()
-	lbl.text = "SELECT MAP"
-	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	v.add_child(lbl)
-
-	var b1 := Button.new()
-	b1.text = "MAP 1 (map.tscn)"
-	b1.pressed.connect(Callable(self, "_on_map_chosen").bind("res://scenes/map.tscn"))
-	v.add_child(b1)
-
-	var b2 := Button.new()
-	b2.text = "MAP 2 (map2.tscn)"
-	b2.pressed.connect(Callable(self, "_on_map_chosen").bind("res://scenes/map2.tscn"))
-	v.add_child(b2)
-
-	var back := Button.new()
-	back.text = "BACK"
-	back.pressed.connect(Callable(self, "_on_map_back_pressed"))
-	v.add_child(back)
-
-	add_child(panel)
-	map_selector = panel
-
-func _on_map_chosen(path: String):
+func _on_map_selected(map_data):
 	if has_node("/root/DifficultyManager"):
-		get_node("/root/DifficultyManager").set_meta("selected_map_path", path)
+		get_node("/root/DifficultyManager").set_meta("selected_map_path", map_data.map_path)
+	
 	if map_selector and is_instance_valid(map_selector):
 		map_selector.queue_free()
 		map_selector = null
+	
 	start_game()
 
 func _on_map_back_pressed():
