@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://bmqwnoeo23mwx"]
 
 [ext_resource type="Script" uid="uid://c8up6f5wilo2e" path="res://scripts/main_menu.gd" id="1_g3eks"]
-[ext_resource type="Texture2D" uid="uid://o606x6btsxvb" path="res://assets/menu/godot-menu-background.svg" id="1_p5q33"]
-[ext_resource type="Texture2D" uid="uid://b4c66sov7o72l" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="2_wlxha"]
-[ext_resource type="Texture2D" uid="uid://c4etfg62owyda" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="3_eq5so"]
-[ext_resource type="FontFile" uid="uid://bg017qo6vfy7p" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="4_xy0mx"]
-[ext_resource type="AudioStream" uid="uid://d01k1a54daiu" path="res://assets/music/Digital Surge.mp3" id="5_4ytvr"]
-[ext_resource type="FontFile" uid="uid://dq2bxbbw8nb5l" path="res://assets/ui/kenny/fonts/Kenney Future.ttf" id="6_v86rl"]
+[ext_resource type="Texture2D" uid="uid://cekggti0sj2lf" path="res://assets/menu/godot-menu-background.svg" id="1_p5q33"]
+[ext_resource type="Texture2D" uid="uid://trnteubyptxo" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="2_wlxha"]
+[ext_resource type="Texture2D" uid="uid://b5enunnwcrptf" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="3_eq5so"]
+[ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="4_xy0mx"]
+[ext_resource type="AudioStream" uid="uid://dm6yqyn0ok2bd" path="res://assets/music/Digital Surge.mp3" id="5_4ytvr"]
+[ext_resource type="FontFile" uid="uid://x0o8s4rr5bxr" path="res://assets/ui/kenny/fonts/Kenney Future.ttf" id="6_v86rl"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
