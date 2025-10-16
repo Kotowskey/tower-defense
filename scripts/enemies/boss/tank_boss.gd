@@ -3,7 +3,7 @@ class_name TankBoss
 
 func _ready():
 	boss_type = 0
-	enemy_type = 0  # For compatibility with reward system
+	enemy_type = 0  
 	max_health = 500
 	speed = 80
 	value = 200

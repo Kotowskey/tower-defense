@@ -4,7 +4,7 @@ class_name IceTower
 var slow_factor: float = 0.5
 var slow_duration: float = 2.0
 
-func _ready():
+func _init():
 	tower_name = "Ice Tower"
 	tower_cost = 150
 	tower_range = 250.0
@@ -12,8 +12,8 @@ func _ready():
 	tower_fire_rate = 1.0
 	slow_factor = 0.5
 	slow_duration = 2.0
-	
-	# Set ice tower appearance
+
+func _ready():
 	if has_node("Basic-tower-top"):
 		var texture = load("res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_blue.png")
 		if texture:
@@ -43,7 +43,7 @@ func apply_upgrade_effects():
 	tower_damage += 2
 
 func get_fire_color() -> Color:
-	return Color(0, 1, 1)  # Cyan
+	return Color(0, 1, 1)  
 
 func get_tower_stats() -> Dictionary:
 	var stats = super.get_tower_stats()

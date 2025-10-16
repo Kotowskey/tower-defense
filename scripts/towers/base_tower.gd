@@ -7,11 +7,11 @@ signal tower_upgraded
 @export var tower_level: int = 1 
 @export var max_level: int = 5
 
-@export var tower_cost: int = 100
-@export var tower_range: float = 300.0
-@export var tower_damage: int = 10
-@export var tower_fire_rate: float = 1.0
-@export var tower_name: String = "Tower"
+var tower_cost: int = 100
+var tower_range: float = 300.0
+var tower_damage: int = 10
+var tower_fire_rate: float = 1.0
+var tower_name: String = "Tower"
 
 var can_fire: bool = true
 var target = null
@@ -111,7 +111,7 @@ func play_fire_sound():
 		$PopSound.play()
 
 func get_fire_color() -> Color:
-	return Color(1, 0, 0)  # Default red color
+	return Color(1, 0, 0)  
 
 func upgrade() -> int:
 	if tower_level >= max_level:
@@ -132,7 +132,6 @@ func upgrade() -> int:
 	return get_upgrade_cost()
 
 func apply_upgrade_effects():
-	# To be overridden by child classes
 	tower_damage += 5
 
 func can_upgrade() -> bool:

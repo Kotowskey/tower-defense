@@ -14,5 +14,4 @@ func _ready():
 	super._ready()
 
 func take_damage(damage):
-	# Shield boss reduces incoming damage
 	return super.take_damage(int(damage * 0.7))

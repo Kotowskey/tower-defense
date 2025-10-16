@@ -6,7 +6,7 @@ signal enemy_escaped
 
 @export var path: Path2D
 @export var path_follow: PathFollow2D
-@export var speed: float = 100
+@export var speed: float = 50
 @export var max_health: int = 100
 @export var value: int = 25
 
@@ -15,7 +15,7 @@ var current_speed: float
 var slow_factor: float = 1.0
 var slow_timer: Timer = null
 var health_bar: ProgressBar
-var enemy_type: int = 0  # For backwards compatibility
+var enemy_type: int = 0 
 
 func _ready():
 	current_health = max_health

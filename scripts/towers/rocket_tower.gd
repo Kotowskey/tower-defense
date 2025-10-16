@@ -3,14 +3,14 @@ class_name RocketTower
 
 var targets = []
 
-func _ready():
+func _init():
 	tower_name = "Rocket Tower"
 	tower_cost = 200
 	tower_range = 250.0
 	tower_damage = 5
 	tower_fire_rate = 1.5
-	
-	# Set rocket tower appearance
+
+func _ready():
 	if has_node("Basic-tower-top"):
 		var texture = load("res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_red.png") 
 		if texture:
@@ -18,7 +18,6 @@ func _ready():
 	
 	super._ready()
 	
-	# Override default area connections
 	if has_node("Node2D/Area2D"):
 		var area = $Node2D/Area2D
 		area.disconnect("body_entered", Callable(self, "_on_detection_area_body_entered"))
@@ -27,7 +26,6 @@ func _ready():
 		area.connect("body_exited", Callable(self, "_on_detection_area_body_exited_area"))
 
 func _process(_delta):
-	# Override base tracking since we're targeting multiple enemies
 	pass
 
 func _on_detection_area_body_entered_area(body):
@@ -74,4 +72,4 @@ func apply_upgrade_effects():
 	tower_range += 25
 
 func get_fire_color() -> Color:
-	return Color(1, 0.5, 0)  # Orange
+	return Color(1, 0.5, 0) 

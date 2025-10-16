@@ -1,14 +1,13 @@
 extends BaseEnemy
 class_name BaseBossEnemy
 
-var boss_type: int = 0  # For backwards compatibility
+var boss_type: int = 0  
 
 func _ready():
 	scale = Vector2(1.5, 1.5)
 	super._ready()
 
 func apply_slow(factor, duration):
-	# Bosses have slow resistance
 	var slow_resistance = 0.5
 	var effective_factor = factor * slow_resistance + (1.0 - slow_resistance)
 	var effective_duration = duration * slow_resistance

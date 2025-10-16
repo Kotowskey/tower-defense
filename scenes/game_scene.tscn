@@ -45,9 +45,6 @@ corner_radius_bottom_left = 8
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_a5vh6")
-player_money = 500
-wave_size = 2
-wave_delay = 5.0
 
 [node name="TowerCreation" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_b5spy")
