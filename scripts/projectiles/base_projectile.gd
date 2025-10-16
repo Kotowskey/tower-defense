@@ -48,20 +48,16 @@ func _on_area_entered(area):
 		on_hit()
 
 func on_hit():
-	print("Projectile hit! Area damage: ", has_area_damage, " Radius: ", area_damage_radius)
 	if has_area_damage and area_damage_radius > 0:
 		deal_area_damage()
 	else:
 		if target and weakref(target).get_ref() and target.has_method("take_damage"):
 			target.take_damage(damage)
-			print("Direct damage dealt: ", damage)
 	queue_free()
 
 func deal_area_damage():
 	var damaged_enemies = []
 	var all_enemies = get_tree().get_nodes_in_group("enemies")
-	
-	print("Dealing area damage. Enemies in game: ", all_enemies.size())
 	
 	for enemy in all_enemies:
 		if enemy and is_instance_valid(enemy):
@@ -70,27 +66,61 @@ func deal_area_damage():
 				if enemy.has_method("take_damage") and enemy not in damaged_enemies:
 					enemy.take_damage(damage)
 					damaged_enemies.append(enemy)
-					print("Area damage dealt to enemy at distance: ", distance, " Damage: ", damage)
 	
-	print("Total enemies damaged: ", damaged_enemies.size())
 	create_explosion_effect()
 
 func create_explosion_effect():
 	var explosion = Node2D.new()
 	get_parent().add_child(explosion)
 	explosion.global_position = global_position
-
-	var circle = Line2D.new()
-	circle.width = 3
-	circle.default_color = Color(1, 0.5, 0, 0.8)
-	explosion.add_child(circle)
 	
-	var segments = 32
-	for i in range(segments + 1):
-		var angle = (i / float(segments)) * TAU
-		var point = Vector2(cos(angle), sin(angle)) * area_damage_radius
-		circle.add_point(point)
+	var sprite = Sprite2D.new()
+	explosion.add_child(sprite)
 	
-	var tween = create_tween()
-	tween.tween_property(circle, "modulate", Color(1, 0.5, 0, 0), 0.4)
-	tween.tween_callback(func(): explosion.queue_free())
+	# Small scale
+	var scale_factor = area_damage_radius / 1000
+	sprite.scale = Vector2(scale_factor, scale_factor)
+	sprite.modulate = Color(1.0, 0.7, 0.3)
+	
+	# Load explosion frames
+	var explosion_frames = []
+	for i in range(9):
+		var texture = load("res://assets/kenney_smoke-particles/PNG/Explosion/explosion0%d.png" % i)
+		if texture:
+			explosion_frames.append(texture)
+	
+	# Animate through frames
+	var frame_index = 0
+	var anim_timer = Timer.new()
+	explosion.add_child(anim_timer)
+	anim_timer.wait_time = 0.05
+	anim_timer.one_shot = false
+	anim_timer.timeout.connect(func():
+		if frame_index < explosion_frames.size():
+			sprite.texture = explosion_frames[frame_index]
+			frame_index += 1
+		else:
+			anim_timer.queue_free()
+	)
+	anim_timer.start()
+	
+	# Add flash effect
+	var flash = Sprite2D.new()
+	explosion.add_child(flash)
+	var flash_texture = load("res://assets/kenney_smoke-particles/PNG/Flash/flash00.png")
+	if flash_texture:
+		flash.texture = flash_texture
+		flash.scale = Vector2(scale_factor * 0.5, scale_factor * 0.5)
+		flash.modulate = Color(1, 0.8, 0.4, 0.8)
+		
+		var tween = explosion.create_tween()
+		tween.tween_property(flash, "modulate:a", 0.0, 0.15)
+		tween.tween_callback(func(): flash.queue_free())
+	
+	# Delete entire explosion after animation completes
+	var cleanup_timer = Timer.new()
+	explosion.add_child(cleanup_timer)
+	cleanup_timer.wait_time = 0.1  
+	cleanup_timer.one_shot = true
+	cleanup_timer.timeout.connect(func(): explosion.queue_free())
+	cleanup_timer.start()
