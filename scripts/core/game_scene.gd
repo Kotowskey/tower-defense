@@ -17,7 +17,6 @@ var ui_manager
 var settings_manager
 
 func _ready():
-	# Initialize settings manager
 	if not get_node_or_null("/root/SettingsManager"):
 		settings_manager = load("res://scripts/managers/settings_manager.gd").new()
 		settings_manager.name = "SettingsManager"
