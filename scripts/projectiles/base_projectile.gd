@@ -90,15 +90,15 @@ func create_explosion_effect():
 			explosion_frames.append(texture)
 	
 	# Animate through frames
-	var frame_index = 0
+	var frame_data = [0]  # Use array to capture by reference
 	var anim_timer = Timer.new()
 	explosion.add_child(anim_timer)
 	anim_timer.wait_time = 0.05
 	anim_timer.one_shot = false
 	anim_timer.timeout.connect(func():
-		if frame_index < explosion_frames.size():
-			sprite.texture = explosion_frames[frame_index]
-			frame_index += 1
+		if frame_data[0] < explosion_frames.size():
+			sprite.texture = explosion_frames[frame_data[0]]
+			frame_data[0] += 1
 		else:
 			anim_timer.queue_free()
 	)
