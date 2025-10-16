@@ -18,6 +18,7 @@ var health_bar: ProgressBar
 var enemy_type: int = 0 
 
 func _ready():
+	add_to_group("enemies")
 	current_health = max_health
 	current_speed = speed
 	

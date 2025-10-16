@@ -1,14 +1,14 @@
 extends BaseTower
 class_name RocketTower
 
-var targets = []
+var projectile_scene = preload("res://scenes/rocket_projectile.tscn")
 
 func _init():
 	tower_name = "Rocket Tower"
 	tower_cost = 200
 	tower_range = 250.0
-	tower_damage = 5
-	tower_fire_rate = 1.5
+	tower_damage = 30  
+	tower_fire_rate = 2.0  
 
 func _ready():
 	if has_node("Basic-tower-top"):
@@ -17,58 +17,26 @@ func _ready():
 			$"Basic-tower-top".texture = texture
 	
 	super._ready()
-	
-	if has_node("Node2D/Area2D"):
-		var area = $Node2D/Area2D
-		area.disconnect("body_entered", Callable(self, "_on_detection_area_body_entered"))
-		area.disconnect("body_exited", Callable(self, "_on_detection_area_body_exited"))
-		area.connect("body_entered", Callable(self, "_on_detection_area_body_entered_area"))
-		area.connect("body_exited", Callable(self, "_on_detection_area_body_exited_area"))
-
-func _process(_delta):
-	pass
-
-func _on_detection_area_body_entered_area(body):
-	var parent = body.get_parent()
-	if parent.has_method("take_damage") and not targets.has(parent):
-		targets.append(parent)
-
-func _on_detection_area_body_exited_area(body):
-	var parent = body.get_parent()
-	if targets.has(parent):
-		targets.erase(parent)
 
 func _on_fire_rate_timer_timeout():
-	fire_at_all_targets()
+	if target and weakref(target).get_ref() and can_fire:
+		fire_rocket(target)
 
-func fire_at_all_targets():
-	var valid_targets = []
+func fire_rocket(enemy_target):
+	if not enemy_target or not weakref(enemy_target).get_ref():
+		return
 	
-	for t in targets:
-		if weakref(t).get_ref():
-			valid_targets.append(t)
+	var projectile = projectile_scene.instantiate()
+	get_parent().add_child(projectile)
 	
-	targets = valid_targets
+	projectile.setup(global_position, enemy_target, tower_damage)
 	
-	if targets.size() > 0 and can_fire:
-		var effect_scene = load("res://scenes/tower_area_effect.tscn")
-		var effect = effect_scene.instantiate()
-		effect.set_range(tower_range)
-		add_child(effect)
-		
-		var tween = create_tween()
-		tween.tween_property(effect, "modulate", Color(1, 1, 1, 0), 0.3)
-		tween.tween_callback(func(): effect.queue_free())
-		
-		play_fire_sound()
-		
-		for t in targets:
-			if t.has_method("take_damage"):
-				t.take_damage(tower_damage)
-				emit_signal("tower_fired", t)
+	play_fire_sound()
+	
+	emit_signal("tower_fired", enemy_target)
 
 func apply_upgrade_effects():
-	tower_damage += 2
+	tower_damage += 10
 	tower_range += 25
 
 func get_fire_color() -> Color:

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2y3x405a6b7c"]
+
+[ext_resource type="Script" path="res://scripts/projectiles/rocket_projectile.gd" id="1_rocket"]
+[ext_resource type="Texture2D" uid="uid://cejmn2dvpj3xf" path="res://assets/kenney_top-down-tanks-redux/PNG/Default size/tank_red.png" id="2_rocket"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 8.0
+
+[node name="RocketProjectile" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_rocket")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_rocket")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
