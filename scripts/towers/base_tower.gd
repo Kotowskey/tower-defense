@@ -14,6 +14,7 @@ var tower_fire_rate: float = 1.0
 var tower_name: String = "Tower"
 
 var can_fire: bool = true
+var is_placed: bool = false
 var target = null
 var detection_area = null
 var range_indicator = null
@@ -78,7 +79,7 @@ func find_new_target():
 				break
 
 func _on_fire_rate_timer_timeout():
-	if target and weakref(target).get_ref() and can_fire:
+	if target and weakref(target).get_ref() and can_fire and is_placed:
 		fire_at_target(target)
 
 func fire_at_target(enemy_target):

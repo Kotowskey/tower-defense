@@ -101,8 +101,8 @@ func place_tower(pos):
 			new_tower.set_script(tower_classes[current_tower_type])
 		
 		new_tower.add_to_group("towers")
-
 		game_scene.add_child(new_tower)
+		new_tower.is_placed = true
 		if game_scene.has_node("TowerCreation"):
 			game_scene.get_node("TowerCreation").play()
 		
