@@ -5,31 +5,31 @@
 [ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="3_body_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glow"]
-bg_color = Color(0.2, 1, 0.2, 0.3)
+bg_color = Color(0.2, 0.2, 0.2, 0.3)
 corner_radius_top_left = 18
 corner_radius_top_right = 18
 corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_main_panel"]
-bg_color = Color(0.05, 0.15, 0.05, 0.95)
+bg_color = Color(0, 0, 0, 0.75)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.2, 0.8, 0.2, 1)
+border_color = Color(0.4, 0.4, 0.4, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reward_panel"]
-bg_color = Color(0.1, 0.1, 0.05, 0.8)
+bg_color = Color(0.05, 0.05, 0.05, 0.8)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(1, 0.8, 0.2, 0.8)
+border_color = Color(0.4, 0.4, 0.4, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -91,7 +91,7 @@ alignment = 1
 
 [node name="WaveTitle" type="Label" parent="ContentContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 1, 0.9, 1)
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 theme_override_fonts/font = ExtResource("2_title_font")
 theme_override_font_sizes/font_size = 28
 text = "WAVE COMPLETE!"
@@ -124,7 +124,7 @@ text = "💰"
 [node name="Label" type="Label" parent="ContentContainer/RewardPanel/RewardContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_color = Color(1, 0.9, 0.5, 1)
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 theme_override_fonts/font = ExtResource("3_body_font")
 theme_override_font_sizes/font_size = 20
 text = "+100 Money"

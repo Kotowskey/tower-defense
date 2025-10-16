@@ -11,6 +11,13 @@ func _ready():
 func set_wave_info(wave_number, reward):
 	var is_boss_wave = (wave_number % 5 == 0)
 	
+	if is_boss_wave:
+		size.x = 450
+		position.x = -225
+	else:
+		size.x = 360
+		position.x = -180
+	
 	if has_node("ContentContainer/WaveTitle"):
 		var wave_text = "WAVE " + str(wave_number) + " COMPLETE!"
 		if is_boss_wave:
