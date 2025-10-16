@@ -5,12 +5,12 @@ signal lives_changed(amount)
 signal wave_changed(wave_number)
 signal game_over
 
-var player_money: int = 500
+var player_money: int = 250
 var player_lives: int = 10
 var current_wave: int = 0
 var difficulty_multiplier: float = 1.0
 
-var enemy_reward: int = 25
+var enemy_reward: int = 15
 var tower_cost: int = 100
 
 var enemy_rewards = {}
@@ -71,7 +71,7 @@ func get_current_wave() -> int:
 
 func get_wave_reward() -> int:
 	var is_boss_wave = (current_wave % 5 == 0)
-	var wave_reward = 100 + (current_wave * 20)
+	var wave_reward = 50 + (current_wave * 15)
 	
 	if is_boss_wave:
 		wave_reward *= 2

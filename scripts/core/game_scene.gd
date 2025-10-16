@@ -3,11 +3,11 @@ extends Node2D
 @export var tower_scene: PackedScene = preload("res://scenes/tower.tscn")
 @export var enemy_scene: PackedScene = preload("res://scenes/enemy.tscn")
 @export var boss_enemy_scene: PackedScene = preload("res://scenes/boss_enemy.tscn")
-@export var player_money: int = 500
+@export var player_money: int = 250
 @export var player_lives: int = 10
 @export var tower_cost: int = 100
-@export var enemy_reward: int = 25
-@export var wave_size: int = 5
+@export var enemy_reward: int = 15
+@export var wave_size: int = 3
 @export var wave_delay: float = 1.0
 
 var game_state

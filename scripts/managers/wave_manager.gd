@@ -63,7 +63,7 @@ func start_wave():
 	if is_boss_wave:
 		enemies_to_kill = 1 + (current_wave / 10)
 	else:
-		enemies_to_kill = wave_size + (current_wave * 2)
+		enemies_to_kill = wave_size + int(current_wave * 1.5)
 	
 	var wave_timer = Timer.new()
 	wave_timer.wait_time = 1.0
@@ -72,8 +72,8 @@ func start_wave():
 	game_scene.add_child(wave_timer)
 	wave_timer.connect("timeout", Callable(self, "_on_wave_timer_timeout"))
 	
-	var enemy_health_multiplier = 1.0 + (current_wave * 0.2)
-	var enemy_speed_multiplier = 1.0 + (current_wave * 0.05)
+	var enemy_health_multiplier = 1.0 + (current_wave * 0.15)
+	var enemy_speed_multiplier = 1.0 + (current_wave * 0.03)
 	var spawn_delay = wave_delay * (1.0 - (current_wave * 0.02))
 	spawn_delay = max(0.2, spawn_delay)
 	
@@ -101,12 +101,26 @@ func end_wave():
 func spawn_wave(num_enemies = wave_size, delay = wave_delay, health_mult = 1.0, speed_mult = 1.0):
 	for i in range(num_enemies):
 		var timer = game_scene.get_tree().create_timer(i * delay)
-		var enemy_type = randi() % 3  
+		var enemy_type = get_enemy_type_for_wave()
 		
 		timer.timeout.connect(func(): 
 			spawn_enemy(health_mult, speed_mult, enemy_type)
 			enemies_spawned += 1
 		)
+
+func get_enemy_type_for_wave() -> int:
+	var current_wave = game_state.get_current_wave()
+	var available_types = []
+	
+	available_types.append(0)
+	
+	if current_wave >= 3:
+		available_types.append(1)
+	
+	if current_wave >= 6:
+		available_types.append(2)
+	
+	return available_types[randi() % available_types.size()]
 
 func spawn_enemy(health_mult = 1.0, speed_mult = 1.0, enemy_type = 0):
 	var enemy = enemy_scene.instantiate()
@@ -184,7 +198,7 @@ func _on_enemy_died(enemy_type = 0):
 	emit_signal("enemy_died")
 
 func _on_boss_died(_enemy_type = 0):
-	var boss_reward = game_state.enemy_reward * 8
+	var boss_reward = game_state.enemy_reward * 5
 	game_state.add_money(boss_reward)
 	emit_signal("enemy_died")
 
