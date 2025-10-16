@@ -15,7 +15,6 @@ var minimum_tower_distance: float = 100.0
 var is_valid_position: bool = true
 var sell_refund_ratio: float = 0.7
 
-# Define tower classes and costs
 var tower_classes = {
 	0: preload("res://scripts/towers/basic_tower.gd"),
 	1: preload("res://scripts/towers/rocket_tower.gd"),
@@ -60,7 +59,6 @@ func start_tower_placement(tower_type):
 
 	tower_preview = tower_scene.instantiate()
 	
-	# Apply the correct tower script based on type
 	if tower_classes.has(tower_type):
 		tower_preview.set_script(tower_classes[tower_type])
 	
@@ -96,7 +94,6 @@ func place_tower(pos):
 		var new_tower = tower_scene.instantiate()
 		new_tower.position = pos
 		
-		# Apply the correct tower script based on type
 		if tower_classes.has(current_tower_type):
 			new_tower.set_script(tower_classes[current_tower_type])
 		

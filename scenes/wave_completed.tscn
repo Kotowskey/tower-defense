@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bdr4wruc7s3oo"]
 
-[ext_resource type="Script" uid="uid://di2u61jwbr7r0" path="res://scripts/wave_completed.gd" id="1_2t6es"]
+[ext_resource type="Script" uid="uid://di2u61jwbr7r0" path="res://scripts/ui/wave_completed.gd" id="1_2t6es"]
 [ext_resource type="FontFile" uid="uid://x0o8s4rr5bxr" path="res://assets/ui/kenny/fonts/Kenney Future.ttf" id="2_title_font"]
 [ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="3_body_font"]
 
