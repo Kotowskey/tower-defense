@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://qmntmx3mht82"]
 
-[ext_resource type="Script" path="res://scripts/enemies/base_enemy.gd" id="1_t7gky"]
+[ext_resource type="Script" uid="uid://bnughm5gxr327" path="res://scripts/enemies/base_enemy.gd" id="1_t7gky"]
 [ext_resource type="Texture2D" uid="uid://cl5q7ckqx1jwg" path="res://assets/kenney_pixel-vehicle-pack/PNG/Cars/sports_red.png" id="2_md0e3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ycia0"]
@@ -21,8 +21,6 @@ corner_radius_bottom_left = 2
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_t7gky")
-speed = 450.0
-max_health = 25
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 

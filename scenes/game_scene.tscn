@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://qik1ytgalcrw"]
 
-[ext_resource type="Script" uid="uid://cpxycdxkpcq5w" path="res://scripts/game_scene.gd" id="1_a5vh6"]
+[ext_resource type="Script" uid="uid://cpxycdxkpcq5w" path="res://scripts/core/game_scene.gd" id="1_a5vh6"]
 [ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="1_e6pvo"]
 [ext_resource type="Texture2D" uid="uid://dyqfeo33im6n5" path="res://assets/ui/kenny/button_square_depth_flat.png" id="2_6s7g6"]
 [ext_resource type="AudioStream" uid="uid://bb0ltb8symkb5" path="res://assets/effects/tower_creation.mp3" id="2_b5spy"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://bltvm7xlebvrd" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_green.png" id="10_mwyo0"]
 [ext_resource type="AudioStream" uid="uid://c52cyf687q8os" path="res://assets/effects/upgrade_sound.mp3" id="10_rp1ui"]
 [ext_resource type="Texture2D" uid="uid://508nyp1l2s" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_blue.png" id="11_s76x2"]
-[ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/pause_menu.gd" id="11_wys8v"]
+[ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/ui/pause_menu.gd" id="11_wys8v"]
 [ext_resource type="AudioStream" uid="uid://ri5n5ujmrwa6" path="res://assets/effects/InvalidPlacementSound.wav" id="15_ldkr4"]
 [ext_resource type="Texture2D" uid="uid://trnteubyptxo" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="16_new"]
 [ext_resource type="Texture2D" uid="uid://b5enunnwcrptf" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="17_new"]
@@ -45,9 +45,9 @@ corner_radius_bottom_left = 8
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_a5vh6")
-player_money = 1500
-wave_size = 50
-wave_delay = 0.4
+player_money = 500
+wave_size = 2
+wave_delay = 5.0
 
 [node name="TowerCreation" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_b5spy")
