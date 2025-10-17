@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://6ewldabsk56j"]
 
-[ext_resource type="Script" uid="uid://bp71v3j5moyws" path="res://scripts/difficulty_menu.gd" id="1_24r5h"]
+[ext_resource type="Script" uid="uid://bp71v3j5moyws" path="res://scripts/ui/difficulty_menu.gd" id="1_24r5h"]
 [ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_m4lgy"]
 
 [node name="DifficultyMenu" type="Control"]
