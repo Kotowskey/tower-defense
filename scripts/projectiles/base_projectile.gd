@@ -77,20 +77,17 @@ func create_explosion_effect():
 	var sprite = Sprite2D.new()
 	explosion.add_child(sprite)
 	
-	# Small scale
 	var scale_factor = area_damage_radius / 1000
 	sprite.scale = Vector2(scale_factor, scale_factor)
 	sprite.modulate = Color(1.0, 0.7, 0.3)
 	
-	# Load explosion frames
 	var explosion_frames = []
 	for i in range(9):
 		var texture = load("res://assets/kenney_smoke-particles/PNG/Explosion/explosion0%d.png" % i)
 		if texture:
 			explosion_frames.append(texture)
 	
-	# Animate through frames
-	var frame_data = [0]  # Use array to capture by reference
+	var frame_data = [0] 
 	var anim_timer = Timer.new()
 	explosion.add_child(anim_timer)
 	anim_timer.wait_time = 0.05
@@ -104,7 +101,6 @@ func create_explosion_effect():
 	)
 	anim_timer.start()
 	
-	# Add flash effect
 	var flash = Sprite2D.new()
 	explosion.add_child(flash)
 	var flash_texture = load("res://assets/kenney_smoke-particles/PNG/Flash/flash00.png")
@@ -117,7 +113,6 @@ func create_explosion_effect():
 		tween.tween_property(flash, "modulate:a", 0.0, 0.15)
 		tween.tween_callback(func(): flash.queue_free())
 	
-	# Delete entire explosion after animation completes
 	var cleanup_timer = Timer.new()
 	explosion.add_child(cleanup_timer)
 	cleanup_timer.wait_time = 0.1  

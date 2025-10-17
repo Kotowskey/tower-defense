@@ -5,7 +5,7 @@ signal lives_changed(amount)
 signal wave_changed(wave_number)
 signal game_over
 
-var player_money: int = 250
+var player_money: int = 500
 var player_lives: int = 10
 var current_wave: int = 0
 var difficulty_multiplier: float = 1.0
