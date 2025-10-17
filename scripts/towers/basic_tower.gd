@@ -14,6 +14,3 @@ func _ready():
 func apply_upgrade_effects():
 	tower_damage += 5
 	tower_fire_rate *= 0.9
-
-func get_fire_color() -> Color:
-	return Color(1, 0, 0)  

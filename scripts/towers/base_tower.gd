@@ -19,6 +19,8 @@ var target = null
 var detection_area = null
 var range_indicator = null
 
+var projectile_scene = preload("res://scenes/basic_projectile.tscn")
+
 func _ready():
 	setup_detection_area()
 	setup_fire_rate_timer()
@@ -83,36 +85,28 @@ func _on_fire_rate_timer_timeout():
 		fire_at_target(target)
 
 func fire_at_target(enemy_target):
+	if not enemy_target or not weakref(enemy_target).get_ref():
+		return
+	
 	if enemy_target.has_method("take_damage"):
-		create_fire_effect(enemy_target)
+		spawn_projectile(enemy_target)
 		play_fire_sound()
-		
-		var killed = enemy_target.take_damage(tower_damage)
-		
-		if killed:
-			target = null
-			find_new_target()
-		
 		emit_signal("tower_fired", enemy_target)
 
-func create_fire_effect(enemy_target):
-	var line = Line2D.new()
-	line.width = 2
-	line.default_color = get_fire_color()
-	line.add_point(Vector2.ZERO)
-	line.add_point(enemy_target.global_position - global_position)
-	add_child(line)
+func spawn_projectile(enemy_target):
+	if not projectile_scene:
+		return
 	
-	var tween = create_tween()
-	tween.tween_property(line, "modulate", Color(1, 1, 1, 0), 0.2)
-	tween.tween_callback(func(): line.queue_free())
+	var projectile = projectile_scene.instantiate()
+	get_parent().add_child(projectile)
+	projectile.setup(global_position, enemy_target, tower_damage)
+
+func create_fire_effect(enemy_target):
+	pass
 
 func play_fire_sound():
 	if has_node("PopSound"):
 		$PopSound.play()
-
-func get_fire_color() -> Color:
-	return Color(1, 0, 0)  
 
 func upgrade() -> int:
 	if tower_level >= max_level:

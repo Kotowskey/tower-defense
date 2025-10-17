@@ -1,7 +1,7 @@
 extends Area2D
 class_name BaseProjectile
 
-var speed: float = 400.0
+var speed: float = 1500.0
 var damage: int = 10
 var target = null
 var direction: Vector2 = Vector2.ZERO

@@ -12,6 +12,8 @@ func _init():
 	tower_fire_rate = 1.0
 	slow_factor = 0.5
 	slow_duration = 2.0
+	
+	projectile_scene = preload("res://scenes/ice_projectile.tscn")
 
 func _ready():
 	if has_node("Basic-tower-top"):
@@ -45,29 +47,21 @@ func _on_fire_rate_timer_timeout():
 	
 	super._on_fire_rate_timer_timeout()
 
-func fire_at_target(enemy_target):
-	if enemy_target.has_method("take_damage"):
-		create_fire_effect(enemy_target)
-		play_fire_sound()
-		
-		var killed = enemy_target.take_damage(tower_damage)
-		
-		if enemy_target.has_method("apply_slow"):
-			enemy_target.apply_slow(slow_factor, slow_duration)
-		
-		if killed:
-			target = null
-			find_new_target()
-		
-		emit_signal("tower_fired", enemy_target)
+func spawn_projectile(enemy_target):
+	if not projectile_scene:
+		return
+	
+	var projectile = projectile_scene.instantiate()
+	get_parent().add_child(projectile)
+	projectile.setup(global_position, enemy_target, tower_damage)
+	
+	if projectile.has_method("set_slow_properties"):
+		projectile.set_slow_properties(slow_factor, slow_duration)
 
 func apply_upgrade_effects():
 	slow_factor -= 0.1
 	slow_duration += 0.5
 	tower_damage += 2
-
-func get_fire_color() -> Color:
-	return Color(0, 1, 1)  
 
 func get_tower_stats() -> Dictionary:
 	var stats = super.get_tower_stats()

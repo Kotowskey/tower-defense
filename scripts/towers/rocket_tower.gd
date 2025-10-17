@@ -1,14 +1,14 @@
 extends BaseTower
 class_name RocketTower
 
-var projectile_scene = preload("res://scenes/rocket_projectile.tscn")
-
 func _init():
 	tower_name = "Rocket Tower"
 	tower_cost = 200
 	tower_range = 250.0
 	tower_damage = 30  
-	tower_fire_rate = 2.0  
+	tower_fire_rate = 2.0
+	
+	projectile_scene = preload("res://scenes/rocket_projectile.tscn")  
 
 func _ready():
 	if has_node("Basic-tower-top"):
@@ -38,6 +38,3 @@ func fire_rocket(enemy_target):
 func apply_upgrade_effects():
 	tower_damage += 10
 	tower_range += 25
-
-func get_fire_color() -> Color:
-	return Color(1, 0.5, 0) 

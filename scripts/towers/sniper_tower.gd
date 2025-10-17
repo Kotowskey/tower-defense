@@ -7,6 +7,8 @@ func _init():
 	tower_range = 500.0
 	tower_damage = 30
 	tower_fire_rate = 2.0
+	
+	projectile_scene = preload("res://scenes/sniper_projectile.tscn")
 
 func _ready():
 	if has_node("Basic-tower-top"):
@@ -18,6 +20,3 @@ func _ready():
 
 func apply_upgrade_effects():
 	tower_damage += 15
-
-func get_fire_color() -> Color:
-	return Color(0, 0, 1) 
