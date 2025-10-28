@@ -159,6 +159,25 @@ theme_override_font_sizes/font_size = 14
 text = "100"
 horizontal_alignment = 1
 
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerBasic"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="TowerArea" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -197,6 +216,25 @@ theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 14
 text = "200"
 horizontal_alignment = 1
+
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerArea"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "4"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="TowerSniper" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
@@ -237,6 +275,25 @@ theme_override_font_sizes/font_size = 14
 text = "300"
 horizontal_alignment = 1
 
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerSniper"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "2"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="TowerSlow" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -276,6 +333,25 @@ theme_override_font_sizes/font_size = 14
 text = "150"
 horizontal_alignment = 1
 
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerSlow"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "3"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Upgrade" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -297,6 +373,25 @@ text = "UPGRADE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/Upgrade"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "U"
+horizontal_alignment = 2
+vertical_alignment = 1
+
 [node name="Sell" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
@@ -316,6 +411,25 @@ theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 12
 text = "SELL"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/Sell"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "S"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="SpawnButton" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
@@ -344,6 +458,25 @@ theme_override_font_sizes/font_size = 12
 text = "START
 WAVE 1"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/SpawnButton"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "SPC"
+horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="StartSound" type="AudioStreamPlayer" parent="UI/HUD/BuildPanel/BuildUI/SpawnButton"]
@@ -467,6 +600,108 @@ theme_override_font_sizes/font_size = 16
 text = "Speed: 1x"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HotkeysPanel" type="Panel" parent="UI/HUD"]
+custom_minimum_size = Vector2(200, 220)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_top = -240.0
+offset_right = 520.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_info_panel")
+
+[node name="HotkeysTitle" type="Label" parent="UI/HUD/HotkeysPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 18
+text = "⌨️ HOTKEYS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ToggleButton" type="Button" parent="UI/HUD/HotkeysPanel"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -30.0
+offset_top = 2.0
+offset_right = -5.0
+offset_bottom = 27.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("18_new")
+theme_override_font_sizes/font_size = 14
+text = "−"
+flat = true
+
+[node name="HotkeysList" type="VBoxContainer" parent="UI/HUD/HotkeysPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 35.0
+offset_right = -15.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+
+[node name="Hotkey1" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[1] Basic Tower"
+
+[node name="Hotkey2" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[2] Sniper Tower"
+
+[node name="Hotkey3" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[3] Slow Tower"
+
+[node name="Hotkey4" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[4] Area Tower"
+
+[node name="HotkeyU" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[U] Upgrade Tower"
+
+[node name="HotkeyS" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[S] Sell Tower"
+
+[node name="HotkeySpace" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[SPACE] Start Wave"
+
+[node name="HotkeyEsc" type="Label" parent="UI/HUD/HotkeysPanel/HotkeysList"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "[ESC] Cancel Build"
 
 [node name="PauseMenu" type="Control" parent="UI"]
 process_mode = 3

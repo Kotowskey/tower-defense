@@ -95,7 +95,10 @@ func _input(event):
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"): 
-		ui_manager.toggle_pause_menu()
+		if tower_manager.is_in_building_mode():
+			tower_manager.cancel_building()
+		else:
+			ui_manager.toggle_pause_menu()
 
 func _on_restart_pressed():
 	get_tree().paused = false

@@ -8,7 +8,7 @@ var wave_manager
 var can_upgrade = false
 var upgrade_cost = 0
 var build_menu_visible = false
-var game_speed = 1.0  # Current game speed multiplier (1x, 2x, 4x)
+var game_speed = 1.0  
 
 func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	game_scene = p_game_scene
@@ -36,6 +36,32 @@ func _process(_delta):
 		can_upgrade = false
 	
 	update_upgrade_ui()
+
+func _input(event):
+	if event is InputEventKey and event.pressed and not event.echo:
+		if not _is_typing_in_text_field():
+			match event.keycode:
+				KEY_1:
+					_on_tower_basic_pressed()
+				KEY_2:
+					_on_tower_sniper_pressed()
+				KEY_3:
+					_on_tower_slow_pressed()
+				KEY_4:
+					_on_tower_area_pressed()
+				KEY_U:
+					if tower_manager.get_selected_tower() and can_upgrade:
+						_on_upgrade_pressed()
+				KEY_S:
+					if tower_manager.get_selected_tower():
+						_on_sell_pressed()
+				KEY_SPACE:
+					if not wave_manager.is_wave_in_progress():
+						_on_spawn_button_pressed()
+
+func _is_typing_in_text_field() -> bool:
+	var focused = game_scene.get_viewport().gui_get_focus_owner()
+	return focused is LineEdit or focused is TextEdit
 
 func connect_ui_buttons():
 	if game_scene.has_node("UI/HUD/BuildPanel"):
@@ -70,6 +96,9 @@ func connect_ui_buttons():
 	
 	if game_scene.has_node("UI/HUD/SpeedButton"):
 		game_scene.get_node("UI/HUD/SpeedButton").connect("pressed", Callable(self, "_on_speed_button_pressed"))
+	
+	if game_scene.has_node("UI/HUD/HotkeysPanel/ToggleButton"):
+		game_scene.get_node("UI/HUD/HotkeysPanel/ToggleButton").connect("pressed", Callable(self, "_on_toggle_hotkeys_panel"))
 
 func update_money_ui(amount = null):
 	if amount == null:
@@ -253,22 +282,32 @@ func toggle_build_menu():
 		build_panel.visible = build_menu_visible
 
 func _on_speed_button_pressed():
-	# Cycle through speeds: 1x -> 2x -> 4x -> 1x
 	if game_speed == 1.0:
 		game_speed = 2.0
 	elif game_speed == 2.0:
 		game_speed = 4.0
 	else:
 		game_speed = 1.0
-	
-	# Apply the speed to the engine
 	Engine.time_scale = game_speed
 	
-	# Update the button label
 	if game_scene.has_node("UI/HUD/SpeedButton/SpeedLabel"):
 		var speed_text = "Speed: " + str(int(game_speed)) + "x"
 		game_scene.get_node("UI/HUD/SpeedButton/SpeedLabel").text = speed_text
 	
-	# Play button sound if available
 	if game_scene.has_node("ButtonSound"):
 		game_scene.get_node("ButtonSound").play()
+
+func _on_toggle_hotkeys_panel():
+	if game_scene.has_node("UI/HUD/HotkeysPanel"):
+		var panel = game_scene.get_node("UI/HUD/HotkeysPanel")
+		var toggle_btn = game_scene.get_node("UI/HUD/HotkeysPanel/ToggleButton")
+		var hotkeys_list = game_scene.get_node("UI/HUD/HotkeysPanel/HotkeysList")
+		
+		hotkeys_list.visible = !hotkeys_list.visible
+		
+		if hotkeys_list.visible:
+			toggle_btn.text = "−"
+			panel.custom_minimum_size = Vector2(200, 220)
+		else:
+			toggle_btn.text = "+"
+			panel.custom_minimum_size = Vector2(200, 35)
