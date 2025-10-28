@@ -8,6 +8,20 @@ func _ready():
 
 func get_enemy_path():
 	return path
+
+func get_path_points() -> Array:
+	"""Returns array of Vector2 points along the path"""
+	var points = []
+	if not path or not path.curve:
+		return points
+	
+	var curve = path.curve
+	var point_count = curve.point_count
+	
+	for i in range(point_count):
+		points.append(curve.get_point_position(i))
+	
+	return points
 	
 func is_position_on_path(pos: Vector2) -> bool:
 	if not path:

@@ -1,0 +1,180 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjwx2p3k8lmp1"]
+
+[ext_resource type="Script" path="res://scripts/core/tower_rush_scene.gd" id="1_tr"]
+[ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="2_tr_map"]
+[ext_resource type="AudioStream" uid="uid://crbqfxor5yxvj" path="res://assets/music/Fortress in the Sky.mp3" id="3_tr_music"]
+[ext_resource type="FontFile" uid="uid://cn0chp0skw8f0" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="4_tr_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud"]
+bg_color = Color(0, 0, 0, 0.75)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.4, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pause"]
+bg_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.1, 0.1, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.6, 0.6, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="TowerRushScene" type="Node2D"]
+script = ExtResource("1_tr")
+
+[node name="Map" parent="." instance=ExtResource("2_tr_map")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tr_music")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+zoom = Vector2(1, 1)
+enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="PanelContainer" parent="UI/HUD"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/TopBar"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="UI/HUD/TopBar/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 24
+text = "TOWER RUSH MODE"
+horizontal_alignment = 1
+
+[node name="MoneyLabel" type="Label" parent="UI/HUD/TopBar/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 18
+text = "Money: 100"
+
+[node name="LivesLabel" type="Label" parent="UI/HUD/TopBar/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 18
+text = "AI Lives: 10"
+
+[node name="WaveLabel" type="Label" parent="UI/HUD/TopBar/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 18
+text = "Wave: 1"
+
+[node name="InfoPanel" type="PanelContainer" parent="UI/HUD"]
+layout_mode = 0
+offset_left = 850.0
+offset_top = 10.0
+offset_right = 1140.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/InfoPanel"]
+layout_mode = 2
+
+[node name="InfoTitle" type="Label" parent="UI/HUD/InfoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 20
+text = "HOW TO PLAY"
+horizontal_alignment = 1
+
+[node name="Info1" type="Label" parent="UI/HUD/InfoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 14
+text = "Spawn enemies to break through"
+
+[node name="Info2" type="Label" parent="UI/HUD/InfoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 14
+text = "AI builds towers (+15$ per enemy)"
+
+[node name="Info3" type="Label" parent="UI/HUD/InfoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 14
+text = "Keys: 1=Basic(10$) 2=Fast(15$) 3=Tank(25$)"
+
+[node name="Info4" type="Label" parent="UI/HUD/InfoPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 14
+text = "Reduce AI lives to 0 to win!"
+
+[node name="PauseMenu" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -75.0
+offset_right = 100.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+theme_override_font_sizes/font_size = 32
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="UI/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="UI/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+text = "Restart"
+
+[node name="MainMenuButton" type="Button" parent="UI/PauseMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_tr_font")
+text = "Main Menu"

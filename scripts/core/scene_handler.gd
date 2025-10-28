@@ -2,13 +2,21 @@ extends Node
 
 var map_selector: Control = null
 var settings_menu: Control = null
+var game_mode_menu: Control = null
 
 func _ready():
 	call_deferred("setup_difficulty_manager")
 	call_deferred("setup_settings_manager")
+	call_deferred("setup_game_mode_manager")
 	
 	var timer = get_tree().create_timer(0.1)
 	timer.timeout.connect(func(): connect_menu_buttons())
+
+func setup_game_mode_manager():
+	if not get_node_or_null("/root/GameModeManager"):
+		var mode_manager = load("res://scripts/managers/game_mode_manager.gd").new()
+		mode_manager.name = "GameModeManager"
+		get_node("/root").add_child(mode_manager)
 
 func setup_difficulty_manager():
 	if not get_node_or_null("/root/DifficultyManager"):
@@ -45,10 +53,41 @@ func on_new_game_pressed():
 	if has_node("Menu"):
 		$Menu.hide()
 	
+	# Show game mode selection first
+	open_game_mode_menu()
+
+func open_game_mode_menu():
+	if game_mode_menu and is_instance_valid(game_mode_menu):
+		game_mode_menu.queue_free()
+	
+	var mode_menu_scene = load("res://scenes/game_mode_menu.tscn")
+	game_mode_menu = mode_menu_scene.instantiate()
+	game_mode_menu.connect("mode_selected", Callable(self, "_on_game_mode_selected"))
+	game_mode_menu.connect("back_pressed", Callable(self, "_on_mode_back_pressed"))
+	add_child(game_mode_menu)
+
+func _on_game_mode_selected(mode):
+	# Set game mode
+	if has_node("/root/GameModeManager"):
+		get_node("/root/GameModeManager").set_game_mode(mode)
+	
+	if game_mode_menu and is_instance_valid(game_mode_menu):
+		game_mode_menu.queue_free()
+		game_mode_menu = null
+	
+	# Show difficulty menu
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.show()
 	else:
 		open_map_selector()
+
+func _on_mode_back_pressed():
+	if game_mode_menu and is_instance_valid(game_mode_menu):
+		game_mode_menu.queue_free()
+		game_mode_menu = null
+	
+	if has_node("Menu"):
+		$Menu.show()
 
 func on_settings_pressed():
 	if has_node("Menu"):
@@ -81,8 +120,8 @@ func on_difficulty_selected(difficulty):
 func on_diff_back_pressed():
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.hide()
-	if has_node("Menu"):
-		$Menu.show()
+	# Go back to game mode menu instead of main menu
+	open_game_mode_menu()
 
 func open_map_selector():
 	if has_node("DifficultyMenu"):
@@ -118,9 +157,21 @@ func start_game():
 		$DifficultyMenu.queue_free()
 	if has_node("Menu"):
 		$Menu.queue_free()
-	var game_scene = load("res://scenes/game_scene.tscn").instantiate()
-	if has_node("/root/DifficultyManager"):
-		var diff_manager = get_node("/root/DifficultyManager")
-		game_scene.player_money = int(game_scene.player_money * diff_manager.get_difficulty_multiplier("player_money"))
-		game_scene.enemy_reward = int(game_scene.enemy_reward * diff_manager.get_difficulty_multiplier("enemy_reward"))
+	
+	# Load the appropriate game scene based on game mode
+	var game_scene_path = "res://scenes/game_scene.tscn"
+	if has_node("/root/GameModeManager"):
+		var mode_manager = get_node("/root/GameModeManager")
+		if mode_manager.is_tower_rush():
+			game_scene_path = "res://scenes/tower_rush_scene.tscn"
+	
+	var game_scene = load(game_scene_path).instantiate()
+	
+	# Apply difficulty settings for classic mode
+	if game_scene_path == "res://scenes/game_scene.tscn":
+		if has_node("/root/DifficultyManager"):
+			var diff_manager = get_node("/root/DifficultyManager")
+			game_scene.player_money = int(game_scene.player_money * diff_manager.get_difficulty_multiplier("player_money"))
+			game_scene.enemy_reward = int(game_scene.enemy_reward * diff_manager.get_difficulty_multiplier("enemy_reward"))
+	
 	add_child(game_scene)

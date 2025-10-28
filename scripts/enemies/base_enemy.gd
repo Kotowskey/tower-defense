@@ -47,7 +47,7 @@ func move_along_path(delta):
 		position = path_follow.global_position
 		
 		if path_follow.progress_ratio >= 0.99:
-			emit_signal("enemy_escaped")
+			emit_signal("enemy_escaped", self)
 			queue_free()
 
 func take_damage(damage):
