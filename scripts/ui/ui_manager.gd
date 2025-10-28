@@ -8,6 +8,7 @@ var wave_manager
 var can_upgrade = false
 var upgrade_cost = 0
 var build_menu_visible = false
+var game_speed = 1.0  # Current game speed multiplier (1x, 2x, 4x)
 
 func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	game_scene = p_game_scene
@@ -66,6 +67,9 @@ func connect_ui_buttons():
 		pause_menu.connect("resume_pressed", Callable(self, "_on_resume_pressed"))
 		pause_menu.connect("settings_pressed", Callable(self, "_on_pause_settings_pressed"))
 		pause_menu.connect("main_menu_pressed", Callable(game_scene, "_on_main_menu_pressed"))
+	
+	if game_scene.has_node("UI/HUD/SpeedButton"):
+		game_scene.get_node("UI/HUD/SpeedButton").connect("pressed", Callable(self, "_on_speed_button_pressed"))
 
 func update_money_ui(amount = null):
 	if amount == null:
@@ -247,3 +251,24 @@ func toggle_build_menu():
 		var build_panel = game_scene.get_node("UI/HUD/BuildPanel")
 		build_menu_visible = !build_menu_visible
 		build_panel.visible = build_menu_visible
+
+func _on_speed_button_pressed():
+	# Cycle through speeds: 1x -> 2x -> 4x -> 1x
+	if game_speed == 1.0:
+		game_speed = 2.0
+	elif game_speed == 2.0:
+		game_speed = 4.0
+	else:
+		game_speed = 1.0
+	
+	# Apply the speed to the engine
+	Engine.time_scale = game_speed
+	
+	# Update the button label
+	if game_scene.has_node("UI/HUD/SpeedButton/SpeedLabel"):
+		var speed_text = "Speed: " + str(int(game_speed)) + "x"
+		game_scene.get_node("UI/HUD/SpeedButton/SpeedLabel").text = speed_text
+	
+	# Play button sound if available
+	if game_scene.has_node("ButtonSound"):
+		game_scene.get_node("ButtonSound").play()
