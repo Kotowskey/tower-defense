@@ -23,6 +23,7 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	
 	tower_manager.connect("tower_selected", Callable(self, "_on_tower_selected"))
 	tower_manager.connect("tower_deselected", Callable(self, "_on_tower_deselected"))
+	tower_manager.connect("insufficient_funds", Callable(self, "_on_insufficient_funds"))
 	
 	wave_manager.connect("wave_started", Callable(self, "_on_wave_started"))
 	wave_manager.connect("wave_completed", Callable(self, "_on_wave_completed"))
@@ -238,6 +239,9 @@ func _on_tower_deselected():
 
 	update_upgrade_ui()
 
+func _on_insufficient_funds(cost):
+	show_notification("Not enough money! Price: " + str(cost))
+
 func _on_wave_started():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton"):
 		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").disabled = true
@@ -311,3 +315,15 @@ func _on_toggle_hotkeys_panel():
 		else:
 			toggle_btn.text = "+"
 			panel.custom_minimum_size = Vector2(200, 35)
+
+func show_notification(message: String, duration: float = 2.0):
+	if game_scene.has_node("UI/HUD/NotificationLabel"):
+		var notification_label = game_scene.get_node("UI/HUD/NotificationLabel")
+		notification_label.text = message
+		notification_label.visible = true
+		
+		var timer = game_scene.get_tree().create_timer(duration)
+		timer.timeout.connect(func(): 
+			if notification_label:
+				notification_label.visible = false
+		)

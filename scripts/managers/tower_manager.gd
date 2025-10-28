@@ -2,6 +2,7 @@ extends Node
 
 signal tower_selected(tower)
 signal tower_deselected
+signal insufficient_funds(cost)
 
 var tower_scene: PackedScene
 var game_scene
@@ -107,7 +108,7 @@ func place_tower(pos):
 		cancel_building()
 		return true
 	else:
-		print("Not enough money to place tower")
+		emit_signal("insufficient_funds", selected_tower_cost)
 		return false
 
 func cancel_building():
