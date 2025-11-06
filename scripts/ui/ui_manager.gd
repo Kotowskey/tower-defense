@@ -346,15 +346,25 @@ func update_campaign_info():
 	var level_number = mode_manager.get_campaign_level()
 	var level = CampaignLevel.get_level(level_number)
 	
-	if level and game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel"):
-		var wave_label = game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel")
-		var parent = wave_label.get_parent()
+	if level and game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer"):
+		var wave_container = game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer")
 		
-		if not parent.has_node("LevelNameLabel"):
+		if not wave_container.has_node("LevelNameLabel"):
 			var level_name_label = Label.new()
 			level_name_label.name = "LevelNameLabel"
 			level_name_label.text = level.level_name
 			level_name_label.add_theme_font_size_override("font_size", 20)
 			level_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-			parent.add_child(level_name_label)
-			parent.move_child(level_name_label, 0)
+			wave_container.add_child(level_name_label)
+			wave_container.move_child(level_name_label, 0)
+		
+		if not wave_container.has_node("LevelDescLabel") and level.level_description != "":
+			var level_desc_label = Label.new()
+			level_desc_label.name = "LevelDescLabel"
+			level_desc_label.text = level.level_description
+			level_desc_label.add_theme_font_size_override("font_size", 14)
+			level_desc_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			level_desc_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			level_desc_label.custom_minimum_size = Vector2(250, 0)
+			wave_container.add_child(level_desc_label)
+			wave_container.move_child(level_desc_label, 1)

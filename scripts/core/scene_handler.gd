@@ -3,6 +3,7 @@ extends Node
 var map_selector: Control = null
 var settings_menu: Control = null
 var game_mode_selector: Control = null
+var campaign_level_selector: Control = null
 
 func _ready():
 	call_deferred("setup_difficulty_manager")
@@ -84,7 +85,7 @@ func on_difficulty_selected(difficulty):
 	
 	var mode_manager = get_node_or_null("/root/GameModeManager")
 	if mode_manager and mode_manager.is_campaign():
-		start_game()
+		open_campaign_level_selector()
 	else:
 		open_map_selector()
 
@@ -158,6 +159,38 @@ func _on_map_back_pressed():
 	if map_selector and is_instance_valid(map_selector):
 		map_selector.queue_free()
 		map_selector = null
+	if has_node("DifficultyMenu"):
+		$DifficultyMenu.show()
+
+func open_campaign_level_selector():
+	if has_node("DifficultyMenu"):
+		$DifficultyMenu.hide()
+	
+	if campaign_level_selector and is_instance_valid(campaign_level_selector):
+		campaign_level_selector.queue_free()
+	
+	var level_selector_scene = load("res://scenes/campaign_level_selector.tscn")
+	campaign_level_selector = level_selector_scene.instantiate()
+	campaign_level_selector.connect("level_selected", Callable(self, "_on_campaign_level_selected"))
+	campaign_level_selector.connect("back_pressed", Callable(self, "_on_campaign_level_back_pressed"))
+	add_child(campaign_level_selector)
+
+func _on_campaign_level_selected(level_number: int):
+	var mode_manager = get_node_or_null("/root/GameModeManager")
+	if mode_manager:
+		mode_manager.set_campaign_level(level_number)
+	
+	if campaign_level_selector and is_instance_valid(campaign_level_selector):
+		campaign_level_selector.queue_free()
+		campaign_level_selector = null
+	
+	start_game()
+
+func _on_campaign_level_back_pressed():
+	if campaign_level_selector and is_instance_valid(campaign_level_selector):
+		campaign_level_selector.queue_free()
+		campaign_level_selector = null
+	
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.show()
 

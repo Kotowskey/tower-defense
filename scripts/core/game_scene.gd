@@ -68,6 +68,7 @@ func _ready():
 	
 	if game_mode_manager.is_campaign() and current_campaign_level:
 		wave_manager.set_max_waves(current_campaign_level.max_waves)
+		wave_manager.set_campaign_difficulty_multiplier(current_campaign_level.difficulty_multiplier)
 	
 	ui_manager = load("res://scripts/ui/ui_manager.gd").new(self, game_state, tower_manager, wave_manager)
 	add_child(ui_manager)
@@ -144,8 +145,9 @@ func setup_campaign_level():
 		current_campaign_level = CampaignLevel.get_level(level_number)
 		
 		if current_campaign_level:
-			player_money = current_campaign_level.starting_money
+			player_money = current_campaign_level.starting_money + game_mode_manager.get_campaign_bonus()
 			player_lives = current_campaign_level.starting_lives
+			game_mode_manager.clear_campaign_bonus()
 
 func _on_level_completed():
 	if game_mode_manager and game_mode_manager.is_campaign():
@@ -163,7 +165,8 @@ func show_level_complete():
 	var level_complete_scene = load("res://scenes/level_complete.tscn")
 	if level_complete_scene:
 		var level_complete = level_complete_scene.instantiate()
-		level_complete.set_level_info(game_mode_manager.get_campaign_level())
+		var bonus_money = game_state.player_money
+		level_complete.set_level_info(game_mode_manager.get_campaign_level(), bonus_money)
 		print("Connecting next_level_pressed signal...")
 		level_complete.connect("next_level_pressed", Callable(self, "_on_next_level"))
 		level_complete.connect("main_menu_pressed", Callable(self, "_on_main_menu_from_victory"))
@@ -180,10 +183,15 @@ func show_campaign_complete():
 func _on_next_level():
 	print("_on_next_level called!")
 	if game_mode_manager:
+		var bonus_money = game_state.player_money
+		game_mode_manager.add_campaign_bonus(bonus_money)
+		
 		var old_level = game_mode_manager.get_campaign_level()
 		game_mode_manager.next_campaign_level()
+		game_mode_manager.save_progress()
 		var new_level = game_mode_manager.get_campaign_level()
 		print("Level changed from ", old_level, " to ", new_level)
+		print("Bonus money carried over: ", bonus_money)
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 

@@ -19,6 +19,7 @@ var enemies_to_kill: int = 0
 var wave_size: int = 5
 var wave_delay: float = 1.0
 var max_waves: int = -1
+var campaign_difficulty_multiplier: float = 1.0
 
 var enemy_classes = {
 	0: preload("res://scripts/enemies/basic_enemy.gd"),
@@ -42,6 +43,9 @@ func _init(p_game_scene, p_enemy_scene: PackedScene, p_boss_enemy_scene: PackedS
 
 func set_max_waves(waves: int):
 	max_waves = waves
+
+func set_campaign_difficulty_multiplier(multiplier: float):
+	campaign_difficulty_multiplier = multiplier
 	
 func setup_map(p_map_node):
 	map_node = p_map_node
@@ -77,8 +81,8 @@ func start_wave():
 	game_scene.add_child(wave_timer)
 	wave_timer.connect("timeout", Callable(self, "_on_wave_timer_timeout"))
 	
-	var enemy_health_multiplier = 1.0 + (current_wave * 0.15)
-	var enemy_speed_multiplier = 1.0 + (current_wave * 0.03)
+	var enemy_health_multiplier = (1.0 + (current_wave * 0.15)) * campaign_difficulty_multiplier
+	var enemy_speed_multiplier = (1.0 + (current_wave * 0.03)) * campaign_difficulty_multiplier
 	var spawn_delay = wave_delay * (1.0 - (current_wave * 0.02))
 	spawn_delay = max(0.2, spawn_delay)
 	
