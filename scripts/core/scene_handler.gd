@@ -2,10 +2,12 @@ extends Node
 
 var map_selector: Control = null
 var settings_menu: Control = null
+var game_mode_selector: Control = null
 
 func _ready():
 	call_deferred("setup_difficulty_manager")
 	call_deferred("setup_settings_manager")
+	call_deferred("setup_game_mode_manager")
 	
 	var timer = get_tree().create_timer(0.1)
 	timer.timeout.connect(func(): connect_menu_buttons())
@@ -24,6 +26,12 @@ func setup_settings_manager():
 		var settings_manager = load("res://scripts/managers/settings_manager.gd").new()
 		settings_manager.name = "SettingsManager"
 		get_node("/root").add_child(settings_manager)
+
+func setup_game_mode_manager():
+	if not get_node_or_null("/root/GameModeManager"):
+		var mode_manager = load("res://scripts/managers/game_mode_manager.gd").new()
+		mode_manager.name = "GameModeManager"
+		get_node("/root").add_child(mode_manager)
 
 func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/NEW GAME"):
@@ -45,10 +53,7 @@ func on_new_game_pressed():
 	if has_node("Menu"):
 		$Menu.hide()
 	
-	if has_node("DifficultyMenu"):
-		$DifficultyMenu.show()
-	else:
-		open_map_selector()
+	open_game_mode_selector()
 
 func on_settings_pressed():
 	if has_node("Menu"):
@@ -76,11 +81,54 @@ func on_quit_pressed():
 func on_difficulty_selected(difficulty):
 	if has_node("/root/DifficultyManager"):
 		get_node("/root/DifficultyManager").set_difficulty(difficulty)
-	open_map_selector()
+	
+	var mode_manager = get_node_or_null("/root/GameModeManager")
+	if mode_manager and mode_manager.is_campaign():
+		start_game()
+	else:
+		open_map_selector()
 
 func on_diff_back_pressed():
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.hide()
+	open_game_mode_selector()
+
+func open_game_mode_selector():
+	if has_node("Menu"):
+		$Menu.hide()
+	if has_node("DifficultyMenu"):
+		$DifficultyMenu.hide()
+	
+	if game_mode_selector and is_instance_valid(game_mode_selector):
+		game_mode_selector.queue_free()
+	
+	var mode_selector_scene = load("res://scenes/game_mode_selector.tscn")
+	game_mode_selector = mode_selector_scene.instantiate()
+	game_mode_selector.connect("mode_selected", Callable(self, "_on_mode_selected"))
+	game_mode_selector.connect("back_pressed", Callable(self, "_on_mode_back_pressed"))
+	add_child(game_mode_selector)
+
+func _on_mode_selected(mode: int):
+	var mode_manager = get_node_or_null("/root/GameModeManager")
+	if mode_manager:
+		mode_manager.set_mode(mode)
+		if mode == 1:
+			mode_manager.reset_campaign()
+	
+	if game_mode_selector and is_instance_valid(game_mode_selector):
+		game_mode_selector.queue_free()
+		game_mode_selector = null
+	
+	if has_node("DifficultyMenu"):
+		$DifficultyMenu.show()
+	else:
+		open_map_selector()
+
+func _on_mode_back_pressed():
+	if game_mode_selector and is_instance_valid(game_mode_selector):
+		game_mode_selector.queue_free()
+		game_mode_selector = null
+	
 	if has_node("Menu"):
 		$Menu.show()
 

@@ -15,6 +15,8 @@ var tower_manager
 var wave_manager
 var ui_manager
 var settings_manager
+var game_mode_manager
+var current_campaign_level: CampaignLevel = null
 
 func _ready():
 	if not get_node_or_null("/root/SettingsManager"):
@@ -23,10 +25,24 @@ func _ready():
 		get_node("/root").add_child(settings_manager)
 	else:
 		settings_manager = get_node("/root/SettingsManager")
+	
+	if not get_node_or_null("/root/GameModeManager"):
+		game_mode_manager = load("res://scripts/managers/game_mode_manager.gd").new()
+		game_mode_manager.name = "GameModeManager"
+		get_node("/root").add_child(game_mode_manager)
+	else:
+		game_mode_manager = get_node("/root/GameModeManager")
+	
+	setup_campaign_level()
+	
 	var selected_map_path := ""
 	if has_node("/root/DifficultyManager"):
 		selected_map_path = str(get_node("/root/DifficultyManager").get_meta("selected_map_path", ""))
 	var default_map_path := "res://scenes/map.tscn"
+	
+	if game_mode_manager.is_campaign() and current_campaign_level:
+		selected_map_path = current_campaign_level.map_path
+	
 	if selected_map_path != "" and selected_map_path != default_map_path:
 		if has_node("Map"):
 			$Map.free()
@@ -39,7 +55,8 @@ func _ready():
 	game_state = load("res://scripts/managers/game_state.gd").new()
 	add_child(game_state)
 	game_state.set_initial_values(player_money, player_lives, enemy_reward)
-	game_state.setup_enemy_rewards()  
+	game_state.setup_enemy_rewards()
+	game_state.connect("game_over", Callable(self, "_on_game_over"))
 	
 	tower_manager = load("res://scripts/managers/tower_manager.gd").new(self, tower_scene, game_state)
 	add_child(tower_manager)
@@ -47,6 +64,10 @@ func _ready():
 	wave_manager = load("res://scripts/managers/wave_manager.gd").new(self, enemy_scene, boss_enemy_scene, game_state, wave_size, wave_delay)
 	add_child(wave_manager)
 	wave_manager.setup_map($Map)
+	wave_manager.connect("level_completed", Callable(self, "_on_level_completed"))
+	
+	if game_mode_manager.is_campaign() and current_campaign_level:
+		wave_manager.set_max_waves(current_campaign_level.max_waves)
 	
 	ui_manager = load("res://scripts/ui/ui_manager.gd").new(self, game_state, tower_manager, wave_manager)
 	add_child(ui_manager)
@@ -116,3 +137,59 @@ func resume_music():
 
 func stop_music():
 	$AudioStreamPlayer.stop()
+
+func setup_campaign_level():
+	if game_mode_manager and game_mode_manager.is_campaign():
+		var level_number = game_mode_manager.get_campaign_level()
+		current_campaign_level = CampaignLevel.get_level(level_number)
+		
+		if current_campaign_level:
+			player_money = current_campaign_level.starting_money
+			player_lives = current_campaign_level.starting_lives
+
+func _on_level_completed():
+	if game_mode_manager and game_mode_manager.is_campaign():
+		stop_music()
+		get_tree().paused = true
+		
+		var is_final = game_mode_manager.is_final_level()
+		
+		if is_final:
+			show_campaign_complete()
+		else:
+			show_level_complete()
+
+func show_level_complete():
+	var level_complete_scene = load("res://scenes/level_complete.tscn")
+	if level_complete_scene:
+		var level_complete = level_complete_scene.instantiate()
+		level_complete.set_level_info(game_mode_manager.get_campaign_level())
+		print("Connecting next_level_pressed signal...")
+		level_complete.connect("next_level_pressed", Callable(self, "_on_next_level"))
+		level_complete.connect("main_menu_pressed", Callable(self, "_on_main_menu_from_victory"))
+		print("Signals connected!")
+		$UI/HUD.add_child(level_complete)
+
+func show_campaign_complete():
+	var campaign_complete_scene = load("res://scenes/campaign_complete.tscn")
+	if campaign_complete_scene:
+		var campaign_complete = campaign_complete_scene.instantiate()
+		campaign_complete.connect("main_menu_pressed", Callable(self, "_on_main_menu_from_victory"))
+		$UI/HUD.add_child(campaign_complete)
+
+func _on_next_level():
+	print("_on_next_level called!")
+	if game_mode_manager:
+		var old_level = game_mode_manager.get_campaign_level()
+		game_mode_manager.next_campaign_level()
+		var new_level = game_mode_manager.get_campaign_level()
+		print("Level changed from ", old_level, " to ", new_level)
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+func _on_main_menu_from_victory():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/scene_handler.tscn")
+
+func _on_game_over():
+	pass

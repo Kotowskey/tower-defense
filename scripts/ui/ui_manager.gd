@@ -27,6 +27,8 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	
 	wave_manager.connect("wave_started", Callable(self, "_on_wave_started"))
 	wave_manager.connect("wave_completed", Callable(self, "_on_wave_completed"))
+	
+	call_deferred("update_campaign_info")
 
 func _process(_delta):
 	if tower_manager.get_selected_tower():
@@ -118,9 +120,17 @@ func update_lives_ui(amount = null):
 func update_wave_ui(wave_number = null):
 	if wave_number == null:
 		wave_number = game_state.current_wave
-		
+	
+	var mode_manager = get_node_or_null("/root/GameModeManager")
+	var wave_text = "Wave: " + str(wave_number)
+	
+	if mode_manager and mode_manager.is_campaign():
+		var max_waves = wave_manager.max_waves if wave_manager else -1
+		if max_waves > 0:
+			wave_text = "Wave: " + str(wave_number) + "/" + str(max_waves)
+	
 	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel"):
-		game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel").text = "Wave: " + str(wave_number)
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel").text = wave_text
 
 func update_upgrade_ui():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
@@ -327,3 +337,24 @@ func show_notification(message: String, duration: float = 2.0):
 			if notification_label:
 				notification_label.visible = false
 		)
+
+func update_campaign_info():
+	var mode_manager = get_node_or_null("/root/GameModeManager")
+	if not mode_manager or not mode_manager.is_campaign():
+		return
+	
+	var level_number = mode_manager.get_campaign_level()
+	var level = CampaignLevel.get_level(level_number)
+	
+	if level and game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel"):
+		var wave_label = game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel")
+		var parent = wave_label.get_parent()
+		
+		if not parent.has_node("LevelNameLabel"):
+			var level_name_label = Label.new()
+			level_name_label.name = "LevelNameLabel"
+			level_name_label.text = level.level_name
+			level_name_label.add_theme_font_size_override("font_size", 20)
+			level_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			parent.add_child(level_name_label)
+			parent.move_child(level_name_label, 0)

@@ -2,6 +2,7 @@ extends Node
 
 signal wave_started
 signal wave_completed
+signal level_completed
 signal enemy_spawned
 signal enemy_died
 signal enemy_escaped
@@ -17,6 +18,7 @@ var enemies_spawned: int = 0
 var enemies_to_kill: int = 0
 var wave_size: int = 5
 var wave_delay: float = 1.0
+var max_waves: int = -1
 
 var enemy_classes = {
 	0: preload("res://scripts/enemies/basic_enemy.gd"),
@@ -37,6 +39,9 @@ func _init(p_game_scene, p_enemy_scene: PackedScene, p_boss_enemy_scene: PackedS
 	game_state = p_game_state
 	wave_size = p_wave_size
 	wave_delay = p_wave_delay
+
+func set_max_waves(waves: int):
+	max_waves = waves
 	
 func setup_map(p_map_node):
 	map_node = p_map_node
@@ -87,6 +92,10 @@ func start_wave():
 
 func end_wave():
 	wave_in_progress = false
+	
+	if max_waves > 0 and game_state.get_current_wave() >= max_waves:
+		emit_signal("level_completed")
+		return
 	
 	var wave_reward = game_state.get_wave_reward()
 	game_state.add_money(wave_reward)
