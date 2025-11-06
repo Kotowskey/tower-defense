@@ -3,6 +3,8 @@ class_name IceTower
 
 var slow_factor: float = 0.5
 var slow_duration: float = 2.0
+var base_slow_factor: float = 0.5
+var base_slow_duration: float = 2.0
 
 func _init():
 	tower_name = "Ice Tower"
@@ -12,6 +14,8 @@ func _init():
 	tower_fire_rate = 1.0
 	slow_factor = 0.5
 	slow_duration = 2.0
+	base_slow_factor = 0.5
+	base_slow_duration = 2.0
 	
 	projectile_scene = preload("res://scenes/ice_projectile.tscn")
 
@@ -22,6 +26,25 @@ func _ready():
 			$"Basic-tower-top".texture = texture
 	
 	super._ready()
+	apply_ice_upgrades()
+
+func apply_ice_upgrades():
+	if not upgrade_manager:
+		return
+	
+	var slow_mult = 1.0
+	var duration_mult = 1.0
+	
+	if upgrade_manager.is_upgrade_unlocked("ice_slow"):
+		slow_mult *= 1.3
+	if upgrade_manager.is_upgrade_unlocked("ice_duration"):
+		duration_mult *= 1.5
+	
+	slow_factor = base_slow_factor * slow_mult
+	slow_duration = base_slow_duration * duration_mult
+
+func get_tower_type_id() -> int:
+	return 3
 
 func _on_detection_area_body_entered(body):
 	var parent = body.get_parent()

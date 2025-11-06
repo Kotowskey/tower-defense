@@ -35,6 +35,9 @@ func fire_rocket(enemy_target):
 	
 	emit_signal("tower_fired", enemy_target)
 
+func get_tower_type_id() -> int:
+	return 1
+
 func apply_upgrade_effects():
 	tower_damage += 10
 	tower_range += 25

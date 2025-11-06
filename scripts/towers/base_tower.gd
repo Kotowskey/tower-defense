@@ -20,10 +20,63 @@ var detection_area = null
 var range_indicator = null
 
 var projectile_scene = preload("res://scenes/basic_projectile.tscn")
+var upgrade_manager = null
+var base_damage: int = 10
+var base_range: float = 300.0
+var base_fire_rate: float = 1.0
 
 func _ready():
+	if has_node("/root/UpgradeManager"):
+		upgrade_manager = get_node("/root/UpgradeManager")
+	
+	base_damage = tower_damage
+	base_range = tower_range
+	base_fire_rate = tower_fire_rate
+	
+	apply_global_upgrades()
 	setup_detection_area()
 	setup_fire_rate_timer()
+
+func apply_global_upgrades():
+	if not upgrade_manager:
+		return
+	
+	var tower_type_id = get_tower_type_id()
+	if tower_type_id == -1:
+		return
+	
+	var damage_mult = 1.0
+	var range_mult = 1.0
+	var fire_rate_mult = 1.0
+	
+	match tower_type_id:
+		0:
+			if upgrade_manager.is_upgrade_unlocked("basic_damage_1"):
+				damage_mult *= 1.25
+			if upgrade_manager.is_upgrade_unlocked("basic_damage_2"):
+				damage_mult *= 1.5
+			if upgrade_manager.is_upgrade_unlocked("basic_range_1"):
+				range_mult *= 1.3
+			if upgrade_manager.is_upgrade_unlocked("basic_fire_rate_1"):
+				fire_rate_mult *= 0.8
+		1:
+			if upgrade_manager.is_upgrade_unlocked("rocket_damage_1"):
+				damage_mult *= 1.3
+		2:
+			if upgrade_manager.is_upgrade_unlocked("sniper_damage_1"):
+				damage_mult *= 1.5
+		3:
+			if upgrade_manager.is_upgrade_unlocked("ice_slow"):
+				pass
+			if upgrade_manager.is_upgrade_unlocked("ice_duration"):
+				pass
+	
+	tower_damage = int(base_damage * damage_mult)
+	tower_range = base_range * range_mult
+	tower_fire_rate = base_fire_rate * fire_rate_mult
+
+func get_tower_type_id() -> int:
+	return -1
 
 func setup_detection_area():
 	if not has_node("Node2D"):

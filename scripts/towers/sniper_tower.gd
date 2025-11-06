@@ -18,5 +18,8 @@ func _ready():
 	
 	super._ready()
 
+func get_tower_type_id() -> int:
+	return 2
+
 func apply_upgrade_effects():
 	tower_damage += 15
