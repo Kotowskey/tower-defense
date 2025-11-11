@@ -4,6 +4,7 @@ var map_selector: Control = null
 var settings_menu: Control = null
 var game_mode_selector: Control = null
 var campaign_level_selector: Control = null
+var almanac: Control = null
 
 func _ready():
 	call_deferred("setup_difficulty_manager")
@@ -47,6 +48,9 @@ func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/UPGRADES"):
 		get_node("Menu/MarginContainer/VBoxContainer/UPGRADES").connect("pressed", Callable(self, "on_upgrades_pressed"))
 	
+	if has_node("Menu/MarginContainer/VBoxContainer/ALMANAC"):
+		get_node("Menu/MarginContainer/VBoxContainer/ALMANAC").connect("pressed", Callable(self, "on_almanac_pressed"))
+	
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.connect("difficulty_selected", Callable(self, "on_difficulty_selected"))
 		$DifficultyMenu.connect("back_pressed", Callable(self, "on_diff_back_pressed"))
@@ -89,6 +93,26 @@ func on_upgrades_pressed():
 	add_child(upgrade_menu)
 
 func on_upgrade_menu_closed():
+	if has_node("Menu"):
+		$Menu.show()
+
+func on_almanac_pressed():
+	if has_node("Menu"):
+		$Menu.hide()
+	
+	if almanac and is_instance_valid(almanac):
+		almanac.queue_free()
+	
+	var almanac_scene = load("res://scenes/almanac.tscn")
+	almanac = almanac_scene.instantiate()
+	almanac.connect("back_pressed", Callable(self, "on_almanac_back_pressed"))
+	add_child(almanac)
+
+func on_almanac_back_pressed():
+	if almanac and is_instance_valid(almanac):
+		almanac.queue_free()
+		almanac = null
+	
 	if has_node("Menu"):
 		$Menu.show()
 
