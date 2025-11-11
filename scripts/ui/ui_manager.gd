@@ -95,6 +95,7 @@ func connect_ui_buttons():
 		var pause_menu = game_scene.get_node("UI/PauseMenu")
 		pause_menu.connect("resume_pressed", Callable(self, "_on_resume_pressed"))
 		pause_menu.connect("settings_pressed", Callable(self, "_on_pause_settings_pressed"))
+		pause_menu.connect("upgrades_pressed", Callable(self, "_on_pause_upgrades_pressed"))
 		pause_menu.connect("main_menu_pressed", Callable(game_scene, "_on_main_menu_pressed"))
 	
 	if game_scene.has_node("UI/HUD/SpeedButton"):
@@ -218,6 +219,19 @@ func _on_pause_settings_back():
 			child.queue_free()
 			break
 	
+	if game_scene.has_node("UI/PauseMenu"):
+		game_scene.get_node("UI/PauseMenu").show()
+
+func _on_pause_upgrades_pressed():
+	if game_scene.has_node("UI/PauseMenu"):
+		game_scene.get_node("UI/PauseMenu").hide()
+	
+	var upgrade_menu_scene = load("res://scenes/tower_upgrade_menu.tscn")
+	var upgrade_menu = upgrade_menu_scene.instantiate()
+	upgrade_menu.connect("closed", Callable(self, "_on_pause_upgrades_back"))
+	game_scene.get_node("UI").add_child(upgrade_menu)
+
+func _on_pause_upgrades_back():
 	if game_scene.has_node("UI/PauseMenu"):
 		game_scene.get_node("UI/PauseMenu").show()
 

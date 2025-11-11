@@ -44,6 +44,9 @@ func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/SETTINGS"):
 		get_node("Menu/MarginContainer/VBoxContainer/SETTINGS").connect("pressed", Callable(self, "on_settings_pressed"))
 	
+	if has_node("Menu/MarginContainer/VBoxContainer/UPGRADES"):
+		get_node("Menu/MarginContainer/VBoxContainer/UPGRADES").connect("pressed", Callable(self, "on_upgrades_pressed"))
+	
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.connect("difficulty_selected", Callable(self, "on_difficulty_selected"))
 		$DifficultyMenu.connect("back_pressed", Callable(self, "on_diff_back_pressed"))
@@ -73,6 +76,19 @@ func on_settings_back_pressed():
 		settings_menu.queue_free()
 		settings_menu = null
 	
+	if has_node("Menu"):
+		$Menu.show()
+
+func on_upgrades_pressed():
+	if has_node("Menu"):
+		$Menu.hide()
+	
+	var upgrade_menu_scene = load("res://scenes/tower_upgrade_menu.tscn")
+	var upgrade_menu = upgrade_menu_scene.instantiate()
+	upgrade_menu.connect("closed", Callable(self, "on_upgrade_menu_closed"))
+	add_child(upgrade_menu)
+
+func on_upgrade_menu_closed():
 	if has_node("Menu"):
 		$Menu.show()
 

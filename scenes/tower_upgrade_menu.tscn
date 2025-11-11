@@ -1,0 +1,94 @@
+[gd_scene load_steps=2 format=3 uid="uid://btwi5gvjwc3kt"]
+
+[ext_resource type="Script" path="res://scripts/ui/tower_upgrade_menu.gd" id="1_tower_upgrade_menu"]
+
+[node name="TowerUpgradeMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tower_upgrade_menu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "DRZEWKO ULEPSZEŃ WIEŻ"
+horizontal_alignment = 1
+
+[node name="CurrencyLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Punkty ulepszeń: 0"
+horizontal_alignment = 1
+
+[node name="TestAddPoints" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "DODAJ 10 PUNKTÓW (TEST)"
+
+[node name="TowerSelection" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TowerButton1" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
+text = "Podstawowa"
+
+[node name="TowerButton2" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
+text = "Lodowa"
+
+[node name="TowerButton3" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
+text = "Rakietowa"
+
+[node name="TowerButton4" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
+text = "Snajperska"
+
+[node name="TowerButton5" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
+text = "Obszarowa"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UpgradesContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "ZAMKNIJ"

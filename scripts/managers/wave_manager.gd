@@ -97,7 +97,13 @@ func start_wave():
 func end_wave():
 	wave_in_progress = false
 	
-	if max_waves > 0 and game_state.get_current_wave() >= max_waves:
+	var current_wave = game_state.get_current_wave()
+	
+	if current_wave % 10 == 0:
+		if get_node_or_null("/root/UpgradeCurrencyManager"):
+			get_node("/root/UpgradeCurrencyManager").add_upgrade_points(1)
+	
+	if max_waves > 0 and current_wave >= max_waves:
 		emit_signal("level_completed")
 		return
 	
@@ -106,7 +112,7 @@ func end_wave():
 	
 	var wave_completed_scene = load("res://scenes/wave_completed.tscn")
 	var wave_completed_instance = wave_completed_scene.instantiate()
-	wave_completed_instance.set_wave_info(game_state.get_current_wave(), wave_reward)
+	wave_completed_instance.set_wave_info(current_wave, wave_reward)
 	game_scene.get_node("UI/HUD").add_child(wave_completed_instance)
 	
 	emit_signal("wave_completed")

@@ -21,7 +21,24 @@ var range_indicator = null
 
 var projectile_scene = preload("res://scenes/basic_projectile.tscn")
 
+var tower_upgrade_tree = null
+var base_damage: int = 10
+var base_fire_rate: float = 1.0
+var base_range: float = 300.0
+
 func _ready():
+	base_damage = tower_damage
+	base_fire_rate = tower_fire_rate
+	base_range = tower_range
+	
+	if not get_node_or_null("/root/TowerUpgradeTree"):
+		tower_upgrade_tree = load("res://scripts/managers/tower_upgrade_tree.gd").new()
+		tower_upgrade_tree.name = "TowerUpgradeTree"
+		get_node("/root").add_child(tower_upgrade_tree)
+	else:
+		tower_upgrade_tree = get_node("/root/TowerUpgradeTree")
+	
+	apply_permanent_upgrades()
 	setup_detection_area()
 	setup_fire_rate_timer()
 
@@ -128,6 +145,24 @@ func upgrade() -> int:
 
 func apply_upgrade_effects():
 	tower_damage += 5
+
+func apply_permanent_upgrades():
+	var tower_type = get_tower_type()
+	
+	if tower_upgrade_tree:
+		var UpgradeType = tower_upgrade_tree.UpgradeType
+		
+		var damage_bonus = tower_upgrade_tree.get_tower_bonus(tower_type, UpgradeType.DAMAGE)
+		tower_damage = int(base_damage * (1.0 + damage_bonus))
+		
+		var fire_rate_bonus = tower_upgrade_tree.get_tower_bonus(tower_type, UpgradeType.FIRE_RATE)
+		tower_fire_rate = base_fire_rate / (1.0 + fire_rate_bonus)
+		
+		var range_bonus = tower_upgrade_tree.get_tower_bonus(tower_type, UpgradeType.RANGE)
+		tower_range = base_range * (1.0 + range_bonus)
+
+func get_tower_type() -> String:
+	return "basic"
 
 func can_upgrade() -> bool:
 	return tower_level < max_level

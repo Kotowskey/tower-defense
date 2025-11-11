@@ -33,6 +33,16 @@ func _ready():
 	else:
 		game_mode_manager = get_node("/root/GameModeManager")
 	
+	if not get_node_or_null("/root/UpgradeCurrencyManager"):
+		var upgrade_currency_manager = load("res://scripts/managers/upgrade_currency_manager.gd").new()
+		upgrade_currency_manager.name = "UpgradeCurrencyManager"
+		get_node("/root").add_child(upgrade_currency_manager)
+	
+	if not get_node_or_null("/root/TowerUpgradeTree"):
+		var tower_upgrade_tree = load("res://scripts/managers/tower_upgrade_tree.gd").new()
+		tower_upgrade_tree.name = "TowerUpgradeTree"
+		get_node("/root").add_child(tower_upgrade_tree)
+	
 	setup_campaign_level()
 	
 	var selected_map_path := ""

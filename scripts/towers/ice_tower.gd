@@ -23,6 +23,9 @@ func _ready():
 	
 	super._ready()
 
+func get_tower_type() -> String:
+	return "ice"
+
 func _on_detection_area_body_entered(body):
 	var parent = body.get_parent()
 	if parent.has_method("take_damage") and not target:

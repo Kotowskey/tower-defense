@@ -18,6 +18,9 @@ func _ready():
 	
 	super._ready()
 
+func get_tower_type() -> String:
+	return "rocket"
+
 func _on_fire_rate_timer_timeout():
 	if target and weakref(target).get_ref() and can_fire:
 		fire_rocket(target)

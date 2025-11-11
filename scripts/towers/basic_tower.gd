@@ -11,6 +11,9 @@ func _init():
 func _ready():
 	super._ready()
 
+func get_tower_type() -> String:
+	return "basic"
+
 func apply_upgrade_effects():
 	tower_damage += 5
 	tower_fire_rate *= 0.9
