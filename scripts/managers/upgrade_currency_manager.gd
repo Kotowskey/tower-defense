@@ -38,3 +38,8 @@ func load_currency():
 			file.close()
 	else:
 		upgrade_points = 0
+
+func reset_points():
+	upgrade_points = 0
+	save_currency()
+	emit_signal("currency_changed", upgrade_points)

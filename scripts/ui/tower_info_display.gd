@@ -18,10 +18,10 @@ func set_tower_info(tower_name: String, tower_level: int, tower_damage: int, tow
 		$VBoxContainer/InfoContainer/TowerDamage.text = "Damage: " + str(tower_damage)
 		
 	if has_node("VBoxContainer/InfoContainer/TowerRange"):
-		$VBoxContainer/InfoContainer/TowerRange.text = "Range: " + str(tower_range)
+		$VBoxContainer/InfoContainer/TowerRange.text = "Range: " + ("%.2f" % tower_range)
 		
 	if has_node("VBoxContainer/InfoContainer/TowerFireRate"):
-		$VBoxContainer/InfoContainer/TowerFireRate.text = "Fire Rate: " + str(tower_fire_rate) + "/s"
+		$VBoxContainer/InfoContainer/TowerFireRate.text = "Fire Rate: " + ("%.2f" % tower_fire_rate) + "/s"
 		
 	if has_node("VBoxContainer/InfoContainer/TowerSpecial"):
 		if has_slow:

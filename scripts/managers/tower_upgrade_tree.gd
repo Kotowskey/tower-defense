@@ -205,3 +205,9 @@ func load_upgrades():
 						for upgrade in tower_upgrades[tower_type]["upgrades"]:
 							if upgrade["id"] == upgrade_id:
 								upgrade["unlocked"] = true
+
+func reset_all_upgrades():
+	for tower_type in tower_upgrades.keys():
+		for upgrade in tower_upgrades[tower_type]["upgrades"]:
+			upgrade["unlocked"] = false
+	save_upgrades()

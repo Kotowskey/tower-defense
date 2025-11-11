@@ -44,6 +44,9 @@ func setup_ui():
 	
 	if has_node("Panel/VBoxContainer/TestAddPoints"):
 		$Panel/VBoxContainer/TestAddPoints.connect("pressed", Callable(self, "_on_test_add_points"))
+	
+	if has_node("Panel/VBoxContainer/ResetButton"):
+		$Panel/VBoxContainer/ResetButton.connect("pressed", Callable(self, "_on_reset_button_pressed"))
 
 func _on_tower_button_pressed(tower_type: String):
 	current_tower_type = tower_type
@@ -127,3 +130,24 @@ func _on_test_add_points():
 	upgrade_currency_manager.add_upgrade_points(10)
 	update_currency_display()
 	refresh_upgrades()
+
+func _on_reset_button_pressed():
+	# Calculate total points spent
+	var total_spent = 0
+	for tower_type in tower_types:
+		var upgrades = tower_upgrade_tree.get_tower_upgrades(tower_type)
+		for upgrade in upgrades:
+			if upgrade["unlocked"]:
+				total_spent += upgrade["cost"]
+	
+	# Reset all upgrades
+	tower_upgrade_tree.reset_all_upgrades()
+	
+	# Refund all points
+	upgrade_currency_manager.add_upgrade_points(total_spent)
+	
+	# Update UI
+	update_currency_display()
+	refresh_upgrades()
+	
+	print("Skill points reset! Refunded " + str(total_spent) + " points")
