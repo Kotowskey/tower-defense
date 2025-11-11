@@ -196,7 +196,7 @@ func upgrade_selected_tower():
 			game_scene.get_viewport().set_input_as_handled()
 			return true
 		else:
-			print("Not enough money to upgrade tower")
+			emit_signal("insufficient_funds", cost)
 			return false
 	return false
 
