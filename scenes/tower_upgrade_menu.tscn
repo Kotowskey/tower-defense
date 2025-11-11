@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/tower_upgrade_menu.gd" id="1_tower_upgrade_menu"]
 
 [node name="TowerUpgradeMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,17 +45,17 @@ grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "DRZEWKO ULEPSZEŃ WIEŻ"
+text = "TOWER UPGRADES TREE"
 horizontal_alignment = 1
 
 [node name="CurrencyLabel" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "Punkty ulepszeń: 0"
+text = "Upgrade Points: 0"
 horizontal_alignment = 1
 
 [node name="TestAddPoints" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "DODAJ 10 PUNKTÓW (TEST)"
+text = "ADD 10 POINTS (TEST)"
 
 [node name="TowerSelection" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -62,23 +63,23 @@ alignment = 1
 
 [node name="TowerButton1" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
 layout_mode = 2
-text = "Podstawowa"
+text = "Basic"
 
 [node name="TowerButton2" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
 layout_mode = 2
-text = "Lodowa"
+text = "Ice"
 
 [node name="TowerButton3" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
 layout_mode = 2
-text = "Rakietowa"
+text = "Rocket"
 
 [node name="TowerButton4" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
 layout_mode = 2
-text = "Snajperska"
+text = "Sniper"
 
 [node name="TowerButton5" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
 layout_mode = 2
-text = "Obszarowa"
+text = "Area"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -91,4 +92,4 @@ size_flags_vertical = 3
 
 [node name="CloseButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-text = "ZAMKNIJ"
+text = "CLOSE"

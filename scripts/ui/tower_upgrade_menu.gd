@@ -30,7 +30,11 @@ func _ready():
 	refresh_upgrades()
 
 func setup_ui():
-	$Panel/VBoxContainer/CloseButton.connect("pressed", Callable(self, "_on_close_button_pressed"))
+	if has_node("Panel/VBoxContainer/CloseButton"):
+		$Panel/VBoxContainer/CloseButton.connect("pressed", Callable(self, "_on_close_button_pressed"))
+		print("Close button connected successfully")
+	else:
+		print("ERROR: Close button not found!")
 	
 	for i in range(tower_types.size()):
 		var tower_type = tower_types[i]
@@ -66,24 +70,24 @@ func create_upgrade_item(upgrade: Dictionary) -> Control:
 	item.add_child(name_label)
 	
 	var cost_label = Label.new()
-	cost_label.text = "Koszt: " + str(upgrade["cost"])
+	cost_label.text = "Cost: " + str(upgrade["cost"])
 	cost_label.custom_minimum_size = Vector2(100, 0)
 	item.add_child(cost_label)
 	
 	var unlock_button = Button.new()
 	if upgrade["unlocked"]:
-		unlock_button.text = "ODBLOKOWANO"
+		unlock_button.text = "UNLOCKED"
 		unlock_button.disabled = true
 	elif tower_upgrade_tree.can_unlock_upgrade(current_tower_type, upgrade["id"]):
 		var current_points = upgrade_currency_manager.get_upgrade_points()
 		if current_points >= upgrade["cost"]:
-			unlock_button.text = "KUP"
+			unlock_button.text = "BUY"
 			unlock_button.connect("pressed", Callable(self, "_on_unlock_upgrade").bind(upgrade["id"]))
 		else:
-			unlock_button.text = "ZA MAŁO PUNKTÓW"
+			unlock_button.text = "NOT ENOUGH POINTS"
 			unlock_button.disabled = true
 	else:
-		unlock_button.text = "ZABLOKOWANE"
+		unlock_button.text = "LOCKED"
 		unlock_button.disabled = true
 	
 	unlock_button.custom_minimum_size = Vector2(150, 0)
@@ -111,11 +115,13 @@ func _on_unlock_upgrade(upgrade_id: int):
 
 func update_currency_display():
 	var points = upgrade_currency_manager.get_upgrade_points()
-	$Panel/VBoxContainer/CurrencyLabel.text = "Punkty ulepszeń: " + str(points)
+	$Panel/VBoxContainer/CurrencyLabel.text = "Upgrade Points: " + str(points)
 
 func _on_close_button_pressed():
+	print("Close button pressed!")
 	emit_signal("closed")
-	queue_free()
+	hide()
+	call_deferred("queue_free")
 
 func _on_test_add_points():
 	upgrade_currency_manager.add_upgrade_points(10)

@@ -232,6 +232,12 @@ func _on_pause_upgrades_pressed():
 	game_scene.get_node("UI").add_child(upgrade_menu)
 
 func _on_pause_upgrades_back():
+	var ui_node = game_scene.get_node("UI")
+	for child in ui_node.get_children():
+		if child.name == "TowerUpgradeMenu":
+			child.queue_free()
+			break
+	
 	if game_scene.has_node("UI/PauseMenu"):
 		game_scene.get_node("UI/PauseMenu").show()
 
