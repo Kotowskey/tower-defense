@@ -70,7 +70,9 @@ func start_wave():
 	var is_boss_wave = (current_wave % 5 == 0)
 	
 	if is_boss_wave:
-		enemies_to_kill = 1 + (current_wave / 10)
+		var num_bosses = 1 + (current_wave / 10)
+		var num_normal_enemies = int((wave_size + int(current_wave * 1.0)) * 0.5)
+		enemies_to_kill = num_bosses + num_normal_enemies
 	else:
 		enemies_to_kill = wave_size + int(current_wave * 1.5)
 	
@@ -173,11 +175,25 @@ func spawn_enemy(health_mult = 1.0, speed_mult = 1.0, enemy_type = 0):
 	emit_signal("enemy_spawned")
 
 func spawn_boss_wave(num_bosses = 1, health_mult = 1.0, speed_mult = 1.0):
+	# Spawn bosses
 	for i in range(num_bosses):
 		var timer = game_scene.get_tree().create_timer(i * 3.0)
 		var boss_type = i % 3
 		timer.timeout.connect(func(): 
 			spawn_boss_enemy(health_mult, speed_mult, boss_type)
+			enemies_spawned += 1
+		)
+	
+	var current_wave = game_state.get_current_wave()
+	var num_normal_enemies = int((wave_size + int(current_wave * 1.0)) * 0.5)  # Half the normal wave size
+	var spawn_delay = wave_delay * 0.8  # Slightly faster spawn rate
+	
+	for i in range(num_normal_enemies):
+		var timer = game_scene.get_tree().create_timer((num_bosses * 3.0) + (i * spawn_delay))
+		var enemy_type = get_enemy_type_for_wave()
+		
+		timer.timeout.connect(func(): 
+			spawn_enemy(health_mult * 0.8, speed_mult, enemy_type)  # Slightly weaker than normal
 			enemies_spawned += 1
 		)
 
