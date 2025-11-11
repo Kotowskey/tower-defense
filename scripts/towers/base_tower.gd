@@ -49,8 +49,10 @@ func setup_detection_area():
 		add_child(area_node)
 		
 		var area = area_node.get_node("Area2D")
-		var shape = area.get_node("CollisionShape2D").shape
-		shape.radius = tower_range
+		var collision_shape = area.get_node("CollisionShape2D")
+		var new_shape = CircleShape2D.new()
+		new_shape.radius = tower_range
+		collision_shape.shape = new_shape
 		
 		area.connect("body_entered", Callable(self, "_on_detection_area_body_entered"))
 		area.connect("body_exited", Callable(self, "_on_detection_area_body_exited"))
@@ -136,7 +138,9 @@ func upgrade() -> int:
 		$FireRateTimer.wait_time = tower_fire_rate
 	
 	if has_node("Node2D/Area2D/CollisionShape2D"):
-		$Node2D/Area2D/CollisionShape2D.shape.radius = tower_range
+		var collision_shape = $Node2D/Area2D/CollisionShape2D
+		if collision_shape.shape:
+			collision_shape.shape.radius = tower_range
 	
 	update_range_indicator()
 	
