@@ -20,14 +20,18 @@ var tower_classes = {
 	0: preload("res://scripts/towers/basic_tower.gd"),
 	1: preload("res://scripts/towers/rocket_tower.gd"),
 	2: preload("res://scripts/towers/sniper_tower.gd"),
-	3: preload("res://scripts/towers/ice_tower.gd")
+	3: preload("res://scripts/towers/ice_tower.gd"),
+	4: preload("res://scripts/towers/machine_gun_tower.gd"),
+	5: preload("res://scripts/towers/magic_tower.gd")
 }
 
 var tower_costs = {
 	0: 100, # Basic tower
 	1: 200, # Rocket tower
 	2: 300, # Sniper tower
-	3: 150  # Ice tower
+	3: 150, # Ice tower
+	4: 120, # Machine gun tower
+	5: 250  # Magic tower
 }
 
 func _init(p_game_scene, p_tower_scene: PackedScene, p_game_state):

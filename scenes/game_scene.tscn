@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://qik1ytgalcrw"]
+[gd_scene load_steps=23 format=3 uid="uid://qik1ytgalcrw"]
 
 [ext_resource type="Script" uid="uid://cpxycdxkpcq5w" path="res://scripts/core/game_scene.gd" id="1_a5vh6"]
 [ext_resource type="PackedScene" uid="uid://cah106dou6wt3" path="res://scenes/map.tscn" id="1_e6pvo"]
@@ -14,6 +14,8 @@
 [ext_resource type="AudioStream" uid="uid://bv8a1r87dqnev" path="res://assets/effects/upgrade_sound.mp3" id="10_rp1ui"]
 [ext_resource type="Texture2D" uid="uid://txyifwt0xq1x" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_blue.png" id="11_s76x2"]
 [ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/ui/pause_menu.gd" id="11_wys8v"]
+[ext_resource type="Texture2D" uid="uid://bqr5ccqpj5jj8" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_sand.png" id="12_sand"]
+[ext_resource type="Texture2D" uid="uid://cvn46uwy63cej" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_huge.png" id="13_huge"]
 [ext_resource type="AudioStream" uid="uid://dr8xv4h7j7ker" path="res://assets/effects/InvalidPlacementSound.wav" id="15_ldkr4"]
 [ext_resource type="Texture2D" uid="uid://drr3vonk8x28t" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="16_new"]
 [ext_resource type="Texture2D" uid="uid://c5g7c37ky3pq1" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="17_new"]
@@ -349,6 +351,122 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("6_rurhu")
 theme_override_font_sizes/font_size = 16
 text = "3"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TowerMachineGun" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/TowerMachineGun"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_sand")
+expand_mode = 2
+
+[node name="Cost" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerMachineGun"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -18.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "120"
+horizontal_alignment = 1
+
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerMachineGun"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "5"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TowerMagic" type="TextureButton" parent="UI/HUD/BuildPanel/BuildUI"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_6s7g6")
+texture_pressed = ExtResource("3_dp1g0")
+stretch_mode = 0
+
+[node name="Image" type="TextureRect" parent="UI/HUD/BuildPanel/BuildUI/TowerMagic"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_huge")
+expand_mode = 2
+
+[node name="Cost" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerMagic"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -18.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 14
+text = "250"
+horizontal_alignment = 1
+
+[node name="Hotkey" type="Label" parent="UI/HUD/BuildPanel/BuildUI/TowerMagic"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = 20.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 0.4, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("6_rurhu")
+theme_override_font_sizes/font_size = 16
+text = "6"
 horizontal_alignment = 2
 vertical_alignment = 1
 

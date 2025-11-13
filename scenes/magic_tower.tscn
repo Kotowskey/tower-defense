@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7hx2m8p9q5r2"]
+
+[ext_resource type="Script" path="res://scripts/towers/magic_tower.gd" id="1_magic"]
+[ext_resource type="Texture2D" uid="uid://cvn46uwy63cej" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_huge.png" id="2_magic"]
+[ext_resource type="AudioStream" uid="uid://cyjqkbi6g4i13" path="res://assets/effects/baloon_popping.wav" id="3_magic"]
+
+[node name="MagicTower" type="Node2D"]
+script = ExtResource("1_magic")
+
+[node name="Basic-tower-top" type="Sprite2D" parent="."]
+texture = ExtResource("2_magic")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_magic")
+bus = &"SFX"

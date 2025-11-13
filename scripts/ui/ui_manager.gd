@@ -52,6 +52,10 @@ func _input(event):
 					_on_tower_slow_pressed()
 				KEY_4:
 					_on_tower_area_pressed()
+				KEY_5:
+					_on_tower_machine_gun_pressed()
+				KEY_6:
+					_on_tower_magic_pressed()
 				KEY_U:
 					if tower_manager.get_selected_tower() and can_upgrade:
 						_on_upgrade_pressed()
@@ -81,6 +85,12 @@ func connect_ui_buttons():
 	
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerSlow"):
 		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerSlow").connect("pressed", Callable(self, "_on_tower_slow_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerMachineGun"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerMachineGun").connect("pressed", Callable(self, "_on_tower_machine_gun_pressed"))
+	
+	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/TowerMagic"):
+		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/TowerMagic").connect("pressed", Callable(self, "_on_tower_magic_pressed"))
 	
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
 		game_scene.get_node("UI/HUD/BuildPanel/BuildUI/Upgrade").connect("pressed", Callable(self, "_on_upgrade_pressed"))
@@ -183,6 +193,12 @@ func _on_tower_sniper_pressed():
 
 func _on_tower_slow_pressed():
 	tower_manager.start_tower_placement(3)
+
+func _on_tower_machine_gun_pressed():
+	tower_manager.start_tower_placement(4)
+
+func _on_tower_magic_pressed():
+	tower_manager.start_tower_placement(5)
 
 func _on_upgrade_pressed():
 	tower_manager.upgrade_selected_tower()

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwm3kx5n7q8r1"]
+
+[ext_resource type="Script" path="res://scripts/towers/machine_gun_tower.gd" id="1_mgun"]
+[ext_resource type="Texture2D" uid="uid://bqr5ccqpj5jj8" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_sand.png" id="2_mgun"]
+[ext_resource type="AudioStream" uid="uid://cyjqkbi6g4i13" path="res://assets/effects/baloon_popping.wav" id="3_mgun"]
+
+[node name="MachineGunTower" type="Node2D"]
+script = ExtResource("1_mgun")
+
+[node name="Basic-tower-top" type="Sprite2D" parent="."]
+texture = ExtResource("2_mgun")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mgun")
+bus = &"SFX"
