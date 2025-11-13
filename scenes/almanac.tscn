@@ -105,6 +105,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Sniper Tower - 300 gold"
 
+[node name="Machine GunButton" type="Button" parent="Panel/VBoxContainer/Content/TowerList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Machine Gun Tower - 120 gold"
+
+[node name="MagicButton" type="Button" parent="Panel/VBoxContainer/Content/TowerList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Magic Tower - 250 gold"
+
 [node name="EnemyList" type="VBoxContainer" parent="Panel/VBoxContainer/Content"]
 visible = false
 layout_mode = 1

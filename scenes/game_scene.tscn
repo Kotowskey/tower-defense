@@ -14,8 +14,8 @@
 [ext_resource type="AudioStream" uid="uid://bv8a1r87dqnev" path="res://assets/effects/upgrade_sound.mp3" id="10_rp1ui"]
 [ext_resource type="Texture2D" uid="uid://txyifwt0xq1x" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_blue.png" id="11_s76x2"]
 [ext_resource type="Script" uid="uid://bat1dladmjdqb" path="res://scripts/ui/pause_menu.gd" id="11_wys8v"]
-[ext_resource type="Texture2D" uid="uid://bqr5ccqpj5jj8" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_sand.png" id="12_sand"]
-[ext_resource type="Texture2D" uid="uid://cvn46uwy63cej" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_huge.png" id="13_huge"]
+[ext_resource type="Texture2D" uid="uid://bgmo1ywbogf5h" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_sand.png" id="12_sand"]
+[ext_resource type="Texture2D" uid="uid://cnab0pco5xdca" path="res://assets/kenney_top-down-tanks-redux/PNG/Retina/tank_huge.png" id="13_huge"]
 [ext_resource type="AudioStream" uid="uid://dr8xv4h7j7ker" path="res://assets/effects/InvalidPlacementSound.wav" id="15_ldkr4"]
 [ext_resource type="Texture2D" uid="uid://drr3vonk8x28t" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="16_new"]
 [ext_resource type="Texture2D" uid="uid://c5g7c37ky3pq1" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="17_new"]
@@ -81,7 +81,7 @@ mouse_filter = 2
 color = Color(0.05, 0.05, 0.1, 0.1)
 
 [node name="BuildPanel" type="Panel" parent="UI/HUD"]
-custom_minimum_size = Vector2(120, 750)
+custom_minimum_size = Vector2(120, 900)
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0

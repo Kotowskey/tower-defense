@@ -2,7 +2,7 @@ extends Control
 
 signal back_pressed
 
-var current_category = "towers" # "towers" or "enemies"
+var current_category = "towers" 
 var current_selection = null
 
 var tower_data = {
@@ -41,6 +41,24 @@ var tower_data = {
 		"range": 500,
 		"description": "Sniper tower with the longest range. High cost, but excellent for eliminating threats from a safe distance.",
 		"special": "Longest range in the game"
+	},
+	"machine_gun": {
+		"name": "Machine Gun Tower",
+		"cost": 120,
+		"damage": 2,
+		"fire_rate": 0.15,
+		"range": 250,
+		"description": "Rapid-fire tower with very low damage per shot. Excels against swarms with extremely high fire rate (~6.7 shots/sec). Great DPS over time but weak against single armored targets.",
+		"special": "Extremely fast fire rate - shoots continuously"
+	},
+	"magic": {
+		"name": "Magic Tower",
+		"cost": 250,
+		"damage": 20,
+		"fire_rate": 1.5,
+		"range": 350,
+		"description": "Powerful magical tower with devastating attacks. Expensive but provides excellent long-range firepower. Slower fire rate compensated by high damage and range.",
+		"special": "High damage with extended range"
 	}
 }
 
@@ -87,21 +105,18 @@ func _ready():
 		$Panel/VBoxContainer/BackButton.connect("pressed", Callable(self, "_on_back_pressed"))
 
 func setup_ui():
-	# Connect category buttons
 	if has_node("Panel/VBoxContainer/CategoryButtons/TowersButton"):
 		$Panel/VBoxContainer/CategoryButtons/TowersButton.connect("pressed", Callable(self, "_on_towers_button_pressed"))
 	
 	if has_node("Panel/VBoxContainer/CategoryButtons/EnemiesButton"):
 		$Panel/VBoxContainer/CategoryButtons/EnemiesButton.connect("pressed", Callable(self, "_on_enemies_button_pressed"))
 	
-	# Connect tower buttons
-	var tower_types = ["basic", "ice", "rocket", "sniper"]
+	var tower_types = ["basic", "ice", "rocket", "sniper", "machine_gun", "magic"]
 	for tower_type in tower_types:
 		var button_path = "Panel/VBoxContainer/Content/TowerList/" + tower_type.capitalize() + "Button"
 		if has_node(button_path):
 			get_node(button_path).connect("pressed", Callable(self, "_on_tower_selected").bind(tower_type))
 	
-	# Connect enemy buttons
 	var enemy_types = ["basic", "fast", "tank", "boss"]
 	for enemy_type in enemy_types:
 		var button_path = "Panel/VBoxContainer/Content/EnemyList/" + enemy_type.capitalize() + "Button"
@@ -118,7 +133,6 @@ func show_towers():
 	if has_node("Panel/VBoxContainer/Content/DetailPanel"):
 		$Panel/VBoxContainer/Content/DetailPanel.visible = false
 	
-	# Highlight towers button
 	if has_node("Panel/VBoxContainer/CategoryButtons/TowersButton"):
 		$Panel/VBoxContainer/CategoryButtons/TowersButton.disabled = true
 	if has_node("Panel/VBoxContainer/CategoryButtons/EnemiesButton"):
@@ -134,7 +148,6 @@ func show_enemies():
 	if has_node("Panel/VBoxContainer/Content/DetailPanel"):
 		$Panel/VBoxContainer/Content/DetailPanel.visible = false
 	
-	# Highlight enemies button
 	if has_node("Panel/VBoxContainer/CategoryButtons/TowersButton"):
 		$Panel/VBoxContainer/CategoryButtons/TowersButton.disabled = false
 	if has_node("Panel/VBoxContainer/CategoryButtons/EnemiesButton"):
@@ -199,11 +212,9 @@ func show_detail_panel():
 
 func _on_back_pressed():
 	if has_node("Panel/VBoxContainer/Content/DetailPanel") and $Panel/VBoxContainer/Content/DetailPanel.visible:
-		# Go back to list view
 		if current_category == "towers":
 			show_towers()
 		else:
 			show_enemies()
 	else:
-		# Go back to main menu
 		emit_signal("back_pressed")
