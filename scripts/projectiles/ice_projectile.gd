@@ -15,7 +15,7 @@ func _ready():
 	image.fill(Color(0, 1, 1))  
 	var texture = ImageTexture.create_from_image(image)
 	sprite.texture = texture
-	sprite.scale = Vector2(0.5, 0.5)
+	sprite.scale = Vector2(1.0, 1.0)
 
 func set_slow_properties(factor: float, duration: float):
 	slow_factor = factor

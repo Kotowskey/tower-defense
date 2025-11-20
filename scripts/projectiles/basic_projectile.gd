@@ -12,7 +12,7 @@ func _ready():
 	image.fill(Color.RED)
 	var texture = ImageTexture.create_from_image(image)
 	sprite.texture = texture
-	sprite.scale = Vector2(0.5, 0.5)
+	sprite.scale = Vector2(1.0, 1.0)
 
 func setup(start_pos: Vector2, target_enemy, projectile_damage: int):
 	super.setup(start_pos, target_enemy, projectile_damage)

@@ -12,4 +12,4 @@ func _ready():
 	image.fill(Color(0, 0, 1)) 
 	var texture = ImageTexture.create_from_image(image)
 	sprite.texture = texture
-	sprite.scale = Vector2(0.6, 0.6)  
+	sprite.scale = Vector2(1.2, 1.2)  
