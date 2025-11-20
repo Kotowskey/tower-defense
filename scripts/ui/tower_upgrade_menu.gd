@@ -6,7 +6,7 @@ var upgrade_currency_manager
 var tower_upgrade_tree
 var current_tower_type = "basic"
 
-var tower_types = ["basic", "ice", "rocket", "sniper", "area"]
+var tower_types = ["basic", "ice", "rocket", "sniper", "machine_gun", "magic", "area"]
 
 func _ready():
 	if not get_node_or_null("/root/UpgradeCurrencyManager"):

@@ -83,6 +83,14 @@ text = "Sniper"
 
 [node name="TowerButton5" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
 layout_mode = 2
+text = "Machine Gun"
+
+[node name="TowerButton6" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
+text = "Magic"
+
+[node name="TowerButton7" type="Button" parent="Panel/VBoxContainer/TowerSelection"]
+layout_mode = 2
 text = "Area"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer"]

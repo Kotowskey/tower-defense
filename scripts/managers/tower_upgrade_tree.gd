@@ -80,6 +80,20 @@ var tower_upgrades = {
 			{"id": 8, "name": "Explosive Rounds", "type": UpgradeType.SPECIAL, "cost": 30, "value": 1.0, "unlocked": false, "requires": [2, 5]},
 		]
 	},
+	"magic": {
+		"name": "Magic Tower",
+		"upgrades": [
+			{"id": 0, "name": "Arcane Power I", "type": UpgradeType.DAMAGE, "cost": 10, "value": 0.20, "unlocked": false, "requires": []},
+			{"id": 1, "name": "Arcane Power II", "type": UpgradeType.DAMAGE, "cost": 15, "value": 0.30, "unlocked": false, "requires": [0]},
+			{"id": 2, "name": "Arcane Power III", "type": UpgradeType.DAMAGE, "cost": 25, "value": 0.40, "unlocked": false, "requires": [1]},
+			{"id": 3, "name": "Faster Casting I", "type": UpgradeType.FIRE_RATE, "cost": 10, "value": 0.12, "unlocked": false, "requires": []},
+			{"id": 4, "name": "Faster Casting II", "type": UpgradeType.FIRE_RATE, "cost": 15, "value": 0.18, "unlocked": false, "requires": [3]},
+			{"id": 5, "name": "Faster Casting III", "type": UpgradeType.FIRE_RATE, "cost": 25, "value": 0.25, "unlocked": false, "requires": [4]},
+			{"id": 6, "name": "Extended Range I", "type": UpgradeType.RANGE, "cost": 12, "value": 0.20, "unlocked": false, "requires": []},
+			{"id": 7, "name": "Extended Range II", "type": UpgradeType.RANGE, "cost": 18, "value": 0.25, "unlocked": false, "requires": [6]},
+			{"id": 8, "name": "Chain Lightning", "type": UpgradeType.SPECIAL, "cost": 40, "value": 3.0, "unlocked": false, "requires": [2, 5]},
+		]
+	},
 	"area": {
 		"name": "Area Tower",
 		"upgrades": [
