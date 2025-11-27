@@ -27,7 +27,7 @@ func populate_levels():
 	for level_data in levels:
 		var level_button = Button.new()
 		level_button.text = "Level " + str(level_data.level_number) + "\n" + level_data.level_name
-		level_button.custom_minimum_size = Vector2(200, 80)
+		level_button.custom_minimum_size = Vector2(350, 150)
 		
 		var is_unlocked = level_data.level_number <= highest_unlocked
 		

@@ -40,14 +40,14 @@ theme_override_constants/separation = 20
 layout_mode = 2
 text = "Select Campaign Level"
 horizontal_alignment = 1
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 
 [node name="LevelGrid" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 20
-columns = 3
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+columns = 2
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
