@@ -235,11 +235,16 @@ func _on_campaign_level_back_pressed():
 		$DifficultyMenu.show()
 
 func start_game():
+	if has_node("GameScene"):
+		var existing_game_scene = get_node("GameScene")
+		existing_game_scene.name = "GameScene_Old"
+		existing_game_scene.queue_free()
 	if has_node("DifficultyMenu"):
 		$DifficultyMenu.queue_free()
 	if has_node("Menu"):
 		$Menu.queue_free()
 	var game_scene = load("res://scenes/game_scene.tscn").instantiate()
+	game_scene.name = "GameScene"
 	if has_node("/root/DifficultyManager"):
 		var diff_manager = get_node("/root/DifficultyManager")
 		game_scene.player_money = int(game_scene.player_money * diff_manager.get_difficulty_multiplier("player_money"))

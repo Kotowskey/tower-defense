@@ -134,7 +134,11 @@ func _unhandled_input(event):
 
 func _on_restart_pressed():
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	var root_scene = get_tree().current_scene
+	if root_scene and root_scene != self and root_scene.has_method("start_game"):
+		root_scene.start_game()
+	else:
+		get_tree().reload_current_scene()
 
 func _on_main_menu_pressed():
 	get_tree().paused = false
