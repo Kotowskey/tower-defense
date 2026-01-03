@@ -70,7 +70,7 @@ func start_wave():
 	var is_boss_wave = (current_wave % 5 == 0)
 	
 	if is_boss_wave:
-		var num_bosses = 1 + (current_wave / 10)
+		var num_bosses = current_wave / 5
 		var num_normal_enemies = int((wave_size + int(current_wave * 1.0)) * 0.5)
 		enemies_to_kill = num_bosses + num_normal_enemies
 	else:
@@ -89,7 +89,8 @@ func start_wave():
 	spawn_delay = max(0.2, spawn_delay)
 	
 	if is_boss_wave:
-		spawn_boss_wave(enemies_to_kill, enemy_health_multiplier, enemy_speed_multiplier)
+		var num_bosses = current_wave / 5
+		spawn_boss_wave(num_bosses, enemy_health_multiplier, enemy_speed_multiplier)
 	else:
 		spawn_wave(enemies_to_kill, spawn_delay, enemy_health_multiplier, enemy_speed_multiplier)
 	
