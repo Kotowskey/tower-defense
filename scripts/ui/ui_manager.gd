@@ -8,7 +8,8 @@ var wave_manager
 var can_upgrade = false
 var upgrade_cost = 0
 var build_menu_visible = false
-var game_speed = 1.0  
+var game_speed = 1.0
+var game_time = 0.0  
 
 func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	game_scene = p_game_scene
@@ -34,6 +35,9 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	call_deferred("update_campaign_info")
 
 func _process(_delta):
+	game_time += _delta
+	update_timer_ui()
+	
 	if tower_manager.get_selected_tower():
 		var selected_tower = tower_manager.get_selected_tower()
 		can_upgrade = selected_tower.can_upgrade()
@@ -145,6 +149,17 @@ func update_wave_ui(wave_number = null):
 	
 	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel"):
 		game_scene.get_node("UI/HUD/InfoPanel/UserUI/WaveContainer/WaveLabel").text = wave_text
+
+func update_timer_ui():
+	if not game_scene.has_node("UI/HUD/InfoPanel/UserUI/TimeContainer"):
+		return
+	
+	var minutes = int(game_time) / 60
+	var seconds = int(game_time) % 60
+	var time_text = "Time: %02d:%02d" % [minutes, seconds]
+	
+	if game_scene.has_node("UI/HUD/InfoPanel/UserUI/TimeContainer/TimeLabel"):
+		game_scene.get_node("UI/HUD/InfoPanel/UserUI/TimeContainer/TimeLabel").text = time_text
 
 func update_upgrade_ui():
 	if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/Upgrade"):
@@ -362,10 +377,14 @@ func _on_toggle_hotkeys_panel():
 			toggle_btn.text = "−"
 			panel.custom_minimum_size = Vector2(200, 220)
 			panel.offset_top = -240.0
+			panel.offset_left = 20.0
+			panel.offset_right = 220.0
 		else:
 			toggle_btn.text = "+"
 			panel.custom_minimum_size = Vector2(200, 35)
 			panel.offset_top = -55.0
+			panel.offset_left = 20.0
+			panel.offset_right = 220.0
 
 func show_notification(message: String, duration: float = 2.0):
 	if game_scene.has_node("UI/HUD/NotificationLabel"):
