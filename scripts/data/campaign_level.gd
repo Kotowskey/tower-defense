@@ -49,7 +49,7 @@ static func get_campaign_levels() -> Array:
 		15,
 		350,
 		12,
-		"res://scenes/map.tscn",
+		"res://scenes/map2.tscn",
 		1.0,
 		"Enemies are getting stronger. Use your resources wisely."
 	))
@@ -60,7 +60,7 @@ static func get_campaign_levels() -> Array:
 		20,
 		300,
 		10,
-		"res://scenes/map2.tscn",
+		"res://scenes/map3.tscn",
 		1.2,
 		"New battlefield, tougher enemies. Adapt your strategy."
 	))
@@ -71,7 +71,7 @@ static func get_campaign_levels() -> Array:
 		25,
 		250,
 		8,
-		"res://scenes/map2.tscn",
+		"res://scenes/map.tscn",
 		1.4,
 		"Resources are scarce. Every decision counts."
 	))
