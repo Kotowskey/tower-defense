@@ -12,16 +12,16 @@ var difficulty_multipliers = {
 		"enemy_reward": 1.0
 	},
 	Difficulty.NORMAL: {
-		"enemy_health": 1.1,
-		"enemy_speed": 1.,
-		"player_money": 1.0,
-		"enemy_reward": 1.0
+		"enemy_health": 1.25,
+		"enemy_speed": 1.25,
+		"player_money": 0.8,
+		"enemy_reward": 0.8
 	},
 	Difficulty.HARD: {
-		"enemy_health": 1.2,
-		"enemy_speed": 1.2,
-		"player_money": 1.0,
-		"enemy_reward": 1.0
+		"enemy_health": 1.5,
+		"enemy_speed": 1.5,
+		"player_money": 0.6,
+		"enemy_reward": 0.6
 	}
 }
 
