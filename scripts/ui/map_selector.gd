@@ -43,6 +43,16 @@ func _initialize_maps():
 		false
 	)
 	available_maps.append(map2)
+	
+	var map3 = MapData.new(
+		"Wave Path",
+		"Serpentine route with flowing turns.\nMedium difficulty.",
+		"res://scenes/map3.tscn",
+		"res://assets/maps/map3.png",
+		2,
+		false
+	)
+	available_maps.append(map3)
 
 func _setup_ui_references():
 	if has_node("Panel/VBoxContainer/MapsScrollContainer/MapGrid"):
