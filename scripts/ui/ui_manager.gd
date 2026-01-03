@@ -361,9 +361,11 @@ func _on_toggle_hotkeys_panel():
 		if hotkeys_list.visible:
 			toggle_btn.text = "−"
 			panel.custom_minimum_size = Vector2(200, 220)
+			panel.offset_top = -240.0
 		else:
 			toggle_btn.text = "+"
 			panel.custom_minimum_size = Vector2(200, 35)
+			panel.offset_top = -55.0
 
 func show_notification(message: String, duration: float = 2.0):
 	if game_scene.has_node("UI/HUD/NotificationLabel"):
