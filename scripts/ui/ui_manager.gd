@@ -16,6 +16,9 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	tower_manager = p_tower_manager
 	wave_manager = p_wave_manager
 	
+	game_speed = 1.0
+	Engine.time_scale = 1.0
+	
 	game_state.connect("money_changed", Callable(self, "update_money_ui"))
 	game_state.connect("lives_changed", Callable(self, "update_lives_ui"))
 	game_state.connect("wave_changed", Callable(self, "update_wave_ui"))
