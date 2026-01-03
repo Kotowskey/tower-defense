@@ -101,7 +101,7 @@ func end_wave():
 	
 	var current_wave = game_state.get_current_wave()
 	
-	if current_wave % 10 == 0:
+	if current_wave % 5 == 0:
 		if get_node_or_null("/root/UpgradeCurrencyManager"):
 			get_node("/root/UpgradeCurrencyManager").add_upgrade_points(1)
 	
