@@ -95,11 +95,12 @@ tile_map_data = PackedByteArray("AAAOAAAAAwAAAAAAAAAOAAEAAwACAAAAAAAOAAIAAwAAAAA
 tile_set = SubResource("TileSet_hqri8")
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAOAA4ABABqAD0AAAAPAA0ABABrADwAAAAPAA4ABABrAD0AAAAQAA0ABABsADwAAAAQAA4ABABsAD0AAAARABAABABtAD0AAAAfAB4ABABqAD0AAAAgAB0ABABrADwAAAAgAB4ABABrAD0AAAAhAB0ABABsADwAAAAhAB4ABABsAD0AAAAiAB4ABABtAD0AAAAKADoABABqAD0AAAALADkABABrADwAAAALADoABABrAD0AAAAMADkABABsADwAAAAMADoABABsAD0AAAANADoABABtAD0AAAA=")
+visible = false
 tile_set = SubResource("TileSet_2lpho")
 
 [node name="Turrets" type="Node2D" parent="."]
 visible = false
 
 [node name="Path2D" type="Path2D" parent="."]
+visible = false
 curve = SubResource("Curve2D_mltpi")

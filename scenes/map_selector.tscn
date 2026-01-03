@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://xlnnyevnltm"]
 
 [ext_resource type="Script" uid="uid://djfmxpw7hl65n" path="res://scripts/ui/map_selector.gd" id="1_map_selector"]
-[ext_resource type="FontFile" uid="uid://du5n2h313xgwm" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_font_narrow"]
-[ext_resource type="Texture2D" uid="uid://trnteubyptxo" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="3_button_flat"]
-[ext_resource type="Texture2D" uid="uid://b5enunnwcrptf" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="4_button_pressed"]
+[ext_resource type="FontFile" uid="uid://cn0chp0skw8f0" path="res://assets/ui/kenny/fonts/Kenney Future Narrow.ttf" id="2_font_narrow"]
+[ext_resource type="Texture2D" uid="uid://drr3vonk8x28t" path="res://assets/ui/kenny/button_rectangle_depth_flat.png" id="3_button_flat"]
+[ext_resource type="Texture2D" uid="uid://c5g7c37ky3pq1" path="res://assets/ui/kenny/button_rectangle_depth_gradient.png" id="4_button_pressed"]
 
 [node name="MapSelector" type="Control"]
 layout_mode = 3
