@@ -50,11 +50,11 @@ func _input(event):
 				KEY_1:
 					_on_tower_basic_pressed()
 				KEY_2:
-					_on_tower_sniper_pressed()
-				KEY_3:
-					_on_tower_slow_pressed()
-				KEY_4:
 					_on_tower_area_pressed()
+				KEY_3:
+					_on_tower_sniper_pressed()
+				KEY_4:
+					_on_tower_slow_pressed()
 				KEY_5:
 					_on_tower_machine_gun_pressed()
 				KEY_6:
