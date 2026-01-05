@@ -170,6 +170,12 @@ func _on_level_completed():
 		
 		var is_final = game_mode_manager.is_final_level()
 		
+		if not is_final:
+			var next_level = game_mode_manager.get_campaign_level() + 1
+			game_mode_manager.unlock_level(next_level)
+			game_mode_manager.save_progress()
+			print("Level ", next_level, " unlocked!")
+		
 		if is_final:
 			show_campaign_complete()
 		else:
@@ -195,19 +201,15 @@ func show_campaign_complete():
 		$UI/HUD.add_child(campaign_complete)
 
 func _on_next_level():
-	print("_on_next_level called!")
+	print("_on_next_level called - showing campaign level selector")
 	if game_mode_manager:
 		var bonus_money = game_state.player_money
 		game_mode_manager.add_campaign_bonus(bonus_money)
-		
-		var old_level = game_mode_manager.get_campaign_level()
-		game_mode_manager.next_campaign_level()
 		game_mode_manager.save_progress()
-		var new_level = game_mode_manager.get_campaign_level()
-		print("Level changed from ", old_level, " to ", new_level)
-		print("Bonus money carried over: ", bonus_money)
+		print("Bonus money saved: ", bonus_money)
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	get_tree().change_scene_to_file("res://scenes/scene_handler.tscn")
+	# Scene handler will need to open campaign level selector automatically
 
 func _on_main_menu_from_victory():
 	get_tree().paused = false

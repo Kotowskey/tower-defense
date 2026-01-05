@@ -12,7 +12,10 @@ func _ready():
 	call_deferred("setup_game_mode_manager")
 	
 	var timer = get_tree().create_timer(0.1)
-	timer.timeout.connect(func(): connect_menu_buttons())
+	timer.timeout.connect(func(): 
+		connect_menu_buttons()
+		check_if_should_open_campaign_selector()
+	)
 
 func setup_difficulty_manager():
 	if not get_node_or_null("/root/DifficultyManager"):
@@ -56,6 +59,14 @@ func connect_menu_buttons():
 		$DifficultyMenu.connect("back_pressed", Callable(self, "on_diff_back_pressed"))
 		
 		$DifficultyMenu.hide()
+
+func check_if_should_open_campaign_selector():
+	var mode_manager = get_node_or_null("/root/GameModeManager")
+	if mode_manager and mode_manager.is_campaign():
+		# If we're in campaign mode and returned to main menu, show level selector
+		if has_node("Menu"):
+			$Menu.hide()
+		open_campaign_level_selector()
 	
 func on_new_game_pressed():
 	if has_node("Menu"):
