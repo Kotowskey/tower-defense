@@ -63,7 +63,6 @@ func connect_menu_buttons():
 func check_if_should_open_campaign_selector():
 	var mode_manager = get_node_or_null("/root/GameModeManager")
 	if mode_manager and mode_manager.is_campaign():
-		# If we're in campaign mode and returned to main menu, show level selector
 		if has_node("Menu"):
 			$Menu.hide()
 		open_campaign_level_selector()
