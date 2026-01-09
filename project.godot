@@ -15,6 +15,14 @@ run/main_scene="res://scenes/scene_handler.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SettingsManager="*res://scripts/managers/settings_manager.gd"
+DifficultyManager="*res://scripts/managers/difficulty_manager.gd"
+GameModeManager="*res://scripts/managers/game_mode_manager.gd"
+UpgradeCurrencyManager="*res://scripts/managers/upgrade_currency_manager.gd"
+TowerUpgradeTree="*res://scripts/managers/tower_upgrade_tree.gd"
+
 [display]
 
 window/size/viewport_width=1920

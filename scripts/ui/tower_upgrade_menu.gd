@@ -9,21 +9,8 @@ var current_tower_type = "basic"
 var tower_types = ["basic", "ice", "rocket", "sniper", "machine_gun", "magic", "area"]
 
 func _ready():
-	if not get_node_or_null("/root/UpgradeCurrencyManager"):
-		upgrade_currency_manager = load("res://scripts/managers/upgrade_currency_manager.gd").new()
-		upgrade_currency_manager.name = "UpgradeCurrencyManager"
-		get_node("/root").add_child(upgrade_currency_manager)
-		upgrade_currency_manager._ready()
-	else:
-		upgrade_currency_manager = get_node("/root/UpgradeCurrencyManager")
-	
-	if not get_node_or_null("/root/TowerUpgradeTree"):
-		tower_upgrade_tree = load("res://scripts/managers/tower_upgrade_tree.gd").new()
-		tower_upgrade_tree.name = "TowerUpgradeTree"
-		get_node("/root").add_child(tower_upgrade_tree)
-		tower_upgrade_tree._ready()
-	else:
-		tower_upgrade_tree = get_node("/root/TowerUpgradeTree")
+	upgrade_currency_manager = UpgradeCurrencyManager
+	tower_upgrade_tree = TowerUpgradeTree
 	
 	setup_ui()
 	update_currency_display()

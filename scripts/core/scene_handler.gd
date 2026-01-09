@@ -7,36 +7,14 @@ var campaign_level_selector: Control = null
 var almanac: Control = null
 
 func _ready():
-	call_deferred("setup_difficulty_manager")
-	call_deferred("setup_settings_manager")
-	call_deferred("setup_game_mode_manager")
+	if not DifficultyManager.has_meta("selected_map_path"):
+		DifficultyManager.set_meta("selected_map_path", "res://scenes/map.tscn")
 	
 	var timer = get_tree().create_timer(0.1)
 	timer.timeout.connect(func(): 
 		connect_menu_buttons()
 		check_if_should_open_campaign_selector()
 	)
-
-func setup_difficulty_manager():
-	if not get_node_or_null("/root/DifficultyManager"):
-		var diff_manager = load("res://scripts/managers/difficulty_manager.gd").new()
-		diff_manager.name = "DifficultyManager"
-		get_node("/root").add_child(diff_manager)
-	var dm = get_node("/root/DifficultyManager")
-	if not dm.has_meta("selected_map_path"):
-		dm.set_meta("selected_map_path", "res://scenes/map.tscn")
-
-func setup_settings_manager():
-	if not get_node_or_null("/root/SettingsManager"):
-		var settings_manager = load("res://scripts/managers/settings_manager.gd").new()
-		settings_manager.name = "SettingsManager"
-		get_node("/root").add_child(settings_manager)
-
-func setup_game_mode_manager():
-	if not get_node_or_null("/root/GameModeManager"):
-		var mode_manager = load("res://scripts/managers/game_mode_manager.gd").new()
-		mode_manager.name = "GameModeManager"
-		get_node("/root").add_child(mode_manager)
 
 func connect_menu_buttons():
 	if has_node("Menu/MarginContainer/VBoxContainer/NEW GAME"):
@@ -61,8 +39,7 @@ func connect_menu_buttons():
 		$DifficultyMenu.hide()
 
 func check_if_should_open_campaign_selector():
-	var mode_manager = get_node_or_null("/root/GameModeManager")
-	if mode_manager and mode_manager.is_campaign():
+	if GameModeManager.is_campaign():
 		if has_node("Menu"):
 			$Menu.hide()
 		open_campaign_level_selector()
@@ -130,11 +107,9 @@ func on_quit_pressed():
 	get_tree().quit()
 
 func on_difficulty_selected(difficulty):
-	if has_node("/root/DifficultyManager"):
-		get_node("/root/DifficultyManager").set_difficulty(difficulty)
+	DifficultyManager.set_difficulty(difficulty)
 	
-	var mode_manager = get_node_or_null("/root/GameModeManager")
-	if mode_manager and mode_manager.is_campaign():
+	if GameModeManager.is_campaign():
 		open_campaign_level_selector()
 	else:
 		open_map_selector()
@@ -160,11 +135,9 @@ func open_game_mode_selector():
 	add_child(game_mode_selector)
 
 func _on_mode_selected(mode: int):
-	var mode_manager = get_node_or_null("/root/GameModeManager")
-	if mode_manager:
-		mode_manager.set_mode(mode)
-		if mode == 1:
-			mode_manager.reset_campaign()
+	GameModeManager.set_mode(mode)
+	if mode == 1:
+		GameModeManager.reset_campaign()
 	
 	if game_mode_selector and is_instance_valid(game_mode_selector):
 		game_mode_selector.queue_free()
@@ -196,8 +169,7 @@ func open_map_selector():
 	add_child(map_selector)
 
 func _on_map_selected(map_data):
-	if has_node("/root/DifficultyManager"):
-		get_node("/root/DifficultyManager").set_meta("selected_map_path", map_data.map_path)
+	DifficultyManager.set_meta("selected_map_path", map_data.map_path)
 	
 	if map_selector and is_instance_valid(map_selector):
 		map_selector.queue_free()
@@ -226,9 +198,7 @@ func open_campaign_level_selector():
 	add_child(campaign_level_selector)
 
 func _on_campaign_level_selected(level_number: int):
-	var mode_manager = get_node_or_null("/root/GameModeManager")
-	if mode_manager:
-		mode_manager.set_campaign_level(level_number)
+	GameModeManager.set_campaign_level(level_number)
 	
 	if campaign_level_selector and is_instance_valid(campaign_level_selector):
 		campaign_level_selector.queue_free()
@@ -255,8 +225,6 @@ func start_game():
 		$Menu.queue_free()
 	var game_scene = load("res://scenes/game_scene.tscn").instantiate()
 	game_scene.name = "GameScene"
-	if has_node("/root/DifficultyManager"):
-		var diff_manager = get_node("/root/DifficultyManager")
-		game_scene.player_money = int(game_scene.player_money * diff_manager.get_difficulty_multiplier("player_money"))
-		game_scene.enemy_reward = int(game_scene.enemy_reward * diff_manager.get_difficulty_multiplier("enemy_reward"))
+	game_scene.player_money = int(game_scene.player_money * DifficultyManager.get_difficulty_multiplier("player_money"))
+	game_scene.enemy_reward = int(game_scene.enemy_reward * DifficultyManager.get_difficulty_multiplier("enemy_reward"))
 	add_child(game_scene)

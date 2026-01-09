@@ -19,35 +19,13 @@ var game_mode_manager
 var current_campaign_level: CampaignLevel = null
 
 func _ready():
-	if not get_node_or_null("/root/SettingsManager"):
-		settings_manager = load("res://scripts/managers/settings_manager.gd").new()
-		settings_manager.name = "SettingsManager"
-		get_node("/root").add_child(settings_manager)
-	else:
-		settings_manager = get_node("/root/SettingsManager")
-	
-	if not get_node_or_null("/root/GameModeManager"):
-		game_mode_manager = load("res://scripts/managers/game_mode_manager.gd").new()
-		game_mode_manager.name = "GameModeManager"
-		get_node("/root").add_child(game_mode_manager)
-	else:
-		game_mode_manager = get_node("/root/GameModeManager")
-	
-	if not get_node_or_null("/root/UpgradeCurrencyManager"):
-		var upgrade_currency_manager = load("res://scripts/managers/upgrade_currency_manager.gd").new()
-		upgrade_currency_manager.name = "UpgradeCurrencyManager"
-		get_node("/root").add_child(upgrade_currency_manager)
-	
-	if not get_node_or_null("/root/TowerUpgradeTree"):
-		var tower_upgrade_tree = load("res://scripts/managers/tower_upgrade_tree.gd").new()
-		tower_upgrade_tree.name = "TowerUpgradeTree"
-		get_node("/root").add_child(tower_upgrade_tree)
+	settings_manager = SettingsManager
+	game_mode_manager = GameModeManager
 	
 	setup_campaign_level()
 	
 	var selected_map_path := ""
-	if has_node("/root/DifficultyManager"):
-		selected_map_path = str(get_node("/root/DifficultyManager").get_meta("selected_map_path", ""))
+	selected_map_path = str(DifficultyManager.get_meta("selected_map_path", ""))
 	var default_map_path := "res://scenes/map.tscn"
 	
 	if game_mode_manager.is_campaign() and current_campaign_level:
@@ -209,7 +187,6 @@ func _on_next_level():
 		print("Bonus money saved: ", bonus_money)
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/scene_handler.tscn")
-	# Scene handler will need to open campaign level selector automatically
 
 func _on_main_menu_from_victory():
 	get_tree().paused = false

@@ -31,12 +31,7 @@ func _ready():
 	base_fire_rate = tower_fire_rate
 	base_range = tower_range
 	
-	if not get_node_or_null("/root/TowerUpgradeTree"):
-		tower_upgrade_tree = load("res://scripts/managers/tower_upgrade_tree.gd").new()
-		tower_upgrade_tree.name = "TowerUpgradeTree"
-		get_node("/root").add_child(tower_upgrade_tree)
-	else:
-		tower_upgrade_tree = get_node("/root/TowerUpgradeTree")
+	tower_upgrade_tree = TowerUpgradeTree
 	
 	apply_permanent_upgrades()
 	setup_detection_area()

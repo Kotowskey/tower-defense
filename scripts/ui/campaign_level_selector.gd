@@ -6,7 +6,7 @@ signal back_pressed
 var mode_manager
 
 func _ready():
-	mode_manager = get_node_or_null("/root/GameModeManager")
+	mode_manager = GameModeManager
 	populate_levels()
 	
 	if has_node("MarginContainer/VBoxContainer/ButtonContainer/BackButton"):

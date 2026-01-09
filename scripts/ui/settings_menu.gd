@@ -5,12 +5,7 @@ signal back_pressed
 var settings_manager
 
 func _ready():
-	if not get_node_or_null("/root/SettingsManager"):
-		settings_manager = load("res://scripts/managers/settings_manager.gd").new()
-		settings_manager.name = "SettingsManager"
-		get_node("/root").add_child(settings_manager)
-	else:
-		settings_manager = get_node("/root/SettingsManager")
+	settings_manager = SettingsManager
 	
 	$Panel/VBoxContainer/MusicContainer/HBoxContainer/MusicSlider.connect("value_changed", Callable(self, "_on_music_slider_changed"))
 	$Panel/VBoxContainer/SFXContainer/HBoxContainer/SFXSlider.connect("value_changed", Callable(self, "_on_sfx_slider_changed"))

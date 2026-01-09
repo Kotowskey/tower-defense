@@ -139,10 +139,9 @@ func update_wave_ui(wave_number = null):
 	if wave_number == null:
 		wave_number = game_state.current_wave
 	
-	var mode_manager = get_node_or_null("/root/GameModeManager")
 	var wave_text = "Wave: " + str(wave_number)
 	
-	if mode_manager and mode_manager.is_campaign():
+	if GameModeManager.is_campaign():
 		var max_waves = wave_manager.max_waves if wave_manager else -1
 		if max_waves > 0:
 			wave_text = "Wave: " + str(wave_number) + "/" + str(max_waves)
@@ -399,11 +398,10 @@ func show_notification(message: String, duration: float = 2.0):
 		)
 
 func update_campaign_info():
-	var mode_manager = get_node_or_null("/root/GameModeManager")
-	if not mode_manager or not mode_manager.is_campaign():
+	if not GameModeManager.is_campaign():
 		return
 	
-	var level_number = mode_manager.get_campaign_level()
+	var level_number = GameModeManager.get_campaign_level()
 	var level = CampaignLevel.get_level(level_number)
 	
 	if level and game_scene.has_node("UI/HUD/InfoPanel"):
