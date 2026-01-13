@@ -35,7 +35,9 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	call_deferred("update_campaign_info")
 
 func _process(_delta):
-	game_time += _delta
+	# Use real delta time so the timer doesn't speed up with game speed
+	var real_delta = _delta / Engine.time_scale
+	game_time += real_delta
 	update_timer_ui()
 	
 	if tower_manager.get_selected_tower():
