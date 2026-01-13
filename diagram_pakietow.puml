@@ -1,0 +1,112 @@
+@startuml
+title Diagram pakietów - Tower Defense (bez UI)
+
+' -- USTAWIENIA LAYOUTU --
+skinparam nodesep 100
+skinparam ranksep 80
+skinparam linetype ortho
+skinparam packageStyle rectangle
+
+' -- DEFINICJE PAKIETÓW --
+
+package "Core" #E8F5E9 {
+    class SceneHandler
+    class GameScene
+}
+
+package "Managers" #E1F5FE {
+    class DifficultyManager
+    class TowerManager
+    class GameModeManager
+    class UpgradeCurrencyManager
+    class WaveManager
+    class GameState
+    class SettingsManager
+    class TowerUpgradeTree
+}
+
+package "Towers" #FFF8E1 {
+    abstract class BaseTower
+    class BasicTower
+    class IceTower
+    class RocketTower
+    class MachineGunTower
+    class MagicTower
+    class SniperTower
+    class RangeIndicator
+    class TowerAreaEffect
+}
+
+package "Projectiles" #F3E5F5 {
+    abstract class BaseProjectile
+    class BasicProjectile
+    class IceProjectile
+    class RocketProjectile
+    class SniperProjectile
+}
+
+package "Enemies" #FFEBEE {
+    abstract class BaseEnemy
+    abstract class BaseBossEnemy
+    class BasicEnemy
+    class FastEnemy
+    class TankEnemy
+    note "Pakiet boss/ zawiera:\nShieldBoss\nSpeedBoss\nTankBoss" as BossNote
+    BossNote .. BaseBossEnemy
+}
+
+package "Data" #ECEFF1 {
+    class MapData
+    class CampaignLevel
+}
+
+package "Map" #E0F2F1 {
+    class Map
+}
+
+' -- WYMUSZENIE POZYCJI (LAYOUT HINTS) --
+Core -[hidden]down-> Managers
+Managers -[hidden]right-> Towers
+Managers -[hidden]down-> Data
+Data -[hidden]right-> Projectiles
+Projectiles -[hidden]down-> Enemies
+Enemies -[hidden]right-> Map
+
+' -- RELACJE I KIERUNKI --
+
+' Core -> Inne
+GameScene ..> Managers : <<używa>>
+GameScene ..> Map : <<ładuje>>
+GameScene ..> Data : <<używa>>
+
+' Wewnątrz Managers
+GameModeManager ..> GameState : <<modyfikuje>>
+TowerManager ..> TowerUpgradeTree : <<używa>>
+WaveManager ..> GameState : <<aktualizuje>>
+DifficultyManager ..> GameState : <<modyfikuje>>
+SettingsManager ..> GameState : <<konfiguruje>>
+
+' Managers -> Towers
+TowerManager ..> Towers : <<instancjonuje>>
+TowerUpgradeTree ..> BaseTower : <<ulepsza>>
+
+' Managers -> Enemies
+WaveManager ..> Enemies : <<tworzy>>
+
+' Towers -> Inne
+BaseTower ..> BaseProjectile : <<generuje>>
+BaseTower ..> BaseEnemy : <<wykrywa>>
+BaseTower ..> TowerUpgradeTree : <<dostęp>>
+RangeIndicator ..> BaseTower : <<wizualizuje>>
+TowerAreaEffect ..> BaseTower : <<efekt>>
+
+' Projectiles -> Enemies
+BaseProjectile ..> BaseEnemy : <<trafia>>
+
+' Enemies - hierarchia
+BaseBossEnemy -up-|> BaseEnemy
+
+' Map -> Enemies
+Map ..> BaseEnemy : <<ścieżka>>
+
+@enduml

@@ -1,0 +1,249 @@
+@startuml
+
+title Tower Defense - System Zarządzania (Core & Managers) 
+
+skinparam classAttributeIconSize 0
+
+package "Core (Główne)" {
+
+    class GameScene {
+
+        + player_money: int
+
+        + player_lives: int
+
+        + wave_size: int
+
+        + current_campaign_level: CampaignLevel
+
+        __
+
+        + _ready()
+
+        + _input(event)
+
+        + setup_campaign_level()
+
+        + pause_music()
+
+        + resume_music()
+
+        + show_level_complete()
+
+        + show_campaign_complete()
+
+        + _on_game_over()
+
+        + _on_level_completed()
+
+    }
+
+    class SceneHandler {
+
+        + map_selector: Control
+
+        + settings_menu: Control
+
+        + game_mode_selector: Control
+
+        __
+
+        + connect_menu_buttons()
+
+        + start_game()
+
+        + open_map_selector()
+
+        + open_campaign_level_selector()
+
+        + on_new_game_pressed()
+
+    }
+
+}
+
+package "Managers (Zarządzanie)" {
+
+    class UpgradeCurrencyManager {
+
+        + upgrade_points: int
+
+        __
+
+        + add_upgrade_points()
+
+        + spend_upgrade_points()
+
+    }
+
+    class TowerManager {
+
+        + building_mode: bool
+
+        + current_tower_type: int
+
+        + tower_costs: Dictionary
+
+        __
+
+        + start_tower_placement(type)
+
+        + place_tower(pos): bool
+
+        + cancel_building()
+
+        + select_tower_at_position(pos)
+
+        + deselect_tower()
+
+        + upgrade_selected_tower(): bool
+
+        + sell_selected_tower(): bool
+
+        + get_upgrade_cost(): int
+
+        + get_sell_refund(): int
+
+    }
+
+    class WaveManager {
+
+        + wave_in_progress: bool
+
+        + enemies_spawned: int
+
+        + enemies_to_kill: int
+
+        + max_waves: int
+
+        __
+
+        + start_wave(): bool
+
+        + end_wave()
+
+        + spawn_wave()
+
+        + spawn_boss_wave()
+
+        + spawn_enemy()
+
+        + is_wave_in_progress(): bool
+
+        + _on_wave_timer_timeout()
+
+    }
+
+    class GameState {
+
+        + player_money: int
+
+        + player_lives: int
+
+        + current_wave: int
+
+        + difficulty_multiplier: float
+
+        __
+
+        + set_initial_values()
+
+        + add_money(amount)
+
+        + reduce_money(amount): bool
+
+        + reduce_lives(amount)
+
+        + next_wave()
+
+        + get_wave_reward()
+
+    }
+
+    class DifficultyManager {
+
+        + current_difficulty: Difficulty
+
+        __
+
+        + get_difficulty_multiplier(property)
+
+        + set_difficulty(difficulty)
+
+    }
+
+    class UIManager {
+
+        + build_menu_visible: bool
+
+        + can_upgrade: bool
+
+        __
+
+        + update_money_ui()
+
+        + update_lives_ui()
+
+        + update_wave_ui()
+
+        + update_upgrade_ui()
+
+        + toggle_build_menu()
+
+        + toggle_pause_menu()
+
+        + show_game_over()
+
+        + show_notification()
+
+    }
+
+    class GameModeManager {
+
+        + current_mode: GameMode
+
+        + current_campaign_level: int
+
+        __
+
+        + set_mode(mode)
+
+        + is_campaign(): bool
+
+        + save_progress()
+
+        + load_progress()
+
+    }
+
+}
+
+' Relacje (Relationships)
+
+' Relacje między Core
+
+SceneHandler --> GameScene : tworzy/uruchamia
+
+GameScene ..> SceneHandler : nawiguje do menu
+
+' Relacje wychodzące z GameScene
+
+GameScene --> TowerManager : tworzy
+
+GameScene --> WaveManager : tworzy
+
+GameScene --> GameState : tworzy/zarządza
+
+GameScene --> UIManager : kontroluje
+
+' Relacje wychodzące ze SceneHandler
+
+SceneHandler o-- DifficultyManager : używa
+
+SceneHandler o-- GameModeManager : czyta
+
+' Relacje wychodzące z WaveManager
+
+WaveManager --> UpgradeCurrencyManager : dodaje punkty
+
+@enduml

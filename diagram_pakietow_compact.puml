@@ -1,0 +1,51 @@
+@startuml
+title Tower Defense - Diagram Pakietów
+skinparam packageStyle rectangle
+skinparam linetype polyline
+skinparam nodesep 80
+skinparam ranksep 60
+
+' Warstwa podstawowa
+package "Data" #ECEFF1 {
+}
+
+' Warstwa rdzennej logiki
+package "Core" #E8F5E9 {
+}
+
+package "Map" #E0F2F1 {
+}
+
+' Warstwa zarządzania
+package "Managers" #E1F5FE {
+}
+
+' Warstwa obiektów gry
+package "Towers" #FFF8E1 {
+}
+
+package "Enemies" #FFEBEE {
+}
+
+package "Projectiles" #F3E5F5 {
+}
+
+' Warstwa interfejsu
+package "UI" #FFF3E0 {
+}
+
+' Zależności - hierarchia od dołu do góry
+Data ..> Map : metadane
+
+Core -down-> Map : ładuje
+Core -down-> Managers : tworzy i inicjalizuje
+
+Managers --> Towers : instancjonuje
+Managers --> Enemies : generuje
+Managers --> UI : aktualizuje
+
+Towers -right-> Projectiles : tworzy
+Towers -down-> Enemies : wykrywa
+Projectiles -left-> Enemies : niszczy
+
+@enduml

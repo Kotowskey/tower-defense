@@ -1,0 +1,207 @@
+@startuml
+title Tower Defense - Jednostki i Walka (Towers, Projectiles & Enemies)
+
+' Ustawienia graficzne, aby diagram był czytelny
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam backgroundColor white
+
+package "Towers (Wieże)" {
+    abstract class BaseTower {
+        + tower_name: String
+        + tower_level: int
+        + tower_range: float
+        + tower_damage: int
+        + tower_fire_rate: float
+        + tower_cost: int
+        + is_placed: bool
+        + target: Node
+        + projectile_scene: PackedScene
+        __
+        + find_new_target()
+        + fire_at_target(target)
+        + spawn_projectile(target)
+        + upgrade(): int
+        + apply_upgrade_effects()
+        + apply_permanent_upgrades()
+        + show_range(bool)
+        + get_tower_stats(): Dictionary
+        + get_tower_type(): String
+        + get_tower_description(): String
+    }
+
+    class BasicTower {
+        __
+        + get_tower_type(): String
+        + apply_upgrade_effects()
+    }
+    
+    class SniperTower {
+        __
+        + get_tower_type(): String
+        + apply_upgrade_effects()
+    }
+    
+    class MachineGunTower {
+        __
+        + get_tower_type(): String
+        + apply_upgrade_effects()
+        + get_tower_description(): String
+    }
+    
+    class MagicTower {
+        __
+        + get_tower_type(): String
+        + apply_upgrade_effects()
+        + get_tower_description(): String
+    }
+
+    class IceTower {
+        + slow_factor: float
+        + slow_duration: float
+        __
+        + get_tower_type(): String
+        + apply_upgrade_effects()
+    }
+
+    class RocketTower {
+        __
+        + get_tower_type(): String
+        + fire_rocket(target)
+        + apply_upgrade_effects()
+    }
+
+    BaseTower <|-- BasicTower
+    BaseTower <|-- SniperTower
+    BaseTower <|-- MachineGunTower
+    BaseTower <|-- MagicTower
+    BaseTower <|-- IceTower
+    BaseTower <|-- RocketTower
+}
+
+package "Projectiles (Pociski)" {
+    abstract class BaseProjectile {
+        + speed: float
+        + damage: int
+        + target: Node
+        + has_area_damage: bool
+        __
+        + setup(pos, target, damage)
+        + on_hit()
+        + deal_area_damage()
+        + create_explosion_effect()
+    }
+
+    class BasicProjectile {
+        __
+        + setup(pos, target, damage)
+    }
+    
+    class SniperProjectile {
+        __
+        + setup(pos, target, damage)
+    }
+    
+    class RocketProjectile {
+        __
+        + on_hit()
+        + deal_area_damage()
+    }
+    
+    class IceProjectile {
+        + slow_factor: float
+        + slow_duration: float
+        __
+        + set_slow_properties()
+        + on_hit()
+    }
+
+    BaseProjectile <|-- BasicProjectile
+    BaseProjectile <|-- SniperProjectile
+    BaseProjectile <|-- RocketProjectile
+    BaseProjectile <|-- IceProjectile
+}
+
+package "Enemies (Przeciwnicy)" {
+    abstract class BaseEnemy {
+        + speed: float
+        + max_health: int
+        + current_health: int
+        + path: Path2D
+        + is_slow_applied: bool
+        __
+        + move_along_path(delta)
+        + take_damage(amount): bool
+        + apply_slow(factor, duration)
+        + is_slowed(): bool
+        + get_enemy_stats(): Dictionary
+    }
+
+    class BasicEnemy {
+        __
+        + take_damage(amount): bool
+    }
+    
+    class FastEnemy {
+        __
+        + take_damage(amount): bool
+    }
+    
+    class TankEnemy {
+        __
+        + take_damage(amount): bool
+    }
+
+    abstract class BaseBossEnemy {
+        + boss_type: int
+        __
+        + apply_slow(factor, duration)
+    }
+
+    class ShieldBoss {
+        + shield_active: bool
+        __
+        + take_damage(amount): bool
+    }
+    
+    class SpeedBoss {
+        __
+        + take_damage(amount): bool
+    }
+    
+    class TankBoss {
+        __
+        + take_damage(amount): bool
+    }
+
+    BaseEnemy <|-- BasicEnemy
+    BaseEnemy <|-- FastEnemy
+    BaseEnemy <|-- TankEnemy
+    BaseEnemy <|-- BaseBossEnemy
+
+    BaseBossEnemy <|-- ShieldBoss
+    BaseBossEnemy <|-- SpeedBoss
+    BaseBossEnemy <|-- TankBoss
+}
+
+' ========================================
+' Relacje między pakietami
+' ========================================
+
+' Wieże -> Pociski (każda wieża tworzy swój pocisk)
+BasicTower ..> BasicProjectile : tworzy
+SniperTower ..> SniperProjectile : tworzy
+MachineGunTower ..> BasicProjectile : tworzy
+IceTower ..> IceProjectile : tworzy
+RocketTower ..> RocketProjectile : tworzy
+MagicTower ..> RocketProjectile : tworzy
+
+' Wieże -> Przeciwnicy (wykrywanie i celowanie)
+BaseTower ..> BaseEnemy : wykrywa/celuje
+
+' Pociski -> Przeciwnicy (zadawanie obrażeń)
+BaseProjectile ..> BaseEnemy : zadaje obrażenia
+IceProjectile ..> BaseEnemy : spowalnia
+RocketProjectile ..> BaseEnemy : zadaje obszarowe obrażenia
+
+@enduml

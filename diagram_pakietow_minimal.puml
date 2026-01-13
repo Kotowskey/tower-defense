@@ -1,0 +1,49 @@
+@startuml
+title Minimalistyczny Diagram Pakietów - Tower Defense
+
+skinparam packageStyle rectangle
+skinparam linetype ortho
+
+package "Core" #E8F5E9 {
+}
+
+package "Managers" #E1F5FE {
+}
+
+package "Towers" #FFF8E1 {
+}
+
+package "Projectiles" #F3E5F5 {
+}
+
+package "Enemies" #FFEBEE {
+}
+
+package "Map" #E0F2F1 {
+}
+
+package "Data" #ECEFF1 {
+}
+
+package "UI" #FFF3E0 {
+}
+
+' Kluczowe relacje
+Core --> Managers
+Core --> Map
+Core --> Data
+
+Managers --> Towers
+Managers --> Enemies
+
+Towers --> Projectiles
+Towers --> Enemies
+
+Projectiles --> Enemies
+
+Map --> Enemies
+
+UI --> Managers
+UI --> Towers
+
+@enduml

@@ -1,0 +1,87 @@
+@startuml
+title Tower Defense - Przeciwnicy (System Wrogów)
+
+' Ustawienia graficzne, aby diagram był czytelny
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam backgroundColor white
+
+package "Enemies (Przeciwnicy)" {
+    abstract class BaseEnemy {
+        + speed: float
+        + max_health: int
+        + current_health: int
+        + path: Path2D
+        + is_slow_applied: bool
+        __
+        + move_along_path(delta)
+        + take_damage(amount): bool
+        + apply_slow(factor, duration)
+        + is_slowed(): bool
+        + get_enemy_stats(): Dictionary
+    }
+
+    class BasicEnemy {
+        __
+        + take_damage(amount): bool
+    }
+    
+    class FastEnemy {
+        __
+        + take_damage(amount): bool
+    }
+    
+    class TankEnemy {
+        __
+        + take_damage(amount): bool
+    }
+
+    abstract class BaseBossEnemy {
+        + boss_type: int
+        __
+        + apply_slow(factor, duration)
+    }
+
+    class ShieldBoss {
+        + shield_active: bool
+        __
+        + take_damage(amount): bool
+    }
+    
+    class SpeedBoss {
+        __
+        + take_damage(amount): bool
+    }
+    
+    class TankBoss {
+        __
+        + take_damage(amount): bool
+    }
+
+    BaseEnemy <|-- BasicEnemy
+    BaseEnemy <|-- FastEnemy
+    BaseEnemy <|-- TankEnemy
+    BaseEnemy <|-- BaseBossEnemy
+
+    BaseBossEnemy <|-- ShieldBoss
+    BaseBossEnemy <|-- SpeedBoss
+    BaseBossEnemy <|-- TankBoss
+}
+
+note right of BaseEnemy
+  Podstawowi przeciwnicy w:
+  scripts/enemies/
+end note
+
+note right of BaseBossEnemy
+  Bossowie w:
+  scripts/enemies/boss/
+end note
+
+note bottom of BaseEnemy
+  Przeciwnicy są celami dla wież i pocisków.
+  Mogą być spowalniani przez IceProjectile
+  i otrzymywać obrażenia od wszystkich pocisków.
+end note
+
+@enduml
