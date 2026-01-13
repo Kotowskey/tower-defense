@@ -35,7 +35,6 @@ func _init(p_game_scene, p_game_state, p_tower_manager, p_wave_manager):
 	call_deferred("update_campaign_info")
 
 func _process(_delta):
-	# Use real delta time so the timer doesn't speed up with game speed
 	var real_delta = _delta / Engine.time_scale
 	game_time += real_delta
 	update_timer_ui()
@@ -232,8 +231,6 @@ func _on_spawn_button_pressed():
 		if game_scene.has_node("UI/HUD/BuildPanel/BuildUI/SpawnButton") and game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton").has_node("StartSound"):
 			game_scene.get_node("UI/HUD/BuildPanel/BuildUI/SpawnButton/StartSound").play()
 		wave_manager.start_wave()
-	else:
-		print("Wave already in progress")
 
 func _on_resume_pressed():
 	toggle_pause_menu()
